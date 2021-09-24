@@ -1,0 +1,101 @@
+.file-upload-container {
+  .form-field {
+    display: none;
+  }
+  
+  .input-label {
+    top: -21px;
+    font-size: 13px;
+    color: black;
+    left: 0;
+    position: absolute;
+  }
+  
+  .drag-drop-text {
+    font-weight: bold;
+    letter-spacing: 2.2px;
+    margin-top: 0;
+    text-align: center;
+  }
+}
+
+.file-preview-container {  
+  margin-bottom: 35px;
+  span {
+    font-size: 14px;
+  }
+  .preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  
+    @media only screen and (max-width: 400px) {
+      flex-direction: column;
+    }
+  }
+  
+  .file-meta-data {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    background-color: rgba(5, 5, 5, 0.55);
+  
+    aside {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .file-name {
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+  }
+  
+  .preview-container {
+    padding: 0.25rem;
+    width: 20%;
+    height: 120px;
+    border-radius: 6px;
+    box-sizing: border-box;
+  
+    &:hover {
+      opacity: 0.55;
+    }
+  
+    & > div:first-of-type {
+      height: 100%;
+      position: relative;
+    }
+  
+    @media only screen and (max-width: 750px) {
+      width: 25%;
+    }
+  
+    @media only screen and (max-width: 500px) {
+      width: 50%;
+    }
+  
+    @media only screen and (max-width: 400px) {
+      width: 100%;
+      padding: 0 0 0.4em;
+    }
+  }
+  
+  .image-preview { 
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+  }
+}

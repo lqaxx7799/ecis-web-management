@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.log-in-admin {
+  margin-top: 60px;
+  background-color: $primary-light-color;
+  height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .log-in-form {
+    width: 360px;
+  }
+}

@@ -8,6 +8,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import verificationProcessReducer, { VerificationProcessActionTypes } from '../common/reducers/verificationProcess.reducer';
 import criteriaTypeReducer, { CriteriaTypeActionTypes } from '../common/reducers/criteriaType.reducer';
 import criteriaReducer, { CriteriaActionTypes } from '../common/reducers/criteria.reducer';
+import verficationProcessManagementReducer, { VerificationProcessManagementActionTypes } from '../pages/VerificationProcessManagement/reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -23,6 +24,7 @@ const allReducers = combineReducers({
   criteriaType: criteriaTypeReducer,
   criteria: criteriaReducer,
   verificationProcess: verificationProcessReducer,
+  verificationProcessManagement: verficationProcessManagementReducer,
 });
 
 export const store = createStore(allReducers, enhancer);
@@ -36,7 +38,8 @@ export type AppActions =
   | AuthenticationActionTypes
   | CriteriaTypeActionTypes
   | CriteriaActionTypes
-  | VerificationProcessActionTypes;
+  | VerificationProcessActionTypes
+  | VerificationProcessManagementActionTypes;
 
 export type AppDispatch = ThunkDispatch<RootState, void, AppActions>;
 

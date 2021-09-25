@@ -1,0 +1,38 @@
+.company-verification-form {
+  .criteria-item {
+    margin: 18px 0px;
+
+    .criteria-upload-wrapper {
+      padding: 12px;
+      margin-top: 8px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+.uploaded-file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(189, 201, 218);
+  margin-bottom: 8px;
+  .file-info {
+    display: flex;
+    align-items: center;
+  }
+  .file-name {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.file-icon-24 {
+  padding-right: 8px;
+  svg {
+    width: 24px;
+  }
+}

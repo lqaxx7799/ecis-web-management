@@ -55,6 +55,7 @@ export interface VerificationProcess extends BaseModel {
   companyTypeId?: number;
   assignedAgentId?: number;
   companyId: number;
+  company: Company;
 };
 
 export interface VerificationCriteria extends BaseModel {

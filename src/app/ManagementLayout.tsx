@@ -13,11 +13,11 @@ const ManagementLayout = (props: Props) => {
       <div className="main-body">
         <div className="side-menu">
           <div>
-            <Button variant="light" fullWidth component={Link} to="/doanh-nghiep">
+            <Button variant="light" fullWidth component={Link} to="/">
               Dashboard
             </Button>
-            <Button variant="light" fullWidth component={Link} to="/doanh-nghiep/tu-danh-gia">
-              Tự đánh giá
+            <Button variant="light" fullWidth component={Link} to="/qua-trinh-danh-gia">
+              Quá trình đánh giá
             </Button>
           </div>
         </div>

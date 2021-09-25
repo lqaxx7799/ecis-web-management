@@ -1,4 +1,4 @@
-import { VerificationCriteria, VerificationDocument, VerificationProcess } from '../../types/models';
+import { VerificationProcess } from '../../types/models';
 
 export const VERIFICATION_PROCESS_LOADING = 'VERIFICATION_PROCESS_LOADING';
 export const VERIFICATION_PROCESS_LOADED = 'VERIFICATION_PROCESS_LOADED';

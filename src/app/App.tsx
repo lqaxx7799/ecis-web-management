@@ -8,6 +8,10 @@ import authenticationActions from '../common/actions/authentication.actions';
 import ManagementLayout from './ManagementLayout';
 import LogIn from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
+import VerificationProcessManagement from '../pages/VerificationProcessManagement/components';
+import VerifyPendingProcessList from '../pages/VerificationProcessManagement/components/VerifyPendingProcessList';
+import SupportVerificationList from '../pages/VerificationProcessManagement/components/SupportVerificationList';
+import CompanyEditVerification from '../pages/VerificationProcessManagement/components/CompanyEditVerification';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +30,10 @@ const App = () => {
       <Switch>
         <AppRoute path='/dang-nhap' component={LogIn} layout={MainLayout} layoutProps={{ isBleedLayout: true }} />
 
-        {/* <AppRoute path="/" component={CompanySelfVerification} layout={CompanyLayout} needAuth roles={["Company"]} /> */}
-        {/* <AppRoute path="/doanh-nghiep" component={CompanyDashboard} layout={CompanyLayout} needAuth roles={["Company"]} /> */}
+        <AppRoute path="/qua-trinh-danh-gia/ho-tro/:id" component={CompanyEditVerification} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/qua-trinh-danh-gia/ho-tro" component={SupportVerificationList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/qua-trinh-danh-gia/phan-loai" component={VerifyPendingProcessList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/qua-trinh-danh-gia" component={VerificationProcessManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute exact path='/' component={Dashboard} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
       </Switch>

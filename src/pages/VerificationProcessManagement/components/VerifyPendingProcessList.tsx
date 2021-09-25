@@ -44,11 +44,8 @@ const VerifyPendingProcessList = (props: Props) => {
       name: 'Hành động',
       cell: (row, index) => (
         <Group>
-          <Tooltip label="Xem chi tiết">
-            <Button><EyeOpenIcon /></Button>
-          </Tooltip>
-          <Tooltip label="Cập nhật">
-            <Button><Pencil2Icon /></Button>
+          <Tooltip label="Đánh giá">
+            <Button component={Link} to={`/qua-trinh-danh-gia/phan-loai/${row.id}`}><Pencil2Icon /></Button>
           </Tooltip>
         </Group>
       ),
@@ -76,7 +73,7 @@ const VerifyPendingProcessList = (props: Props) => {
         <LoadingOverlay visible={loading} />
 
         <DataTable
-          // title={<Title order={2}>Quá trình tự đánh giá</Title>}
+          title={<Title order={2}>Phân loại doanh nghiệp</Title>}
           columns={columns}
           data={records}
           noDataComponent={<Text>Không có dữ liệu</Text>}

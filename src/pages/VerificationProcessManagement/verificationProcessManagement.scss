@@ -36,3 +36,12 @@
     width: 24px;
   }
 }
+
+.verify-pending-process-detail {
+  .criteria-wrapper {
+    padding: 12px;
+    .rdt_TableHeader {
+      display: none;
+    }
+  }
+}

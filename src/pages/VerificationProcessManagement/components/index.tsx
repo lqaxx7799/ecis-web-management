@@ -56,7 +56,6 @@ const VerificationProcessManagement = (props: Props) => {
     },
   ];
 
-
   return (
     <div>
       <Title order={1}>Quản lý quá trình tự đánh giá của doanh nghiệp</Title>
@@ -68,13 +67,16 @@ const VerificationProcessManagement = (props: Props) => {
         <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/phan-loai">
           Đánh giá đã hoàn thành <Badge color="red">4</Badge>
         </Text>
+        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/lich-su">
+          Lịch sử đánh giá
+        </Text>
       </div>
 
       <div style={{ marginTop: '24px' }}>
         <LoadingOverlay visible={loading} />
 
         <DataTable
-          title={<Title order={2}>Quá trình tự đánh giá</Title>}
+          title={<Title order={2}>Quá trình tự đánh giá Tháng {dayjs().format('MM/YYYY')}</Title>}
           columns={columns}
           data={records}
           noDataComponent={<Text>Không có dữ liệu</Text>}

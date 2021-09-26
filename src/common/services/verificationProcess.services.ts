@@ -21,12 +21,17 @@ function getById(id: number): Promise<VerificationProcess> {
   return request.get(`/VerificationProcess/${id}`);
 }
 
+function submitVerifyReview(id: number): Promise<VerificationProcess> {
+  return request.put(`/VerificationProcess/SubmitReview/${id}`);
+}
+
 const verificationProcessServices = {
   getAll,
   getAllPending,
   getAllByCompany,
   getAllSupport,
   getById,
+  submitVerifyReview,
 };
 
 export default verificationProcessServices;

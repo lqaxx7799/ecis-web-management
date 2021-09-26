@@ -9,9 +9,14 @@ function getById(id: number): Promise<VerificationCriteria> {
   return request.get(`/VerificationCriteria/${id}`);
 }
 
+function update(verificationCriteria: Partial<VerificationCriteria>): Promise<VerificationCriteria> {
+  return request.put(`/VerificationCriteria/Update`, verificationCriteria);
+}
+
 const verificationCriteriaServices = {
   getAllByProcessId,
   getById,
+  update,
 };
 
 export default verificationCriteriaServices;

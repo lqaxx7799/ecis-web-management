@@ -1,8 +1,10 @@
 import { Checkbox, Text } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
-import { useAppSelector } from "../../../app/store";
+import { useAppDispatch, useAppSelector } from "../../../app/store";
 import { VerificationCriteria } from "../../../types/models";
+import verificationProcessManagementActions from "../action";
 import VerifyPendingProcessCriteria from "./VerifyPendingProcessCriteria";
 
 type Props = {
@@ -10,10 +12,26 @@ type Props = {
 };
 
 const VerifyPendingProcessCriteriaGroup = (props: Props) => {
+  const notifications = useNotifications();
+  const dispatch = useAppDispatch();
   const { criterias } = useAppSelector((state) => state.criteria);
 
-  const markAsFinished = (verificationCriteriaId: number) => {
-
+  const markAsComplied = (value: boolean, verificationCriteriaId: number) => {
+    dispatch(verificationProcessManagementActions.updateCriteriaCompliance(value, verificationCriteriaId))
+      .then(() => {
+        notifications.showNotification({
+          color: 'green',
+          title: 'Cập nhật thành công',
+          message: 'Cập nhật trạng thái tuân thủ thành công',
+        });
+      })
+      .catch(() => {
+        notifications.showNotification({
+          color: 'red',
+          title: 'Lỗi hệ thống',
+          message: 'Đã có lỗi xảy ra trong quá trình cập nhật trạng thái tuân thủ',
+        });
+      });
   };
 
   const columns: IDataTableColumn<VerificationCriteria>[] = [
@@ -30,11 +48,11 @@ const VerifyPendingProcessCriteriaGroup = (props: Props) => {
       },
     },
     {
-      name: 'Hoàn thành',
+      name: 'Tuân thủ',
       selector: (row) => (
         <Checkbox
-          checked={row.approvedStatus === 'FINISHED'}
-          onClick={() => markAsFinished(row.id)}
+          checked={row.approvedStatus === 'COMPLIED'}
+          onChange={(e) => markAsComplied(e.target.checked, row.id)}
         />
       ),
     }

@@ -55,11 +55,11 @@ const VerifyPendingProcessList = (props: Props) => {
   return (
     <div>
       <Helmet>
-        <title>Phân loại doanh nghiệp</title>
+        <title>Danh sách doanh nghiệp cần đánh giá tài liệu</title>
       </Helmet>
 
       <Title order={1}>
-        Phân loại doanh nghiệp
+        Danh sách doanh nghiệp cần đánh giá tài liệu
       </Title>
 
       <div style={{ marginTop: '12px' }}>
@@ -73,7 +73,7 @@ const VerifyPendingProcessList = (props: Props) => {
         <LoadingOverlay visible={loading} />
 
         <DataTable
-          title={<Title order={2}>Phân loại doanh nghiệp</Title>}
+          title={<Title order={2}>Danh sách doanh nghiệp cần đánh giá tài liệu</Title>}
           columns={columns}
           data={records}
           noDataComponent={<Text>Không có dữ liệu</Text>}

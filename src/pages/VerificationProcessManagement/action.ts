@@ -8,7 +8,7 @@ import documentReviewServices from "../../common/services/documentReview.service
 import verificationCriteriaServices from "../../common/services/verificationCriteria.services";
 import verificationDocumentServices from "../../common/services/verificationDocument.services";
 import verificationProcessServices from "../../common/services/verificationProcess.services";
-import { DocumentReview, VerificationDocument, VerificationProcess } from "../../types/models";
+import { DocumentReview, VerificationCriteria, VerificationDocument, VerificationProcess } from "../../types/models";
 import { VerificationProcessManagementActionTypes } from "./reducer";
 
 function createDocument(data: Partial<VerificationDocument>): AppThunk<Promise<VerificationDocument>> {
@@ -159,8 +159,58 @@ function removeReview(reviewId: number): AppThunk<Promise<void>> {
   };
 }
 
+function updateCriteriaCompliance(
+  value: boolean,
+  verificationCriteriaId: number
+): AppThunk<Promise<VerificationCriteria>> {
+  return async (dispatch, getState) => {
+    const state = getState();
+    
+    const { verificationCriterias } = state.verificationProcessManagement;
+    const verificationCriteria = _.find(
+      verificationCriterias,
+      (item) => item.id === verificationCriteriaId
+    );
+    const data: Partial<VerificationCriteria> = {
+      ...verificationCriteria,
+      approvedStatus: value ? 'COMPLIED' : 'UNCOMPLIED',
+    };
+    const updated = await verificationCriteriaServices.update(data);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED',
+      payload: _.map(verificationCriterias, (item) => item.id === verificationCriteriaId ? updated : item),
+    });
+
+    return updated;
+  };
+}
+
+function submitVerifyReview(verificationProcessId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch, getState) => {
+    // const state = getState();
+    
+    // const { verificationCriterias } = state.verificationProcessManagement;
+    // const verificationCriteria = _.find(
+    //   verificationCriterias,
+    //   (item) => item.id === verificationCriteriaId
+    // );
+
+    const updated = await verificationProcessServices.submitVerifyReview(verificationProcessId);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED',
+      payload: updated,
+    });
+
+    return updated;
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
+  submitVerifyReview,
+
   createDocument,
   editDocument,
   updateDocument,
@@ -171,6 +221,8 @@ const verificationProcessManagementActions = {
   addReview,
   updateReview,
   removeReview,
+
+  updateCriteriaCompliance,
 };
 
 export default verificationProcessManagementActions;

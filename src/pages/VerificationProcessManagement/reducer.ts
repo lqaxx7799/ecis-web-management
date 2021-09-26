@@ -8,6 +8,8 @@ export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_CREATED = 'VERIFICATION_PR
 export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_EDITED = 'VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_EDITED';
 export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_MODAL_STATE_CHANGED = 'VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_MODAL_STATE_CHANGED';
 export const VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED';
+export const VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED';
+export const VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED';
 
 interface VerificationProcessManagementDetailLoading {
   type: typeof VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING;
@@ -51,6 +53,16 @@ interface VerificationProcessManagementReviewsLoaded {
   payload: DocumentReview[];
 };
 
+interface VerificationProcessManagementCriteriaUpdated {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED;
+  payload: VerificationCriteria[];
+};
+
+interface VerificationProcessManagementProcessUpdated {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED;
+  payload: VerificationProcess;
+};
+
 export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDetailLoading
   | VerificationProcessManagementDetailLoaded
@@ -59,7 +71,9 @@ export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDocumentEdited
   | VerificationProcessManagementDocumentModalStateChanged
   | VerificationProcessManagementDocumentsUpdated
-  | VerificationProcessManagementReviewsLoaded;
+  | VerificationProcessManagementReviewsLoaded
+  | VerificationProcessManagementCriteriaUpdated
+  | VerificationProcessManagementProcessUpdated;
 
 export type VerificationProcessManagementState = {
   loading: boolean;
@@ -129,6 +143,16 @@ const verficationProcessManagementReducer = (
       return {
         ...state,
         documentReviews: action.payload,
+      };
+    case 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED':
+      return {
+        ...state,
+        verificationCriterias: action.payload,
+      };
+    case "VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED":
+      return {
+        ...state,
+        editingProcess: action.payload,
       };
     default:
       return state;

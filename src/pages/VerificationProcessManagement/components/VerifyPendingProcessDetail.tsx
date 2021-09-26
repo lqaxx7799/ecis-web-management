@@ -1,7 +1,8 @@
-import { Button, LoadingOverlay, Tab, Tabs, Text, Title } from "@mantine/core";
+import { Button, Group, LoadingOverlay, Modal, Tab, Tabs, Text, Title } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -19,16 +20,37 @@ type RouteParams = {
 };
 
 const VerifyPendingProcessDetail = (props: Props) => {
+  const notifications = useNotifications();
   const dispatch = useAppDispatch();
   const { loading, verificationCriterias } = useAppSelector((state) => state.verificationProcessManagement);
   const { criterias } = useAppSelector((state) => state.criteria);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
+
+  const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   let { id } = useParams<RouteParams>();
 
   useEffect(() => {
     dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(id)));
   }, []);
+
+  const submitVerify = () => {
+    dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id)))
+      .then(() => {
+        notifications.showNotification({
+          color: 'green',
+          title: 'Thành công',
+          message: 'Lưu đánh giá thành công',
+        });
+      })
+      .catch(() => {
+        notifications.showNotification({
+          color: 'red',
+          title: 'Lỗi hệ thống',
+          message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
+        });
+      });
+  };
 
   const groupedCriteria = _.groupBy(verificationCriterias, (editingCriteria) => {
     const found = _.find(criterias, criteria => criteria.id === editingCriteria.criteriaId);
@@ -38,10 +60,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
   return (
     <div className="verify-pending-process-detail">
       <Helmet>
-        <title>Phân loại doanh nghiệp</title>
+        <title>Đánh giá tài liệu doanh nghiệp</title>
       </Helmet>
       <LoadingOverlay visible={loading} />
-      <Title order={1}>Phân loại doanh nghiệp</Title>
+      <Title order={1}>Đánh giá tài liệu doanh nghiệp</Title>
       <Button
         style={{ marginTop: '12px' }}
         component={Link}
@@ -79,9 +101,28 @@ const VerifyPendingProcessDetail = (props: Props) => {
       </div>
 
       <div style={{ marginTop: '24px' }}>
-        <Title order={3}>Phân loại</Title>
+        <Title order={3}>Hoàn thành</Title>
+        <Button
+          onClick={() => setShowSubmitModal(true)}
+        >
+          Lưu kết quả
+        </Button>
       </div>
 
+      <Modal
+        opened={showSubmitModal}
+        onClose={() => setShowSubmitModal(false)}
+        title="Xác nhận lưu kết quá đánh giá"
+      >
+        <Text>
+          Vui lòng kiểm tra kết quả đánh giá trước khi lưu. Sau khi lưu kết quả, thông tin đánh giá sẽ được chuyển cho bên
+          tiếp nhận để phân loại doanh nghiệp.
+        </Text>
+        <Group>
+          <Button onClick={submitVerify}>Xác nhận</Button>
+          <Button variant="light" onClick={() => setShowSubmitModal(false)}>Hủy</Button>
+        </Group>
+      </Modal>
       <VerifyDocumentModal />
     </div>
   );

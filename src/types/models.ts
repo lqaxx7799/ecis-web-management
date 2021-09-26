@@ -42,6 +42,12 @@ export interface Company extends BaseModel {
   isVerified: boolean;
 };
 
+export interface CompanyType extends BaseModel {
+  id: number;
+  typeName: string;
+  description: string;
+};
+
 export interface VerificationProcess extends BaseModel {
   id: number;
   submitDeadline?: Date;
@@ -74,6 +80,12 @@ export interface VerificationDocument extends BaseModel {
   resourceUrl: string;
   uploaderType: string;
   verificationCriteriaId: number;
+};
+
+export interface DocumentReview extends BaseModel {
+  id: number;
+  content: string;
+  verificationDocumentId: number;
 };
 
 export interface Agent extends BaseModel {

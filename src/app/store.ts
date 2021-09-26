@@ -9,6 +9,7 @@ import verificationProcessReducer, { VerificationProcessActionTypes } from '../c
 import criteriaTypeReducer, { CriteriaTypeActionTypes } from '../common/reducers/criteriaType.reducer';
 import criteriaReducer, { CriteriaActionTypes } from '../common/reducers/criteria.reducer';
 import verficationProcessManagementReducer, { VerificationProcessManagementActionTypes } from '../pages/VerificationProcessManagement/reducer';
+import companyTypeReducer, { CompanyTypeActionTypes } from '../common/reducers/companyType.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -21,6 +22,7 @@ const enhancer = composeWithDevTools(applyMiddleware(...getMiddleware()));
 
 const allReducers = combineReducers({
   authentication: authenticationReducer,
+  companyType: companyTypeReducer,
   criteriaType: criteriaTypeReducer,
   criteria: criteriaReducer,
   verificationProcess: verificationProcessReducer,
@@ -36,6 +38,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type AppActions =
   | AuthenticationActionTypes
+  | CompanyTypeActionTypes
   | CriteriaTypeActionTypes
   | CriteriaActionTypes
   | VerificationProcessActionTypes

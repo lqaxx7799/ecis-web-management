@@ -1,4 +1,4 @@
-import { VerificationCriteria, VerificationDocument, VerificationProcess } from "../../types/models";
+import { DocumentReview, VerificationCriteria, VerificationDocument, VerificationProcess } from "../../types/models";
 
 export const VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING = 'VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING';
 export const VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADED';
@@ -7,6 +7,7 @@ export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENTS_UPDATED = 'VERIFICATION_P
 export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_CREATED = 'VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_CREATED';
 export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_EDITED = 'VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_EDITED';
 export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_MODAL_STATE_CHANGED = 'VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_MODAL_STATE_CHANGED';
+export const VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED';
 
 interface VerificationProcessManagementDetailLoading {
   type: typeof VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING;
@@ -45,6 +46,11 @@ interface VerificationProcessManagementDocumentsUpdated {
   payload: VerificationDocument[];
 };
 
+interface VerificationProcessManagementReviewsLoaded {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED;
+  payload: DocumentReview[];
+};
+
 export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDetailLoading
   | VerificationProcessManagementDetailLoaded
@@ -52,7 +58,8 @@ export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDocumentCreated
   | VerificationProcessManagementDocumentEdited
   | VerificationProcessManagementDocumentModalStateChanged
-  | VerificationProcessManagementDocumentsUpdated;
+  | VerificationProcessManagementDocumentsUpdated
+  | VerificationProcessManagementReviewsLoaded;
 
 export type VerificationProcessManagementState = {
   loading: boolean;
@@ -61,6 +68,7 @@ export type VerificationProcessManagementState = {
   editingProcess?: VerificationProcess;
   editingDocument?: VerificationDocument;
   showEditingDocumentModal: boolean;
+  documentReviews: DocumentReview[];
 };
 
 const initialState: VerificationProcessManagementState = {
@@ -70,6 +78,7 @@ const initialState: VerificationProcessManagementState = {
   editingProcess: undefined,
   editingDocument: undefined,
   showEditingDocumentModal: false,
+  documentReviews: [],
 };
 
 const verficationProcessManagementReducer = (
@@ -115,6 +124,11 @@ const verficationProcessManagementReducer = (
       return {
         ...state,
         verificationDocuments: action.payload,
+      };
+    case "VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED":
+      return {
+        ...state,
+        documentReviews: action.payload,
       };
     default:
       return state;

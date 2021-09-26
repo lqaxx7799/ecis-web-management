@@ -1,11 +1,14 @@
+import _ from "lodash";
 import { AppDispatch, RootState } from "../../app/store";
+import companyTypeActions from "../../common/actions/companyType.action";
 import criteriaActions from "../../common/actions/criteria.action";
 import criteriaTypeActions from "../../common/actions/criteriaType.action";
 import { AppThunk } from "../../common/actions/type";
+import documentReviewServices from "../../common/services/documentReview.services";
 import verificationCriteriaServices from "../../common/services/verificationCriteria.services";
 import verificationDocumentServices from "../../common/services/verificationDocument.services";
 import verificationProcessServices from "../../common/services/verificationProcess.services";
-import { VerificationDocument, VerificationProcess } from "../../types/models";
+import { DocumentReview, VerificationDocument, VerificationProcess } from "../../types/models";
 import { VerificationProcessManagementActionTypes } from "./reducer";
 
 function createDocument(data: Partial<VerificationDocument>): AppThunk<Promise<VerificationDocument>> {
@@ -78,6 +81,7 @@ function loadSelfVerification(processId: number): AppThunk<Promise<VerificationP
         verificationDocumentServices.getAllByProcessId(processId),
         dispatch(criteriaActions.getAll()),
         dispatch(criteriaTypeActions.getAll()),
+        dispatch(companyTypeActions.getAll()),
       ]);
       dispatch<VerificationProcessManagementActionTypes>({
         type: 'VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADED',
@@ -97,6 +101,64 @@ function loadSelfVerification(processId: number): AppThunk<Promise<VerificationP
   };
 }
 
+function loadReview(documentId: number): AppThunk<Promise<DocumentReview[]>> {
+  return async (dispatch) => {
+    const reviews = await documentReviewServices.getAllByDocumentId(documentId);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED',
+      payload: reviews,
+    });
+    return reviews;
+  };
+}
+
+function addReview(payload: Partial<DocumentReview>): AppThunk<Promise<DocumentReview>> {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const review = await documentReviewServices.add(payload);
+    
+    const reviews = state.verificationProcessManagement.documentReviews;
+    const updatedReviews = [...reviews, review];
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED',
+      payload: updatedReviews,
+    });
+    return review;
+  };
+}
+
+function updateReview(payload: Partial<DocumentReview>): AppThunk<Promise<DocumentReview>> {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const review = await documentReviewServices.update(payload);
+    
+    const reviews = state.verificationProcessManagement.documentReviews;
+    const updatedReviews = _.map(reviews, (item) => item.id === review.id ? review : item);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED',
+      payload: updatedReviews,
+    });
+    return review;
+  };
+}
+
+function removeReview(reviewId: number): AppThunk<Promise<void>> {
+  return async (dispatch, getState) => {
+    const state = getState();
+    await documentReviewServices.remove(reviewId);
+    
+    const reviews = state.verificationProcessManagement.documentReviews;
+    const updatedReviews = _.filter(reviews, (item) => item.id !== reviewId);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED',
+      payload: updatedReviews,
+    });
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
   createDocument,
@@ -104,6 +166,11 @@ const verificationProcessManagementActions = {
   updateDocument,
   changeEditDocumentModalState,
   removeDocument,
+
+  loadReview,
+  addReview,
+  updateReview,
+  removeReview,
 };
 
 export default verificationProcessManagementActions;

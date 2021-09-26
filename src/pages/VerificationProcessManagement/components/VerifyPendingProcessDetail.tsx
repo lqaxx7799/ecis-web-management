@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessManagementActions from "../action";
+import VerifyDocumentModal from "./VerifyDocumentModal";
 import VerifyPendingProcessCriteriaGroup from "./VerifyPendingProcessCriteriaGroup";
 
 type Props = {
@@ -51,30 +52,37 @@ const VerifyPendingProcessDetail = (props: Props) => {
       </Button>
 
       <div style={{ marginTop: '24px' }}>
-      {
-        !_.isEmpty(Object.keys(groupedCriteria)) && (
-          <Tabs>
-            {
-              Object.keys(groupedCriteria).map((criteriaTypeId) => {
-                const criteriaType = _.find(criteriaTypes, type => type.id === parseInt(criteriaTypeId));
-    
-                const criteriaList = groupedCriteria[criteriaTypeId];
-                return (
-                  <Tab
-                    label={criteriaType?.criteriaTypeName ?? ''}
-                    key={criteriaTypeId}
-                  >
-                    <VerifyPendingProcessCriteriaGroup
-                      verificationCriterias={criteriaList}
-                    />
-                  </Tab>
-                );
-              })
-            }
-          </Tabs>
-        )
-      }
+        <Title order={3}>Đánh giá tài liệu</Title>
+        {
+          !_.isEmpty(Object.keys(groupedCriteria)) && (
+            <Tabs>
+              {
+                Object.keys(groupedCriteria).map((criteriaTypeId) => {
+                  const criteriaType = _.find(criteriaTypes, type => type.id === parseInt(criteriaTypeId));
+      
+                  const criteriaList = groupedCriteria[criteriaTypeId];
+                  return (
+                    <Tab
+                      label={criteriaType?.criteriaTypeName ?? ''}
+                      key={criteriaTypeId}
+                    >
+                      <VerifyPendingProcessCriteriaGroup
+                        verificationCriterias={criteriaList}
+                      />
+                    </Tab>
+                  );
+                })
+              }
+            </Tabs>
+          )
+        }
       </div>
+
+      <div style={{ marginTop: '24px' }}>
+        <Title order={3}>Phân loại</Title>
+      </div>
+
+      <VerifyDocumentModal />
     </div>
   );
 };

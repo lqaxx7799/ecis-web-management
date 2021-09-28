@@ -4,6 +4,7 @@ import companyTypeActions from "../../common/actions/companyType.action";
 import criteriaActions from "../../common/actions/criteria.action";
 import criteriaTypeActions from "../../common/actions/criteriaType.action";
 import { AppThunk } from "../../common/actions/type";
+import companyServices from "../../common/services/company.services";
 import documentReviewServices from "../../common/services/documentReview.services";
 import verificationCriteriaServices from "../../common/services/verificationCriteria.services";
 import verificationDocumentServices from "../../common/services/verificationDocument.services";
@@ -90,6 +91,12 @@ function loadSelfVerification(processId: number): AppThunk<Promise<VerificationP
           verificationCriterias: criterias,
           verificationDocuments: documents,
         },
+      });
+      const companyId = _.get(process, 'companyId');
+      const company = await companyServices.getById(companyId);
+      dispatch<VerificationProcessManagementActionTypes>({
+        type: 'VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED',
+        payload: company,
       });
       return process;
     } catch (e) {
@@ -207,9 +214,19 @@ function submitVerifyReview(verificationProcessId: number): AppThunk<Promise<Ver
   };
 }
 
+function changeVerifyCompleteModalState(state: boolean): AppThunk<void> {
+  return (dispatch: AppDispatch) => {
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED",
+      payload: state,
+    });
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
+  changeVerifyCompleteModalState,
 
   createDocument,
   editDocument,
@@ -222,7 +239,7 @@ const verificationProcessManagementActions = {
   updateReview,
   removeReview,
 
-  updateCriteriaCompliance,
+  updateCriteriaCompliance, 
 };
 
 export default verificationProcessManagementActions;

@@ -1,4 +1,4 @@
-import { DocumentReview, VerificationCriteria, VerificationDocument, VerificationProcess } from "../../types/models";
+import { Company, DocumentReview, VerificationCriteria, VerificationDocument, VerificationProcess } from "../../types/models";
 
 export const VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING = 'VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING';
 export const VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADED';
@@ -10,6 +10,8 @@ export const VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_MODAL_STATE_CHANGED = 'VER
 export const VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED';
 export const VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED';
 export const VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED';
+export const VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED';
+export const VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED = 'VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED';
 
 interface VerificationProcessManagementDetailLoading {
   type: typeof VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING;
@@ -63,6 +65,16 @@ interface VerificationProcessManagementProcessUpdated {
   payload: VerificationProcess;
 };
 
+interface VerificationProcessManagementCompanyLoaded {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED;
+  payload: Company;
+};
+
+interface VerificationProcessManagementVerifyCompleteModalStateChanged {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED;
+  payload: boolean;
+};
+
 export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDetailLoading
   | VerificationProcessManagementDetailLoaded
@@ -73,7 +85,9 @@ export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementDocumentsUpdated
   | VerificationProcessManagementReviewsLoaded
   | VerificationProcessManagementCriteriaUpdated
-  | VerificationProcessManagementProcessUpdated;
+  | VerificationProcessManagementProcessUpdated
+  | VerificationProcessManagementCompanyLoaded
+  | VerificationProcessManagementVerifyCompleteModalStateChanged;
 
 export type VerificationProcessManagementState = {
   loading: boolean;
@@ -82,7 +96,9 @@ export type VerificationProcessManagementState = {
   editingProcess?: VerificationProcess;
   editingDocument?: VerificationDocument;
   showEditingDocumentModal: boolean;
+  showVerifyCompletetModal: boolean;
   documentReviews: DocumentReview[];
+  company?: Company;
 };
 
 const initialState: VerificationProcessManagementState = {
@@ -92,7 +108,9 @@ const initialState: VerificationProcessManagementState = {
   editingProcess: undefined,
   editingDocument: undefined,
   showEditingDocumentModal: false,
+  showVerifyCompletetModal: false,
   documentReviews: [],
+  company: undefined,
 };
 
 const verficationProcessManagementReducer = (
@@ -153,6 +171,16 @@ const verficationProcessManagementReducer = (
       return {
         ...state,
         editingProcess: action.payload,
+      };
+    case "VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED":
+      return {
+        ...state,
+        company: action.payload,
+      };
+    case "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED":
+      return {
+        ...state,
+        showVerifyCompletetModal: action.payload,
       };
     default:
       return state;

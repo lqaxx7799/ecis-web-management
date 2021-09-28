@@ -22,6 +22,7 @@ const VerifyDocumentModal = (props: Props) => {
   const {
     showEditingDocumentModal,
     editingDocument,
+    editingProcess,
     documentReviews,
   } = useAppSelector((state) => state.verificationProcessManagement);
   const [isAddingReview, setAddingReview] = useState(false);
@@ -153,6 +154,7 @@ const VerifyDocumentModal = (props: Props) => {
           )
         }
         <Button
+          disabled={editingProcess?.isReviewed}
           style={{ marginTop: '12px' }}
           leftIcon={<PlusIcon />}
           onClick={() => setAddingReview(true)}

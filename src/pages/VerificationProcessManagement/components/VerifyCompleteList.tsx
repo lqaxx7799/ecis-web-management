@@ -1,27 +1,35 @@
-import { Badge, Button, Group, LoadingOverlay, Text, Title, Tooltip } from "@mantine/core";
-import { EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import { Anchor, Breadcrumbs, Button, Group, LoadingOverlay, Text, Title, Tooltip } from "@mantine/core";
+import { CheckIcon, EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessActions from "../../../common/actions/verificationProcess.action";
 import { VerificationProcess } from "../../../types/models";
-
-import '../verificationProcessManagement.scss';
+import verificationProcessManagementActions from "../action";
+import VerifyCompleteModal from "./VerifyCompleteModal";
 
 type Props = {
 
 };
 
-const VerificationProcessManagement = (props: Props) => {
+const VerifyCompleteList = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAll());
+    dispatch(verificationProcessActions.getAllReviewed());
   }, []);
+
+  const showDetail = (id: number) => {
+    dispatch(verificationProcessManagementActions.loadSelfVerification(id))
+      .then(() => {
+        dispatch(verificationProcessManagementActions.changeVerifyCompleteModalState(true)); 
+      });
+  };
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
     {
@@ -38,6 +46,10 @@ const VerificationProcessManagement = (props: Props) => {
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
     },
     {
+      name: 'Mức độ thỏa mãn tiêu chí',
+      selector: 'complianceRate',
+    },
+    {
       name: 'Trạng thái',
       selector: 'status',
     },
@@ -46,10 +58,9 @@ const VerificationProcessManagement = (props: Props) => {
       cell: (row, index) => (
         <Group>
           <Tooltip label="Xem chi tiết">
-            <Button><EyeOpenIcon /></Button>
-          </Tooltip>
-          <Tooltip label="Cập nhật">
-            <Button><Pencil2Icon /></Button>
+            <Button onClick={() => showDetail(row.id)}>
+              <EyeOpenIcon />
+            </Button>
           </Tooltip>
         </Group>
       ),
@@ -58,35 +69,32 @@ const VerificationProcessManagement = (props: Props) => {
 
   return (
     <div>
-      <Title order={1}>Quản lý quá trình tự đánh giá của doanh nghiệp</Title>
+      <Helmet>
+        <title>Xác nhận đánh giá của doanh nghiệp</title>
+      </Helmet>
+      <Title order={1}>Xác nhận đánh giá của doanh nghiệp</Title>
 
-      <div style={{ marginTop: '24px' }}>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/ho-tro">
-          Hỗ trợ doanh nghiệp <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/phan-loai">
-          Đánh giá đã hoàn thành <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/xac-nhan">
-          Xác nhận đánh giá <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/lich-su">
-          Lịch sử đánh giá
-        </Text>
+      <div style={{ marginTop: '12px' }}>
+        <Breadcrumbs>
+          <Anchor component={Link} to="/">Trang chủ</Anchor>
+          <Anchor component={Link} to="/qua-trinh-danh-gia">Quá trình đánh giá</Anchor>
+        </Breadcrumbs>
       </div>
 
       <div style={{ marginTop: '24px' }}>
         <LoadingOverlay visible={loading} />
 
         <DataTable
-          title={<Title order={2}>Quá trình tự đánh giá Tháng {dayjs().format('MM/YYYY')}</Title>}
+          title={<Title order={2}>Danh sách</Title>}
           columns={columns}
           data={records}
           noDataComponent={<Text>Không có dữ liệu</Text>}
         />
       </div>
+
+      <VerifyCompleteModal />
     </div>
   );
 };
 
-export default VerificationProcessManagement;
+export default VerifyCompleteList;

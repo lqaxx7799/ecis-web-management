@@ -88,11 +88,33 @@ function getAllSupport(): AppThunk<Promise<VerificationProcess[]>> {
   };
 }
 
+function getAllReviewed(): AppThunk<Promise<VerificationProcess[]>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<VerificationProcessActionTypes>({
+      type: 'VERIFICATION_PROCESS_LOADING',
+    });
+    try {
+      const result = await verificationProcessServices.getAllReviewed();
+      dispatch<VerificationProcessActionTypes>({
+        type: 'VERIFICATION_PROCESS_LOADED',
+        payload: result,
+      });
+      return result;
+    } catch (e) {
+      dispatch<VerificationProcessActionTypes>({
+        type: 'VERIFICATION_PROCESS_LOAD_FAILED',
+      });
+      return [];
+    }
+  };
+}
+
 const verificationProcessActions = {
   getAll,
   getAllByCompany,
   getAllPending,
   getAllSupport,
+  getAllReviewed,
 };
 
 export default verificationProcessActions;

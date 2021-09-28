@@ -13,6 +13,10 @@ function getAllSupport(): Promise<VerificationProcess[]> {
   return request.get(`/VerificationProcess/GetSupport`);
 }
 
+function getAllReviewed(): Promise<VerificationProcess[]> {
+  return request.get(`/VerificationProcess/GetReviewed`);
+}
+
 function getAllByCompany(companyId: number): Promise<VerificationProcess[]> {
   return request.get(`/VerificationProcess/GetByCompany/${companyId}`);
 }
@@ -30,6 +34,7 @@ const verificationProcessServices = {
   getAllPending,
   getAllByCompany,
   getAllSupport,
+  getAllReviewed,
   getById,
   submitVerifyReview,
 };

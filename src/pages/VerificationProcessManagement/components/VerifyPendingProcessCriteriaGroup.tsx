@@ -15,6 +15,7 @@ const VerifyPendingProcessCriteriaGroup = (props: Props) => {
   const notifications = useNotifications();
   const dispatch = useAppDispatch();
   const { criterias } = useAppSelector((state) => state.criteria);
+  const { editingProcess } = useAppSelector((state) => state.verificationProcessManagement);
 
   const markAsComplied = (value: boolean, verificationCriteriaId: number) => {
     dispatch(verificationProcessManagementActions.updateCriteriaCompliance(value, verificationCriteriaId))
@@ -51,6 +52,7 @@ const VerifyPendingProcessCriteriaGroup = (props: Props) => {
       name: 'Tuân thủ',
       selector: (row) => (
         <Checkbox
+          disabled={editingProcess?.isReviewed}
           checked={row.approvedStatus === 'COMPLIED'}
           onChange={(e) => markAsComplied(e.target.checked, row.id)}
         />

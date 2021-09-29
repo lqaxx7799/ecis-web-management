@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import verificationProcessManagementActions from "../../action";
 import VerifyDocumentModal from "./VerifyDocumentModal";
 import VerifyPendingProcessCriteriaGroup from "./VerifyPendingProcessCriteriaGroup";
 

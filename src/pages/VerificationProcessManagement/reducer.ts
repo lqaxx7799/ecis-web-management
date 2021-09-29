@@ -11,7 +11,7 @@ export const VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED = 'VERIFICATION_PROC
 export const VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED';
 export const VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED = 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED';
 export const VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED = 'VERIFICATION_PROCESS_MANAGEMENT_COMPANY_LOADED';
-export const VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED = 'VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED';
+export const VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_DRAWER_STATE_CHANGED = 'VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_DRAWER_STATE_CHANGED';
 
 interface VerificationProcessManagementDetailLoading {
   type: typeof VERIFICATION_PROCESS_MANAGEMENT_DETAIL_LOADING;
@@ -70,8 +70,8 @@ interface VerificationProcessManagementCompanyLoaded {
   payload: Company;
 };
 
-interface VerificationProcessManagementVerifyCompleteModalStateChanged {
-  type: typeof VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED;
+interface VerificationProcessManagementVerifyCompleteDrawerStateChanged {
+  type: typeof VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_DRAWER_STATE_CHANGED;
   payload: boolean;
 };
 
@@ -87,7 +87,7 @@ export type VerificationProcessManagementActionTypes =
   | VerificationProcessManagementCriteriaUpdated
   | VerificationProcessManagementProcessUpdated
   | VerificationProcessManagementCompanyLoaded
-  | VerificationProcessManagementVerifyCompleteModalStateChanged;
+  | VerificationProcessManagementVerifyCompleteDrawerStateChanged;
 
 export type VerificationProcessManagementState = {
   loading: boolean;
@@ -96,7 +96,7 @@ export type VerificationProcessManagementState = {
   editingProcess?: VerificationProcess;
   editingDocument?: VerificationDocument;
   showEditingDocumentModal: boolean;
-  showVerifyCompletetModal: boolean;
+  showVerifyCompleteDrawer: boolean;
   documentReviews: DocumentReview[];
   company?: Company;
 };
@@ -108,7 +108,7 @@ const initialState: VerificationProcessManagementState = {
   editingProcess: undefined,
   editingDocument: undefined,
   showEditingDocumentModal: false,
-  showVerifyCompletetModal: false,
+  showVerifyCompleteDrawer: false,
   documentReviews: [],
   company: undefined,
 };
@@ -177,10 +177,10 @@ const verficationProcessManagementReducer = (
         ...state,
         company: action.payload,
       };
-    case "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED":
+    case "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_DRAWER_STATE_CHANGED":
       return {
         ...state,
-        showVerifyCompletetModal: action.payload,
+        showVerifyCompleteDrawer: action.payload,
       };
     default:
       return state;

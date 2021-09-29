@@ -45,3 +45,11 @@
     }
   }
 }
+
+.verify-process-complete-drawer {
+  padding: 12px 18px !important;
+  overflow-y: auto;
+  .rdt_TableHeader {
+    display: none;
+  }
+}

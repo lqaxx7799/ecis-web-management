@@ -5,12 +5,12 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { DefaultExtensionType, defaultStyles } from "react-file-icon";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { DEFAULT_DATETIME_FORMAT } from "../../../common/constants/app";
-import helpers from "../../../common/utils/helpers";
-import config from "../../../config";
-import { DocumentReview, VerificationDocument } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
+import helpers from "../../../../common/utils/helpers";
+import config from "../../../../config";
+import { DocumentReview, VerificationDocument } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
 
 type Props = {
 

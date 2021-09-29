@@ -3,8 +3,8 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import verificationProcessManagementActions from "../../action";
 import CompanyEditVerificationCriteria from "./CompanyEditVerificationCriteria";
 import EditDocumentModal from "./EditDocumentModal";
 

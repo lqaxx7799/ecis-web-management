@@ -3,12 +3,12 @@ import { useNotifications } from "@mantine/notifications";
 import { ExternalLinkIcon, FileIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import { DefaultExtensionType, defaultStyles } from "react-file-icon";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { DEFAULT_DATETIME_FORMAT } from "../../../common/constants/app";
-import helpers from "../../../common/utils/helpers";
-import config from "../../../config";
-import { VerificationDocument } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
+import helpers from "../../../../common/utils/helpers";
+import config from "../../../../config";
+import { VerificationDocument } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
 
 type Props = {
 

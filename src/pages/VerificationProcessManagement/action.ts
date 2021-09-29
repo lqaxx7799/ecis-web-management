@@ -4,6 +4,7 @@ import companyTypeActions from "../../common/actions/companyType.action";
 import criteriaActions from "../../common/actions/criteria.action";
 import criteriaTypeActions from "../../common/actions/criteriaType.action";
 import { AppThunk } from "../../common/actions/type";
+import { VerificationProcessActionTypes } from "../../common/reducers/verificationProcess.reducer";
 import companyServices from "../../common/services/company.services";
 import documentReviewServices from "../../common/services/documentReview.services";
 import verificationCriteriaServices from "../../common/services/verificationCriteria.services";
@@ -119,6 +120,17 @@ function loadReview(documentId: number): AppThunk<Promise<DocumentReview[]>> {
   };
 }
 
+function loadAllReviewsByProcessId(processId: number): AppThunk<Promise<DocumentReview[]>> {
+  return async (dispatch) => {
+    const reviews = await documentReviewServices.getAllByProcessId(processId);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_REVIEWS_LOADED',
+      payload: reviews,
+    });
+    return reviews;
+  };
+}
+
 function addReview(payload: Partial<DocumentReview>): AppThunk<Promise<DocumentReview>> {
   return async (dispatch, getState) => {
     const state = getState();
@@ -214,19 +226,40 @@ function submitVerifyReview(verificationProcessId: number): AppThunk<Promise<Ver
   };
 }
 
-function changeVerifyCompleteModalState(state: boolean): AppThunk<void> {
+function changeVerifyCompleteDrawerState(state: boolean): AppThunk<void> {
   return (dispatch: AppDispatch) => {
     dispatch<VerificationProcessManagementActionTypes>({
-      type: "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_MODAL_STATE_CHANGED",
+      type: "VERIFICATION_PROCESS_MANAGEMENT_VERIFY_COMPLETE_DRAWER_STATE_CHANGED",
       payload: state,
     });
+  };
+}
+
+function updateProcess(process: Partial<VerificationProcess>): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch: AppDispatch, getState) => {
+    const result = await verificationProcessServices.update(process);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: "VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED",
+      payload: result,
+    });
+
+    const state = getState();
+    const updatedRecords = _.map(state.verificationProcess.records, (item) => item.id === result.id ? result : item);
+
+    dispatch<VerificationProcessActionTypes>({
+      type: "VERIFICATION_PROCESS_LOADED",
+      payload: updatedRecords,
+    });
+
+    return result;
   };
 }
 
 const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
-  changeVerifyCompleteModalState,
+  changeVerifyCompleteDrawerState,
+  updateProcess,
 
   createDocument,
   editDocument,
@@ -235,6 +268,7 @@ const verificationProcessManagementActions = {
   removeDocument,
 
   loadReview,
+  loadAllReviewsByProcessId,
   addReview,
   updateReview,
   removeReview,

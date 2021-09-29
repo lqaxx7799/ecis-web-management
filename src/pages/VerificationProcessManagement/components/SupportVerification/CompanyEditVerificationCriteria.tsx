@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { useAppSelector } from "../../../app/store";
-import { VerificationCriteria } from "../../../types/models";
+import { useAppSelector } from "../../../../app/store";
+import { VerificationCriteria } from "../../../../types/models";
 import VerificationCriteriaForm from "./VerificationCriteriaForm";
 
 type Props = {

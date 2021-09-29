@@ -5,30 +5,45 @@ import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import verificationProcessActions from "../../../common/actions/verificationProcess.action";
-import { VerificationProcess } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
-import VerifyCompleteModal from "./VerifyCompleteModal";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import verificationProcessActions from "../../../../common/actions/verificationProcess.action";
+import { VerificationProcess } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
+import VerifyCompleteDrawer from "./VerifyCompleteDrawer";
 
 type Props = {
 
 };
 
+type RouteParams = {
+  id: string;
+};
+
 const VerifyCompleteList = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
+  const history = useHistory();
+  let { id: processId } = useParams<RouteParams>();
 
   useEffect(() => {
     dispatch(verificationProcessActions.getAllReviewed());
   }, []);
 
+  useEffect(() => {
+    if (processId) {
+      dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(processId)))
+        .then(() => {
+          dispatch(verificationProcessManagementActions.loadAllReviewsByProcessId(parseInt(processId)));
+          dispatch(verificationProcessManagementActions.changeVerifyCompleteDrawerState(true));
+        });
+    } else {
+      dispatch(verificationProcessManagementActions.changeVerifyCompleteDrawerState(false)); 
+    }
+  }, [processId]);
+
   const showDetail = (id: number) => {
-    dispatch(verificationProcessManagementActions.loadSelfVerification(id))
-      .then(() => {
-        dispatch(verificationProcessManagementActions.changeVerifyCompleteModalState(true)); 
-      });
+    history.push(`/qua-trinh-danh-gia/xac-nhan/${id}`);
   };
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
@@ -92,7 +107,7 @@ const VerifyCompleteList = (props: Props) => {
         />
       </div>
 
-      <VerifyCompleteModal />
+      <VerifyCompleteDrawer />
     </div>
   );
 };

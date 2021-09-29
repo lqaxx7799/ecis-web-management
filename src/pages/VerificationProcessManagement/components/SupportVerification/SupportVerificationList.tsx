@@ -1,25 +1,25 @@
 import { Anchor, Breadcrumbs, Button, Group, LoadingOverlay, Text, Title, Tooltip } from "@mantine/core";
 import { EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
-import _ from "lodash";
+import _ from 'lodash';
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import verificationProcessActions from "../../../common/actions/verificationProcess.action";
-import { VerificationProcess } from "../../../types/models";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import verificationProcessActions from "../../../../common/actions/verificationProcess.action";
+import { VerificationProcess } from "../../../../types/models";
 
 type Props = {
 
 };
 
-const VerifyPendingProcessList = (props: Props) => {
+const SupportVerificationList = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllPending());
+    dispatch(verificationProcessActions.getAllSupport());
   }, []);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
@@ -44,8 +44,10 @@ const VerifyPendingProcessList = (props: Props) => {
       name: 'Hành động',
       cell: (row, index) => (
         <Group>
-          <Tooltip label="Đánh giá">
-            <Button component={Link} to={`/qua-trinh-danh-gia/phan-loai/${row.id}`}><Pencil2Icon /></Button>
+          <Tooltip label="Cập nhật">
+            <Button to={`/qua-trinh-danh-gia/ho-tro/${row.id}`} component={Link}>
+              <Pencil2Icon />
+            </Button>
           </Tooltip>
         </Group>
       ),
@@ -55,11 +57,11 @@ const VerifyPendingProcessList = (props: Props) => {
   return (
     <div>
       <Helmet>
-        <title>Danh sách doanh nghiệp cần đánh giá tài liệu</title>
+        <title>Hỗ trợ doanh nghiệp đánh giá</title>
       </Helmet>
 
       <Title order={1}>
-        Danh sách doanh nghiệp cần đánh giá tài liệu
+        Hỗ trợ doanh nghiệp đánh giá
       </Title>
 
       <div style={{ marginTop: '12px' }}>
@@ -73,7 +75,7 @@ const VerifyPendingProcessList = (props: Props) => {
         <LoadingOverlay visible={loading} />
 
         <DataTable
-          title={<Title order={2}>Danh sách doanh nghiệp cần đánh giá tài liệu</Title>}
+          title={<Title order={2}>Hỗ trợ đánh giá</Title>}
           columns={columns}
           data={records}
           noDataComponent={<Text>Không có dữ liệu</Text>}
@@ -83,4 +85,4 @@ const VerifyPendingProcessList = (props: Props) => {
   );
 };
 
-export default VerifyPendingProcessList;
+export default SupportVerificationList;

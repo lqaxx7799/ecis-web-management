@@ -2,9 +2,9 @@ import { Checkbox, Text } from "@mantine/core";
 import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { VerificationCriteria } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { VerificationCriteria } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
 import VerifyPendingProcessCriteria from "./VerifyPendingProcessCriteria";
 
 type Props = {

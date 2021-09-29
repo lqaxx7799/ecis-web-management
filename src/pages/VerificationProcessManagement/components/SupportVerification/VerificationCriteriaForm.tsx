@@ -4,10 +4,10 @@ import { FileTextIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
 import { FileIcon, DefaultExtensionType, defaultStyles } from 'react-file-icon';
 import _ from 'lodash';
 import { ChangeEvent, useRef } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import fileServices from "../../../common/services/file.services";
-import { Criteria, VerificationCriteria, VerificationDocument } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import fileServices from "../../../../common/services/file.services";
+import { Criteria, VerificationCriteria, VerificationDocument } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
 
 type Props = {
   criteria?: Criteria;

@@ -2,9 +2,9 @@ import { Button, Group, Modal, Text, Tooltip } from "@mantine/core";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
-import { useAppDispatch, useAppSelector } from "../../../app/store";
-import { VerificationCriteria, VerificationDocument } from "../../../types/models";
-import verificationProcessManagementActions from "../action";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { VerificationCriteria, VerificationDocument } from "../../../../types/models";
+import verificationProcessManagementActions from "../../action";
 
 type Props = {
   data?: VerificationCriteria;

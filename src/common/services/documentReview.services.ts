@@ -1,6 +1,10 @@
 import { DocumentReview } from '../../types/models';
 import request from '../utils/request';
 
+function getAllByProcessId(processId: number): Promise<DocumentReview[]> {
+  return request.get(`/DocumentReview/GetByProcessId/${processId}`);
+}
+
 function getAllByDocumentId(documentId: number): Promise<DocumentReview[]> {
   return request.get(`/DocumentReview/GetByDocumentId/${documentId}`);
 }
@@ -22,6 +26,7 @@ function remove(id: number): Promise<void> {
 }
 
 const documentReviewServices = {
+  getAllByProcessId,
   getAllByDocumentId,
   getById,
   add,

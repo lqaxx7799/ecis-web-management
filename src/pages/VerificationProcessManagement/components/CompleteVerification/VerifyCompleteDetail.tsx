@@ -1,9 +1,11 @@
 import { Button, Drawer, Group, LoadingOverlay, Modal, Select, SelectItemProps, Tab, Table, Tabs, Text, Title } from "@mantine/core";
 import { SelectDataItem } from "@mantine/core/lib/src/components/Select/types";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
 import { VerificationProcess } from "../../../../types/models";
@@ -14,14 +16,27 @@ type Props = {
 
 };
 
-const VerifyCompleteDrawer = (props: Props) => {
+type RouteParams = {
+  id: string;
+};
+
+const VerifyCompleteDetail = (props: Props) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+
+  const { id: processId } = useParams<RouteParams>();
+
+  useEffect(() => {
+    dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(processId)))
+      .then(() => {
+        dispatch(verificationProcessManagementActions.loadAllReviewsByProcessId(parseInt(processId)));
+      });
+  }, [processId]);
+
   const { companyTypes } = useAppSelector((state) => state.companyType);
   const { criterias } = useAppSelector((state) => state.criteria);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
   const {
-    showVerifyCompleteDrawer,
     company,
     editingProcess,
     loading,
@@ -29,11 +44,6 @@ const VerifyCompleteDrawer = (props: Props) => {
   } = useAppSelector((state) => state.verificationProcessManagement);
 
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-
-  const closeDrawer = () => {
-    dispatch(verificationProcessManagementActions.changeVerifyCompleteDrawerState(false));
-    history.push('/qua-trinh-danh-gia/xac-nhan');
-  };
 
   const submitComplete = () => {
 
@@ -55,18 +65,25 @@ const VerifyCompleteDrawer = (props: Props) => {
   });
   
   return (
-    <Drawer
-      opened={showVerifyCompleteDrawer}
-      onClose={closeDrawer}
-      title="Phân loại doanh nghiệp"
-      size="75%"
-      position="right"
-      className="verify-process-complete-drawer"
-      noCloseOnClickOutside
-    >
+    <div>
+      <Helmet>
+        <title>Hoàn thành đánh giá doanh nghiệp</title>
+      </Helmet>
       <LoadingOverlay visible={loading} />
+      <Title order={1}>Hoàn thành đánh giá doanh nghiệp</Title>
+      <Button
+        style={{ marginTop: '12px' }}
+        component={Link}
+        leftIcon={<ChevronLeftIcon />}
+        to="/qua-trinh-danh-gia/xac-nhan"
+      >
+        Quay lại
+      </Button>
 
-      <Title order={2}>Đợt đánh giá ngày {dayjs(editingProcess?.createdAt).format('DD/MM/YYYY')}</Title>
+      <Title style={{ marginTop: '24px' }} order={2}>
+        Đợt đánh giá ngày {dayjs(editingProcess?.createdAt).format('DD/MM/YYYY')}
+      </Title>
+
       <div style={{ marginTop: '24px' }}>
         <Title order={3} style={{ marginBottom: '12px' }}>Thông tin doanh nghiệp</Title>
         <Table>
@@ -137,9 +154,6 @@ const VerifyCompleteDrawer = (props: Props) => {
           <Button onClick={() => setShowSubmitModal(true)}>
             Hoàn thành
           </Button>
-          <Button variant="light" onClick={closeDrawer}>
-            Đóng
-          </Button>
         </Group>
       </div>
 
@@ -157,8 +171,8 @@ const VerifyCompleteDrawer = (props: Props) => {
           <Button variant="light" onClick={() => setShowSubmitModal(false)}>Hủy</Button>
         </Group>
       </Modal>
-    </Drawer>
+    </div>
   );
 };
 
-export default VerifyCompleteDrawer;
+export default VerifyCompleteDetail;

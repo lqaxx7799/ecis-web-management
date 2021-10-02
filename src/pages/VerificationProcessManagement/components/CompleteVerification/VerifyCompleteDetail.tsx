@@ -1,5 +1,6 @@
-import { Button, Drawer, Group, LoadingOverlay, Modal, Select, SelectItemProps, Tab, Table, Tabs, Text, Title, Tooltip } from "@mantine/core";
+import { Button, Drawer, Group, LoadingOverlay, Modal, Paper, Select, SelectItemProps, Tab, Table, Tabs, Text, Title, Tooltip } from "@mantine/core";
 import { SelectDataItem } from "@mantine/core/lib/src/components/Select/types";
+import { useNotifications } from "@mantine/notifications";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
@@ -8,6 +9,7 @@ import { Helmet } from "react-helmet";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import verificationConfirmRequirementActions from "../../../../common/actions/verificationConfirmRequirement.action";
+import FileInfo from "../../../../common/components/FileInfo";
 import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
 import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
@@ -25,6 +27,7 @@ type RouteParams = {
 const VerifyCompleteDetail = (props: Props) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const notifications = useNotifications();
 
   const { id: processId } = useParams<RouteParams>();
 
@@ -52,7 +55,22 @@ const VerifyCompleteDetail = (props: Props) => {
   const [showConfirmRequireModal, setShowConfirmRequireModal] = useState(false);
 
   const submitComplete = () => {
-
+    dispatch(verificationProcessManagementActions.finishVerify(editingProcess?.id ?? 0))
+      .then(() => {
+        history.push('/qua-trinh-danh-gia/xac-nhan');
+        notifications.showNotification({
+          color: 'green',
+          title: 'Thành công',
+          message: 'Phân loại thành công',
+        });
+      })
+      .catch(() => {
+        notifications.showNotification({
+          color: 'red',
+          title: 'Lỗi hệ thống',
+          message: 'Đã có lỗi xảy ra trong quá trình phân loại. Vui lòng thử lại sau.',
+        });
+      });
   };
 
   const changeProcessCompanyType = (companyType: string) => {
@@ -145,6 +163,35 @@ const VerifyCompleteDetail = (props: Props) => {
         editingRequirement && (
           <div style={{ marginTop: '24px' }}>
             <Title order={3} style={{ marginBottom: '12px' }}>Kết quả xác minh</Title>
+            {
+              !!editingRequirement?.confirmedAt ? (
+                <div>
+                  <Text>
+                    Kết quả xác minh:&nbsp;
+                    {_.get(_.find(companyTypes, (type) => type.id === editingRequirement.confirmCompanyTypeId), 'typeName')}
+                  </Text>
+                  <div>
+                    Văn bản xác thực:
+                    <div>
+                      {editingRequirement?.isUsingConfirmFile ? (
+                        <FileInfo
+                          data={{
+                            name: editingRequirement?.confirmDocumentName ?? '',
+                            type: editingRequirement?.confirmDocumentType ?? '',
+                            size: editingRequirement?.confirmDocumentSize ?? 0,
+                            url: editingRequirement?.confirmDocumentUrl ?? '',
+                          }}
+                        />
+                      ) : (
+                        <Paper dangerouslySetInnerHTML={{ __html: editingRequirement?.confirmDocumentContent ?? '' }} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Text>Chưa có kết quả</Text>
+              )
+            }
           </div>
         )
       }

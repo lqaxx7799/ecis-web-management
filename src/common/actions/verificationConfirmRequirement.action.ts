@@ -1,7 +1,7 @@
 import { AppDispatch } from '../../app/store';
 import { VerificationConfirmRequirementDTO, VerificationConfirmUpdateDTO } from '../../types/dto';
 import { VerificationConfirmRequirement } from '../../types/models';
-import { VerificationConfirmRequirementActionTypes, VerificationConfirmRequirementState } from '../reducers/verificationConfirmRequirement.reducer';
+import { VerificationConfirmRequirementActionTypes } from '../reducers/verificationConfirmRequirement.reducer';
 import verificationConfirmRequirementServices from '../services/verificationConfirmRequirement.services';
 import { AppThunk } from './type';
 

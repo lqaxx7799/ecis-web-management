@@ -1,5 +1,5 @@
-import { Button, Group, LoadingOverlay, Modal, Text, Title, Tooltip } from "@mantine/core";
-import { EyeOpenIcon, PersonIcon } from "@radix-ui/react-icons";
+import { Button, Group, LoadingOverlay, Menu, Modal, Text, Title, Tooltip } from "@mantine/core";
+import { CheckIcon, EyeOpenIcon, PersonIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { VerificationConfirmRequirementActionTypes } from "../../../common/reduc
 import { VerificationConfirmUpdateDTO } from "../../../types/dto";
 import { VerificationConfirmRequirement } from "../../../types/models";
 import ConfirmAnnounceCompanyModal from "./ConfirmAnnounceCompanyModal";
+import ReportConfirmModal from "./ReportConfirmModal";
 
 type Props = {
 
@@ -26,6 +27,7 @@ const AssignedVerificationConfirmList = (props: Props) => {
   const [announceCompanyShowing, setAnnounceCompanyShowing] = useState(false);
 
   const [announceDocumentModalShowing, setAnnounceDocumentModalShowing] = useState(false);
+  const [reportModalShowing, setReportModalShowing] = useState(false);
   const [announceDocument, setAnnounceDocument] = useState<Partial<VerificationConfirmUpdateDTO> | undefined>(undefined);
 
   useEffect(() => {
@@ -67,6 +69,21 @@ const AssignedVerificationConfirmList = (props: Props) => {
     setAnnounceCompanyShowing(false);
   };
 
+  const viewReportResult = (confirmId: number) => {
+    dispatch(verificationConfirmRequirementActions.getById(confirmId))
+      .then(() => {
+        setReportModalShowing(true);
+      });
+  };
+
+  const closeReportModal = () => {
+    dispatch<VerificationConfirmRequirementActionTypes>({
+      type: 'VERIFICATION_CONFIRM_REQUIREMENT_EDITING_LOADED',
+      payload: undefined,
+    });
+    setReportModalShowing(false);
+  };
+
   const columns: IDataTableColumn<VerificationConfirmRequirement>[] = [
     {
       name: 'STT',
@@ -92,19 +109,35 @@ const AssignedVerificationConfirmList = (props: Props) => {
     },
     {
       name: 'Trạng thái',
-      selector: (row) => "Chưa đánh giá",
+      selector: (row) =>
+        !!row.confirmedAt ? "Đã đánh giá" :
+        !!row.announcedCompanyAt ? "Đã thông báo doanh nghiệp" :
+        "Chưa thông báo doanh nghiệp",
     },
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Group>
-          <Tooltip label="Thông báo doanh nghiệp">
-            <Button onClick={() => announceCompany(row.id)}><PersonIcon /></Button>
-          </Tooltip>
-          <Tooltip label="Xem văn bản thông báo">
-            <Button  onClick={() => viewAnnounce(row.id)}><EyeOpenIcon /></Button>
-          </Tooltip>
-        </Group>
+        <Menu>
+          <Menu.Item
+            icon={<PersonIcon />}
+            onClick={() => announceCompany(row.id)}  
+          >
+            Thông báo doanh nghiệp
+          </Menu.Item>
+          <Menu.Item
+            icon={<EyeOpenIcon />}
+            onClick={() => viewAnnounce(row.id)}
+          >
+            Xem văn bản thông báo
+          </Menu.Item>
+          <Menu.Item
+            icon={<CheckIcon />}
+            disabled={!!row.confirmedAt}
+            onClick={() => viewReportResult(row.id)}
+          >
+            Báo cáo kết quả
+          </Menu.Item>
+        </Menu>
       ),
     },
   ];
@@ -127,6 +160,11 @@ const AssignedVerificationConfirmList = (props: Props) => {
       <ConfirmAnnounceCompanyModal
         isOpening={announceCompanyShowing}
         onClose={closeModal}
+      />
+
+      <ReportConfirmModal
+        isOpening={reportModalShowing}
+        onClose={closeReportModal}
       />
 
       <Modal

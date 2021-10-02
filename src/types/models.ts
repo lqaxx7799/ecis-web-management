@@ -133,3 +133,14 @@ export interface VerificationConfirmRequirement extends BaseModel {
   assignedAgentId: number;
   confirmCompanyTypeId: number;
 };
+
+export interface CompanyTypeModification extends BaseModel {
+  id: number;
+  modification: string;
+  companyId: number;
+  previousCompanyTypeId: number;
+  updatedCompanyTypeId: number;
+  verificationProcessId: number;
+  companyReportId: number;
+  modificationTypeId: number;
+};

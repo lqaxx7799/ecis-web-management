@@ -26,7 +26,7 @@ function finishConfirm(data: VerificationConfirmUpdateDTO): Promise<Verification
   return request.put(`/VerificationConfirmRequirement/FinishConfirm`, data);
 }
 
-const agentServices = {
+const verificationConfirmRequirementServices = {
   getAssigned,
   getByProcessId,
   getById,
@@ -35,4 +35,4 @@ const agentServices = {
   finishConfirm,
 };
 
-export default agentServices;
+export default verificationConfirmRequirementServices;

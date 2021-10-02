@@ -255,11 +255,32 @@ function updateProcess(process: Partial<VerificationProcess>): AppThunk<Promise<
   };
 }
 
+function finishVerify(processId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch: AppDispatch, getState) => {
+    const result = await verificationProcessServices.finishVerify(processId);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: "VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED",
+      payload: result,
+    });
+
+    const state = getState();
+    const updatedRecords = _.map(state.verificationProcess.records, (item) => item.id === result.id ? result : item);
+
+    dispatch<VerificationProcessActionTypes>({
+      type: "VERIFICATION_PROCESS_LOADED",
+      payload: updatedRecords,
+    });
+
+    return result;
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
   changeVerifyCompleteDrawerState,
   updateProcess,
+  finishVerify,
 
   createDocument,
   editDocument,

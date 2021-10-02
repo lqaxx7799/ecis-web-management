@@ -33,6 +33,10 @@ function update(data: Partial<VerificationProcess>): Promise<VerificationProcess
   return request.put(`/VerificationProcess/Update`, data);
 }
 
+function finishVerify(id: number): Promise<VerificationProcess> {
+  return request.put(`/VerificationProcess/Finish/${id}`);
+}
+
 const verificationProcessServices = {
   getAll,
   getAllPending,
@@ -42,6 +46,7 @@ const verificationProcessServices = {
   getById,
   submitVerifyReview,
   update,
+  finishVerify,
 };
 
 export default verificationProcessServices;

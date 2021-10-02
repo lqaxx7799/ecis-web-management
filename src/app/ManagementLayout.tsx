@@ -22,6 +22,9 @@ const ManagementLayout = (props: Props) => {
             <Button variant="light" fullWidth component={Link} to="/yeu-cau-xac-thuc">
               Yêu cầu xác thực
             </Button>
+            <Button variant="light" fullWidth component={Link} to="/ket-qua-danh-gia">
+              Kết quả đánh giá
+            </Button>
           </div>
         </div>
         <div className="main-content">

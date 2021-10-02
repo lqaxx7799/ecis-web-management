@@ -99,3 +99,37 @@ export interface Agent extends BaseModel {
   address: string;
   accountId: number;
 };
+
+export interface VerificationConfirmRequirement extends BaseModel {
+  id: number; 
+  scheduledTime: Date;
+  scheduledLocation: string; 
+  announcedAgentAt?: Date; 
+  announcedCompanyAt?: Date;
+  confirmedAt?: Date; 
+
+  announceAgentDocumentContent?: string;
+  announceAgentDocumentUrl?: string;
+  announceAgentDocumentType?: string;
+  announceAgentDocumentSize?: number;
+  announceAgentDocumentName?: string;
+  isUsingAnnounceAgentFile: boolean;
+
+  announceCompanyDocumentContent?: string;
+  announceCompanyDocumentUrl?: string;
+  announceCompanyDocumentType?: string;
+  announceCompanyDocumentSize?: number;
+  announceCompanyDocumentName?: string;
+  isUsingAnnounceCompanyFile: boolean;
+
+  confirmDocumentContent?: string;
+  confirmDocumentUrl?: string;
+  confirmDocumentType?: string;
+  confirmDocumentSize?: number;
+  confirmDocumentName?: string;
+  isUsingConfirmFile: boolean;
+
+  verificationProcessId: number;
+  assignedAgentId: number;
+  confirmCompanyTypeId: number;
+};

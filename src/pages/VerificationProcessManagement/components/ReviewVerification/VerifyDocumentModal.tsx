@@ -82,7 +82,7 @@ const VerifyDocumentModal = (props: Props) => {
         <Text
           variant="link"
           component="a"
-          href={`${config.BASE_API}/${editingDocument?.resourceUrl}`}
+          href={`${config.BASE_API}${editingDocument?.resourceUrl}`}
           rel="noreffer noopener"
           target="_blank"
         >

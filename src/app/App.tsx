@@ -15,6 +15,7 @@ import CompanyEditVerification from '../pages/VerificationProcessManagement/comp
 import VerifyPendingProcessDetail from '../pages/VerificationProcessManagement/components/ReviewVerification/VerifyPendingProcessDetail';
 import VerifyCompleteList from '../pages/VerificationProcessManagement/components/CompleteVerification/VerifyCompleteList';
 import VerifyCompleteDetail from '../pages/VerificationProcessManagement/components/CompleteVerification/VerifyCompleteDetail';
+import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfirm/components/AssignedVerificationConfirmList';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,8 @@ const App = () => {
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan/:id" component={VerifyCompleteDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan" component={VerifyCompleteList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia" component={VerificationProcessManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+
+        <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute exact path='/' component={Dashboard} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
       </Switch>

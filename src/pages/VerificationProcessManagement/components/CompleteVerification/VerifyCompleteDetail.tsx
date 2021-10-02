@@ -1,4 +1,4 @@
-import { Button, Drawer, Group, LoadingOverlay, Modal, Select, SelectItemProps, Tab, Table, Tabs, Text, Title } from "@mantine/core";
+import { Button, Drawer, Group, LoadingOverlay, Modal, Select, SelectItemProps, Tab, Table, Tabs, Text, Title, Tooltip } from "@mantine/core";
 import { SelectDataItem } from "@mantine/core/lib/src/components/Select/types";
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
@@ -7,9 +7,11 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import verificationConfirmRequirementActions from "../../../../common/actions/verificationConfirmRequirement.action";
 import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
 import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
+import ConfirmRequireModal from "./ConfirmRequireModal";
 import VerifyCompleteCriteriaGroup from "./VerifyCompleteCriteriaGroup";
 
 type Props = {
@@ -27,15 +29,18 @@ const VerifyCompleteDetail = (props: Props) => {
   const { id: processId } = useParams<RouteParams>();
 
   useEffect(() => {
-    dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(processId)))
+    const parsedProcessId = parseInt(processId);
+    dispatch(verificationProcessManagementActions.loadSelfVerification(parsedProcessId))
       .then(() => {
-        dispatch(verificationProcessManagementActions.loadAllReviewsByProcessId(parseInt(processId)));
+        dispatch(verificationConfirmRequirementActions.getByProcessId(parsedProcessId));
+        dispatch(verificationProcessManagementActions.loadAllReviewsByProcessId(parsedProcessId));
       });
   }, [processId]);
 
   const { companyTypes } = useAppSelector((state) => state.companyType);
   const { criterias } = useAppSelector((state) => state.criteria);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
+  const { editingRequirement } = useAppSelector((state) => state.verificationConfirmRequirement);
   const {
     company,
     editingProcess,
@@ -44,6 +49,7 @@ const VerifyCompleteDetail = (props: Props) => {
   } = useAppSelector((state) => state.verificationProcessManagement);
 
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  const [showConfirmRequireModal, setShowConfirmRequireModal] = useState(false);
 
   const submitComplete = () => {
 
@@ -135,6 +141,14 @@ const VerifyCompleteDetail = (props: Props) => {
         }
       </div>
 
+      {
+        editingRequirement && (
+          <div style={{ marginTop: '24px' }}>
+            <Title order={3} style={{ marginBottom: '12px' }}>Kết quả xác minh</Title>
+          </div>
+        )
+      }
+
       <div style={{ marginTop: '24px' }}>
         <Title order={3} style={{ marginBottom: '12px' }}>Phân loại</Title>
         <Select
@@ -148,19 +162,34 @@ const VerifyCompleteDetail = (props: Props) => {
           }))}
         />
         <Group style={{ marginTop: '12px' }}>
-          <Button>
-            Yêu cầu cán bộ xác minh
-          </Button>
+          {
+            editingRequirement ? (
+              <Tooltip label="Đã yêu cầu cán bộ xác minh">
+                <Button disabled>
+                  Yêu cầu cán bộ xác minh
+                </Button>
+              </Tooltip>
+            ) : (
+              <Button onClick={() => setShowConfirmRequireModal(true)}>
+                Yêu cầu cán bộ xác minh
+              </Button>
+            )
+          }
           <Button onClick={() => setShowSubmitModal(true)}>
             Hoàn thành
           </Button>
         </Group>
       </div>
 
+      <ConfirmRequireModal
+        isOpening={showConfirmRequireModal}
+        setIsOpening={setShowConfirmRequireModal}
+      />
+
       <Modal
         opened={showSubmitModal}
         onClose={() => setShowSubmitModal(false)}
-        title="Xác nhận lưu kết quá phân loại"
+        title="Xác nhận lưu kết quả phân loại"
       >
         <Text style={{ marginBottom: '24px' }}>
           Vui lòng kiểm tra kết quả đánh giá trước khi công bố. Sau khi lưu kết quả, thông tin đánh giá sẽ được

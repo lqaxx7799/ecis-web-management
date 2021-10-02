@@ -47,7 +47,7 @@ const VerifyPendingProcessCriteria = (props: Props) => {
           <Text
             variant="link"
             component="a"
-            href={`${config.BASE_API}/${row.resourceUrl}`}
+            href={`${config.BASE_API}${row.resourceUrl}`}
             rel="noreffer noopener"
             target="_blank"
           >

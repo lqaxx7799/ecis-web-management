@@ -10,6 +10,8 @@ import criteriaTypeReducer, { CriteriaTypeActionTypes } from '../common/reducers
 import criteriaReducer, { CriteriaActionTypes } from '../common/reducers/criteria.reducer';
 import verficationProcessManagementReducer, { VerificationProcessManagementActionTypes } from '../pages/VerificationProcessManagement/reducer';
 import companyTypeReducer, { CompanyTypeActionTypes } from '../common/reducers/companyType.reducer';
+import agentReducer, { AgentActionTypes } from '../common/reducers/agent.reducer';
+import verificationConfirmRequirementReducer, { VerificationConfirmRequirementActionTypes } from '../common/reducers/verificationConfirmRequirement.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -21,10 +23,12 @@ const getMiddleware = () => {
 const enhancer = composeWithDevTools(applyMiddleware(...getMiddleware()));
 
 const allReducers = combineReducers({
+  agent: agentReducer,
   authentication: authenticationReducer,
   companyType: companyTypeReducer,
   criteriaType: criteriaTypeReducer,
   criteria: criteriaReducer,
+  verificationConfirmRequirement: verificationConfirmRequirementReducer,
   verificationProcess: verificationProcessReducer,
   verificationProcessManagement: verficationProcessManagementReducer,
 });
@@ -37,10 +41,12 @@ export type RootState = ReturnType<typeof store.getState>;
 // export type AppDispatch = typeof store.dispatch;
 
 export type AppActions =
+  | AgentActionTypes
   | AuthenticationActionTypes
   | CompanyTypeActionTypes
   | CriteriaTypeActionTypes
   | CriteriaActionTypes
+  | VerificationConfirmRequirementActionTypes
   | VerificationProcessActionTypes
   | VerificationProcessManagementActionTypes;
 

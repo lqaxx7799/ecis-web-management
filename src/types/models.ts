@@ -137,10 +137,12 @@ export interface VerificationConfirmRequirement extends BaseModel {
 export interface CompanyTypeModification extends BaseModel {
   id: number;
   modification: string;
+  isAnnounced: boolean;
   companyId: number;
   previousCompanyTypeId: number;
   updatedCompanyTypeId: number;
   verificationProcessId: number;
   companyReportId: number;
   modificationTypeId: number;
+  company: Company;
 };

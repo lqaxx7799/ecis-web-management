@@ -1,17 +1,22 @@
-import { CompanyType } from '../../types/models';
+import { CompanyTypeModification } from '../../types/models';
 import request from '../utils/request';
 
-function getAll(): Promise<CompanyType[]> {
-  return request.get(`/CompanyType/GetAll`);
+function getReportPrivate(month: number, year: number): Promise<CompanyTypeModification[]> {
+  return request.get(`/Company/GetReportPrivate?month=${month}&year=${year}`);
 }
 
-function getById(id: number): Promise<CompanyType> {
-  return request.get(`/CompanyType/${id}`);
+function getReport(month: number, year: number): Promise<CompanyTypeModification[]> {
+  return request.get(`/Company/GetReport?month=${month}&year=${year}`);
+}
+
+function update(data: Partial<CompanyTypeModification>): Promise<CompanyTypeModification> {
+  return request.put(`/Company/UpdateModification`, data);
 }
 
 const companyTypeServices = {
-  getAll,
-  getById,
+  getReportPrivate,
+  getReport,
+  update,
 };
 
 export default companyTypeServices;

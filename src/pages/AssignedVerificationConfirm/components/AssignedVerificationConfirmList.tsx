@@ -144,17 +144,17 @@ const AssignedVerificationConfirmList = (props: Props) => {
 
   return (
     <div>
+      <LoadingOverlay visible={loading} />
+
       <Title order={1}>Yêu cầu xác thực doanh nghiệp</Title>
 
       <div style={{ marginTop: '24px' }}>
-      <LoadingOverlay visible={loading} />
-
-      <DataTable
-        title={<Title order={2}>Danh sách yêu cầu</Title>}
-        columns={columns}
-        data={verificationConfirmRequirements}
-        noDataComponent={<Text>Không có dữ liệu</Text>}
-      />
+        <DataTable
+          title={<Title order={2}>Danh sách yêu cầu</Title>}
+          columns={columns}
+          data={verificationConfirmRequirements}
+          noDataComponent={<Text>Không có dữ liệu</Text>}
+        />
       </div>
 
       <ConfirmAnnounceCompanyModal

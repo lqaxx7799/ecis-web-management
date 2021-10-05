@@ -13,10 +13,10 @@ function update(data: Partial<CompanyTypeModification>): Promise<CompanyTypeModi
   return request.put(`/Company/UpdateModification`, data);
 }
 
-const companyTypeServices = {
+const companyTypeModificationServices = {
   getReportPrivate,
   getReport,
   update,
 };
 
-export default companyTypeServices;
+export default companyTypeModificationServices;

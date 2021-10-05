@@ -1,4 +1,5 @@
-import { Button, Group, LoadingOverlay, Text, Title, Tooltip } from "@mantine/core";
+import { Button, Group, LoadingOverlay, Select, Text, Title, Tooltip } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
 import { CheckIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
@@ -15,6 +16,7 @@ type Props = {
 
 const CompanyTypeModificationResult = (props: Props) => {
   const dispatch = useAppDispatch();
+  const notifications = useNotifications();
   const { companyTypeModifications, loading } = useAppSelector((state) => state.companyTypeModification);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -23,8 +25,34 @@ const CompanyTypeModificationResult = (props: Props) => {
     dispatch(companyTypeModificationActions.getReportPrivate(month, year));
   }, []);
 
-  const announceReport = (id: number) => {
+  const updateSearch = () => {
+    dispatch(companyTypeModificationActions.getReportPrivate(month, year));
+  };
 
+  const announceReport = (id: number) => {
+    const modification = _.find(companyTypeModifications, (item) => item.id === id);
+    if (!modification) {
+      return;
+    }
+    const updated: CompanyTypeModification = {
+      ...modification,
+      isAnnounced: true,
+    };
+    dispatch(companyTypeModificationActions.update(updated))
+      .then(() => {
+        notifications.showNotification({
+          color: 'green',
+          title: 'Cập nhật thành công',
+          message: 'Kết quả đánh giá của doanh nghiệp đã được công bố công khai.',
+        });
+      })
+      .catch(() => {
+        notifications.showNotification({
+          color: 'red',
+          title: 'Lỗi hệ thống',
+          message: 'Có lỗi xảy ra trong quá trình công bố kết quả. Vui lòng thử lại sau.',
+        });
+      });
   };
 
   const viewDetail = (id: number) => {
@@ -47,6 +75,10 @@ const CompanyTypeModificationResult = (props: Props) => {
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
     },
     {
+      name: 'Phân loại',
+      selector: (row) => row.updatedCompanyType.typeName,
+    },
+    {
       name: 'Trạng thái',
       selector: (row) => row.isAnnounced ? "Đã công bố" : "Chưa công bố"
     },
@@ -62,7 +94,7 @@ const CompanyTypeModificationResult = (props: Props) => {
               <CheckIcon />
             </Button>
           </Tooltip>
-          <Tooltip label="Công bố">
+          <Tooltip label="Xem chi tiết">
             <Button onClick={() => viewDetail(row.id)}>
               <EyeOpenIcon />
             </Button>
@@ -80,6 +112,49 @@ const CompanyTypeModificationResult = (props: Props) => {
       <LoadingOverlay visible={loading} />
 
       <Title order={1}>Kết quả phân loại doanh nghiệp</Title>
+
+      <div style={{ marginTop: '24px' }}>
+        <Title order={2} style={{ marginBottom: '12px', paddingLeft: '15px' }}>Chọn thời gian</Title>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
+          <Select
+            data={[
+              { value: '1', label: 'Tháng 1' },
+              { value: '2', label: 'Tháng 2' },
+              { value: '3', label: 'Tháng 3' },
+              { value: '4', label: 'Tháng 4' },
+              { value: '5', label: 'Tháng 5' },
+              { value: '6', label: 'Tháng 6' },
+              { value: '7', label: 'Tháng 7' },
+              { value: '8', label: 'Tháng 8' },
+              { value: '9', label: 'Tháng 9' },
+              { value: '10', label: 'Tháng 10' },
+              { value: '11', label: 'Tháng 11' },
+              { value: '12', label: 'Tháng 12' },
+            ]}
+            label="Tháng"
+            placeholder="Chọn tháng"
+            value={month.toString()}
+            onChange={(value) => setMonth(parseInt(value))}
+            style={{ width: '300px', marginRight: '24px' }}
+          />
+          <Select
+            data={_.map(_.range(new Date().getFullYear(), 2019, -1), (num) => ({
+              value: num.toString(),
+              label: num.toString(),
+            }))}
+            label="Năm"
+            placeholder="Chọn năm"
+            value={year.toString()}
+            onChange={(value) => setYear(parseInt(value))}
+            style={{ width: '300px', marginRight: '24px' }}
+          />
+          <Button
+            onClick={updateSearch}
+          >
+            Tìm kiếm
+          </Button>
+        </div>
+      </div>
 
       <div style={{ marginTop: '24px' }}>
         <DataTable

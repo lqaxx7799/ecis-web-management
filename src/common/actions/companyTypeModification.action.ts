@@ -26,7 +26,7 @@ function getReportPrivate(month: number, year: number): AppThunk<Promise<Company
   };
 }
 
-function update(data: Partial<CompanyTypeModification>): AppThunk<Promise<CompanyTypeModification | undefined>> {
+function update(data: Partial<CompanyTypeModification>): AppThunk<Promise<CompanyTypeModification>> {
   return async (dispatch: AppDispatch, getState) => {
     dispatch<CompanyTypeModificationActionTypes>({
       type: 'COMPANY_TYPE_MODIFICATION_LOADING',
@@ -45,7 +45,7 @@ function update(data: Partial<CompanyTypeModification>): AppThunk<Promise<Compan
       dispatch<CompanyTypeModificationActionTypes>({
         type: 'COMPANY_TYPE_MODIFICATION_LOAD_FAILED',
       });
-      return undefined;
+      throw e;
     }
   };
 }

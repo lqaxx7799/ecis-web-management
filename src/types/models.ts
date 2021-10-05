@@ -145,4 +145,5 @@ export interface CompanyTypeModification extends BaseModel {
   companyReportId: number;
   modificationTypeId: number;
   company: Company;
+  updatedCompanyType: CompanyType;
 };

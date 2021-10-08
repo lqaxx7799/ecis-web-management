@@ -13,6 +13,7 @@ import companyTypeReducer, { CompanyTypeActionTypes } from '../common/reducers/c
 import agentReducer, { AgentActionTypes } from '../common/reducers/agent.reducer';
 import verificationConfirmRequirementReducer, { VerificationConfirmRequirementActionTypes } from '../common/reducers/verificationConfirmRequirement.reducer';
 import companyTypeModificationReducer, { CompanyTypeModificationActionTypes } from '../common/reducers/companyTypeModification.reducer';
+import companyReducer, { CompanyActionTypes } from '../common/reducers/company.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -26,6 +27,7 @@ const enhancer = composeWithDevTools(applyMiddleware(...getMiddleware()));
 const allReducers = combineReducers({
   agent: agentReducer,
   authentication: authenticationReducer,
+  company: companyReducer,
   companyType: companyTypeReducer,
   companyTypeModification: companyTypeModificationReducer,
   criteriaType: criteriaTypeReducer,
@@ -45,6 +47,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppActions =
   | AgentActionTypes
   | AuthenticationActionTypes
+  | CompanyActionTypes
   | CompanyTypeActionTypes
   | CompanyTypeModificationActionTypes
   | CriteriaTypeActionTypes

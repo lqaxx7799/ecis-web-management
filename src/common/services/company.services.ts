@@ -2,6 +2,10 @@ import { CompanyRegistrationDTO } from '../../types/dto';
 import { Company } from '../../types/models';
 import request from '../utils/request';
 
+function getAll(): Promise<Company[]> {
+  return request.get(`/Company/GetAll`);
+}
+
 function getByAccountId(accountId: number): Promise<Company> {
   return request.get(`/Company/ByAccount/${accountId}`);
 }
@@ -15,6 +19,7 @@ function registerCompany(payload: CompanyRegistrationDTO): Promise<CompanyRegist
 }
 
 const companyServices = {
+  getAll,
   getByAccountId,
   getById,
   registerCompany,

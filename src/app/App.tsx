@@ -17,6 +17,8 @@ import VerifyCompleteList from '../pages/VerificationProcessManagement/component
 import VerifyCompleteDetail from '../pages/VerificationProcessManagement/components/CompleteVerification/VerifyCompleteDetail';
 import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfirm/components/AssignedVerificationConfirmList';
 import CompanyTypeModificationResult from '../pages/CompanyTypeModificationResult/components';
+import CompanyManagement from '../pages/CompanyManagement/components';
+import ReportViolation from '../pages/CompanyManagement/components/ReportViolation';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -46,6 +48,9 @@ const App = () => {
         <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        
+        <AppRoute path="/doanh-nghiep/bao-cao" component={ReportViolation} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
       </Switch>

@@ -19,6 +19,7 @@ import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfir
 import CompanyTypeModificationResult from '../pages/CompanyTypeModificationResult/components';
 import CompanyManagement from '../pages/CompanyManagement/components';
 import ReportViolation from '../pages/CompanyManagement/components/ReportViolation';
+import VerifyViolationReport from '../pages/CompanyManagement/components/VerifyViolationReport';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +50,7 @@ const App = () => {
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
+        <AppRoute path="/doanh-nghiep/duyet-bao-cao" component={VerifyViolationReport} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep/bao-cao" component={ReportViolation} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         

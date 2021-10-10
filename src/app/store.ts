@@ -14,6 +14,7 @@ import agentReducer, { AgentActionTypes } from '../common/reducers/agent.reducer
 import verificationConfirmRequirementReducer, { VerificationConfirmRequirementActionTypes } from '../common/reducers/verificationConfirmRequirement.reducer';
 import companyTypeModificationReducer, { CompanyTypeModificationActionTypes } from '../common/reducers/companyTypeModification.reducer';
 import companyReducer, { CompanyActionTypes } from '../common/reducers/company.reducer';
+import violationReportReducer, { ViolationReportActionTypes } from '../common/reducers/violationReport.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -35,6 +36,7 @@ const allReducers = combineReducers({
   verificationConfirmRequirement: verificationConfirmRequirementReducer,
   verificationProcess: verificationProcessReducer,
   verificationProcessManagement: verficationProcessManagementReducer,
+  violationReport: violationReportReducer,
 });
 
 export const store = createStore(allReducers, enhancer);
@@ -54,7 +56,8 @@ export type AppActions =
   | CriteriaActionTypes
   | VerificationConfirmRequirementActionTypes
   | VerificationProcessActionTypes
-  | VerificationProcessManagementActionTypes;
+  | VerificationProcessManagementActionTypes
+  | ViolationReportActionTypes;
 
 export type AppDispatch = ThunkDispatch<RootState, void, AppActions>;
 

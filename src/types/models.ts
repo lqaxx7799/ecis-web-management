@@ -40,6 +40,8 @@ export interface Company extends BaseModel {
   accountId: number;
   companyTypeId: number;
   isVerified: boolean;
+
+  companyType: CompanyType;
 };
 
 export interface CompanyType extends BaseModel {
@@ -146,4 +148,22 @@ export interface CompanyTypeModification extends BaseModel {
   modificationTypeId: number;
   company: Company;
   updatedCompanyType: CompanyType;
+};
+
+export interface ViolationReport extends BaseModel {
+  id: number;
+  description: string;
+  status: string;
+  approvedAt?: Date;
+  companyId: number;
+  reportAgentId: number; 
+};
+
+export interface ViolationReportDocument extends BaseModel {
+  id: number;
+  documentType: string;
+  documentUrl: string;
+  documentName: string;
+  documentSize: number;
+  violationReportId: number;
 };

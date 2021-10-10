@@ -1,3 +1,5 @@
+import { ViolationReportDocument } from "./models";
+
 export interface CompanyRegistrationDTO {
   email: string;
   companyCode: string;
@@ -39,4 +41,11 @@ export interface VerificationConfirmUpdateDTO {
   documentName?: string;
   isUsingFile?: boolean;
   companyTypeId?: number;
+};
+
+export interface ViolationReportDTO {
+  description: string;
+  companyId: number; 
+  reportAgentId: number; 
+  violationReportDocuments: Partial<ViolationReportDocument>[];
 };

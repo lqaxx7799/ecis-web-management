@@ -61,10 +61,48 @@ function create(data: ViolationReportDTO): AppThunk<Promise<ViolationReport>> {
   };
 }
 
+function approve(id: number): AppThunk<Promise<ViolationReport>> {
+  return async (dispatch: AppDispatch, getState) => {
+    const result = await violationReportServices.approve(id);
+    const state = getState();
+    const currentList = state.violationReport.violationReports;
+    const updatedList = _.map(currentList, (report) => report.id === id ? result : report);
+    dispatch<ViolationReportActionTypes>({
+      type: 'VIOLATION_REPORT_LOADED',
+      payload: updatedList,
+    });
+    dispatch<ViolationReportActionTypes>({
+      type: 'VIOLATION_REPORT_DETAIL_EDITED',
+      payload: result,
+    });
+    return result;
+  };
+}
+
+function reject(id: number): AppThunk<Promise<ViolationReport>> {
+  return async (dispatch: AppDispatch, getState) => {
+    const result = await violationReportServices.reject(id);
+    const state = getState();
+    const currentList = state.violationReport.violationReports;
+    const updatedList = _.map(currentList, (report) => report.id === id ? result : report);
+    dispatch<ViolationReportActionTypes>({
+      type: 'VIOLATION_REPORT_LOADED',
+      payload: updatedList,
+    });
+    dispatch<ViolationReportActionTypes>({
+      type: 'VIOLATION_REPORT_DETAIL_EDITED',
+      payload: result,
+    });
+    return result;
+  };
+}
+
 const violationReportActions = {
   getAll,
   getById,
   create,
+  approve,
+  reject,
 };
 
 export default violationReportActions;

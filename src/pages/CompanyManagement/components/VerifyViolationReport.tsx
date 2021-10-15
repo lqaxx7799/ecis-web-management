@@ -2,26 +2,43 @@ import { Anchor, Breadcrumbs, Button, Group, LoadingOverlay, Title, Tooltip } fr
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import violationReportActions from "../../../common/actions/violationReport.action";
 import { ViolationReport } from "../../../types/models";
+import ViolationReportModal from "./ViolationReportModal";
 
 type Props = {
 
 };
 
+type RouteParams = {
+  id: string;
+};
+
 const VerifyViolationReport = (props: Props) => {
   const dispatch = useAppDispatch();
 
+  const { id: violationReportId } = useParams<RouteParams>();
   const { loading, violationReports } = useAppSelector((state) => state.violationReport);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(violationReportActions.getAll());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (violationReportId) {
+      dispatch(violationReportActions.getById(parseInt(violationReportId)));
+      setShowModal(true);
+    } else {
+      setShowModal(false);
+    }
+  }, [violationReportId, dispatch]);
 
   const columns: IDataTableColumn<ViolationReport>[] = [
     {
@@ -38,11 +55,22 @@ const VerifyViolationReport = (props: Props) => {
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
     },
     {
+      name: 'Trạng thái',
+      selector: (row) => row.status === 'PENDING' ? 'Đang chờ xử lý'
+        : row.status === 'APPROVED' ? 'Đã duyệt'
+        : 'Đã từ chối',
+    },
+    {
       name: 'Hành động',
       cell: (row, index) => (
         <Group>
           <Tooltip label="Xem chi tiết">
-            <Button><EyeOpenIcon /></Button>
+            <Button
+              component={Link}
+              to={`/doanh-nghiep/duyet-bao-cao/${row.id}`}
+            >
+              <EyeOpenIcon />
+            </Button>
           </Tooltip>
         </Group>
       ),
@@ -73,6 +101,10 @@ const VerifyViolationReport = (props: Props) => {
           columns={columns}
         />
       </div>
+
+      <ViolationReportModal
+        isOpening={showModal}
+      />
     </div>
   );
 };

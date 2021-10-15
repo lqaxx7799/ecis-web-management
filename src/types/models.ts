@@ -156,7 +156,9 @@ export interface ViolationReport extends BaseModel {
   status: string;
   approvedAt?: Date;
   companyId: number;
-  reportAgentId: number; 
+  reportAgentId: number;
+
+  company: Company;
 };
 
 export interface ViolationReportDocument extends BaseModel {

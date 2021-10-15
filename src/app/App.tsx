@@ -50,7 +50,7 @@ const App = () => {
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute path="/doanh-nghiep/duyet-bao-cao" component={VerifyViolationReport} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/doanh-nghiep/duyet-bao-cao/:id?" component={VerifyViolationReport} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep/bao-cao" component={ReportViolation} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         

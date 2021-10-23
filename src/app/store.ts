@@ -15,6 +15,7 @@ import verificationConfirmRequirementReducer, { VerificationConfirmRequirementAc
 import companyTypeModificationReducer, { CompanyTypeModificationActionTypes } from '../common/reducers/companyTypeModification.reducer';
 import companyReducer, { CompanyActionTypes } from '../common/reducers/company.reducer';
 import violationReportReducer, { ViolationReportActionTypes } from '../common/reducers/violationReport.reducer';
+import companyReportReducer, { CompanyReportActionTypes } from '../common/reducers/companyReport.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -29,6 +30,7 @@ const allReducers = combineReducers({
   agent: agentReducer,
   authentication: authenticationReducer,
   company: companyReducer,
+  companyReport: companyReportReducer,
   companyType: companyTypeReducer,
   companyTypeModification: companyTypeModificationReducer,
   criteriaType: criteriaTypeReducer,
@@ -50,6 +52,7 @@ export type AppActions =
   | AgentActionTypes
   | AuthenticationActionTypes
   | CompanyActionTypes
+  | CompanyReportActionTypes
   | CompanyTypeActionTypes
   | CompanyTypeModificationActionTypes
   | CriteriaTypeActionTypes

@@ -169,3 +169,30 @@ export interface ViolationReportDocument extends BaseModel {
   documentSize: number;
   violationReportId: number;
 };
+
+export interface CompanyReport extends BaseModel {
+  id: number;
+  actionTitle: string;
+  description: string;
+  acceptedAt?: Date;
+  handledAt?: Date;
+  isHandled: boolean;
+  status: string;
+  verificationProcessId: number;
+  companyReportTypeId: number;
+  targetedCompanyId: number;
+  creatorCompanyId: number;
+  assignedAgentId: number;
+
+  targetedCompany: Company;
+  creatorCompany: Company;
+};
+
+export interface CompanyReportDocument extends BaseModel {
+  id: number;
+  documentType: string;
+  documentUrl: string;
+  documentName: string;
+  documentSize: number;
+  companyReportId: number;
+};

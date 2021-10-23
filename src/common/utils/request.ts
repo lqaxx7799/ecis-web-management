@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import config from '../../config';
 
-const getRequestConfig = ():AxiosRequestConfig => ({
+const getRequestConfig = (): AxiosRequestConfig => ({
   headers: {
     Authorization: 'Bearer ' + Cookies.get('appToken') || '',
   },

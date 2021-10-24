@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Table, Title } from "@mantine/core"
+import { Badge, Button, Group, Modal, Table, Text, Title } from "@mantine/core"
 import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import { useEffect } from "react";
@@ -99,6 +99,11 @@ const CompanyReportModal = (props: Props) => {
         </Table>
       </div>
       <div style={{ marginTop: '24px' }}>
+        <Title order={3}>Nội dung vi phạm</Title>
+        <Text>{editingCompanyReport?.actionTitle}</Text>
+        <Text>{editingCompanyReport?.description}</Text>
+      </div>
+      <div style={{ marginTop: '24px' }}>
         <Title order={3}>Tài liệu vi phạm</Title>
         {
           _.map(companyReportDocuments, (document) => (
@@ -114,12 +119,27 @@ const CompanyReportModal = (props: Props) => {
         }
       </div>
       <div style={{ marginTop: '24px' }}>
+        <Title order={3}>Trạng thái</Title>
+        <Badge>
+          {
+            editingCompanyReport?.status === 'PENDING' ? 'Đang chờ xử lý'
+              : editingCompanyReport?.status === 'APPROVED' ? 'Đã duyệt'
+              : 'Đã từ chối'
+          }
+        </Badge>
+      </div>
+      <div style={{ marginTop: '24px' }}>
         <Group>
           <Button
-           onClick={approveReport}>
+            disabled={editingCompanyReport?.isHandled}
+            onClick={approveReport}
+          >
             Xác nhận
           </Button>
-          <Button onClick={rejectReport} variant="light">
+          <Button
+            onClick={rejectReport} variant="light"
+            disabled={editingCompanyReport?.isHandled}
+          >
             Từ chối
           </Button>
           <Button variant="light" onClick={closeModal}>

@@ -6,7 +6,7 @@ function getAll(): Promise<CompanyReport[]> {
 }
 
 function getById(id: number): Promise<CompanyReport> {
-  return request.get(`/CompanyReport/GetById/${id}`);
+  return request.get(`/CompanyReport/ById/${id}`);
 }
 
 function approve(id: number): Promise<CompanyReport> {

@@ -42,7 +42,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
             <div className="left_col scroll-view">
               <div className="navbar nav_title" style={{ border: 0 }}>
                 <a href="index.html" className="site_title">
-                  <img src="images/fpd_logo_small.png" />
+                  <img src="/images/fpd_logo_small.png" />
                   <span>Cục kiểm lâm</span>
                 </a>
               </div>
@@ -51,7 +51,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
               {/* menu profile quick info */}
               <div className="profile clearfix">
                 <div className="profile_pic">
-                  <img src="images/user.png" alt="..." className="img-circle profile_img" />
+                  <img src="/images/user.png" alt="..." className="img-circle profile_img" />
                 </div>
                 <div className="profile_info">
                   <span>Xin chào,</span>
@@ -201,7 +201,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                 <ul className="nav navbar-nav navbar-right">
                   <li className="">
                     <a href="javascript:;" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img src="images/user.png" alt="" />Ông A
+                      <img src="/images/user.png" alt="" />Ông A
                       <span className=" fa fa-angle-down"></span>
                     </a>
                     <ul className="dropdown-menu dropdown-usermenu pull-right">

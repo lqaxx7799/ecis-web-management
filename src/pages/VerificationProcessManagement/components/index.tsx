@@ -20,13 +20,14 @@ const VerificationProcessManagement = (props: Props) => {
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAll());
+    dispatch(verificationProcessActions.getAllPending());
   }, []);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
     {
       name: 'STT',
       selector: (row, index) => index + 1,
+      width: '50px',
     },
     {
       name: 'Công ty',
@@ -38,52 +39,36 @@ const VerificationProcessManagement = (props: Props) => {
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
     },
     {
-      name: 'Trạng thái',
-      selector: 'status',
+      name: 'Hạn đánh giá',
+      selector: 'submitDeadline',
+      format: (row) => dayjs(row.submitDeadline).format('DD/MM/YYYY'),
     },
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Group>
-          <Tooltip label="Xem chi tiết">
-            <Button><EyeOpenIcon /></Button>
-          </Tooltip>
-          <Tooltip label="Cập nhật">
-            <Button><Pencil2Icon /></Button>
-          </Tooltip>
-        </Group>
+        <Link className="btn btn-default" to={`/verification/${row.id}`}>Đánh giá</Link>
       ),
     },
   ];
 
   return (
-    <div>
-      <Title order={1}>Quản lý quá trình tự đánh giá của doanh nghiệp</Title>
-
-      <div style={{ marginTop: '24px' }}>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/ho-tro">
-          Hỗ trợ doanh nghiệp <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/phan-loai">
-          Đánh giá đã hoàn thành <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/xac-nhan">
-          Xác nhận đánh giá <Badge color="red">4</Badge>
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/qua-trinh-danh-gia/lich-su">
-          Lịch sử đánh giá
-        </Text>
+    <div className="x_panel">
+      <div className="x_title">
+        <h2>Danh sách yêu cầu đánh giá</h2>
+        <div className="clearfix"></div>
       </div>
-
-      <div style={{ marginTop: '24px' }}>
-        <LoadingOverlay visible={loading} />
-
-        <DataTable
-          title={<Title order={2}>Quá trình tự đánh giá Tháng {dayjs().format('MM/YYYY')}</Title>}
-          columns={columns}
-          data={records}
-          noDataComponent={<Text>Không có dữ liệu</Text>}
-        />
+      <div className="x_content">
+        <div className="clearfix"></div>
+        <div className="col-xs-12 table">
+          <DataTable
+            noHeader
+            striped
+            highlightOnHover
+            columns={columns}
+            data={records}
+            noDataComponent="Không có yêu cầu"
+          />
+        </div>
       </div>
     </div>
   );

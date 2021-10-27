@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AppDispatch, RootState } from "../../app/store";
 import companyTypeActions from "../../common/actions/companyType.action";
 import criteriaActions from "../../common/actions/criteria.action";
+import criteriaDetailActions from "../../common/actions/criteriaDetail.action";
 import criteriaTypeActions from "../../common/actions/criteriaType.action";
 import { AppThunk } from "../../common/actions/type";
 import { VerificationProcessActionTypes } from "../../common/reducers/verificationProcess.reducer";
@@ -83,6 +84,7 @@ function loadSelfVerification(processId: number): AppThunk<Promise<VerificationP
         verificationDocumentServices.getAllByProcessId(processId),
         dispatch(criteriaActions.getAll()),
         dispatch(criteriaTypeActions.getAll()),
+        dispatch(criteriaDetailActions.getAll()),
         dispatch(companyTypeActions.getAll()),
       ]);
       dispatch<VerificationProcessManagementActionTypes>({
@@ -192,7 +194,7 @@ function updateCriteriaCompliance(
     );
     const data: Partial<VerificationCriteria> = {
       ...verificationCriteria,
-      approvedStatus: value ? 'COMPLIED' : 'UNCOMPLIED',
+      approvedStatus: value ? 'VERIFIED' : 'REJECTED',
     };
     const updated = await verificationCriteriaServices.update(data);
 

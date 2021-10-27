@@ -30,7 +30,7 @@ const AppRoute = ({
             <Component {...props} />
           </Layout>
         ) : (
-          <Redirect to='/dang-nhap' />
+          <Redirect to='/login' />
         )
       }
     />

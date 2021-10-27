@@ -21,6 +21,7 @@ import CompanyManagement from '../pages/CompanyManagement/components';
 import ReportViolation from '../pages/CompanyManagement/components/ReportViolation';
 import VerifyViolationReport from '../pages/CompanyManagement/components/VerifyViolationReport';
 import CompanyReportManagement from '../pages/CompanyReportManagement/components';
+import BlankLayout from './BlankLayout';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -36,8 +37,8 @@ const App = () => {
 
   return (
     <div>
-      <Switch>
-        <AppRoute path='/dang-nhap' component={LogIn} layout={MainLayout} layoutProps={{ isBleedLayout: true }} />
+      <Switch>        
+        <AppRoute path='/login' component={LogIn} layout={BlankLayout} />
 
         <AppRoute path="/qua-trinh-danh-gia/ho-tro/:id" component={CompanyEditVerification} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/ho-tro" component={SupportVerificationList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
@@ -45,7 +46,7 @@ const App = () => {
         <AppRoute path="/qua-trinh-danh-gia/phan-loai" component={VerifyPendingProcessList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan/:id" component={VerifyCompleteDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan" component={VerifyCompleteList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute path="/qua-trinh-danh-gia" component={VerificationProcessManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verification" component={VerificationProcessManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
@@ -57,7 +58,7 @@ const App = () => {
         <AppRoute path="/doanh-nghiep/bao-cao" component={ReportViolation} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute exact path='/' component={Dashboard} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
       </Switch>
     </div>
   );

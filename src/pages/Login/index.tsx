@@ -21,14 +21,11 @@ const LogIn = (props: Props) => {
   } = useForm<LogInDTO>();
 
   const onSubmit = (data: LogInDTO) => {
-    console.log(111111, data);
     dispatch(authenticationActions.authenticate(data))
       .then((result) => {
-        console.log(111111, result);
         history.push('/');
       })
       .catch((err) => {
-        console.log(1111112, err.response);
         setError(
           'email',
           {
@@ -41,49 +38,116 @@ const LogIn = (props: Props) => {
   };
 
   return (
-    <div className="log-in-admin">
-      <Paper padding="lg" shadow="sm" className="log-in-form">
-        <Title order={2} style={{ marginBottom: '24px' }}>Quản lý hệ thống ECIS</Title>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="email"
-            control={control}
-            rules={{ required: 'Không được để trống email' }}
-            render={({ field: { ref, ...field } }) => (
-              <TextInput
-                {...field}
-                elementRef={ref}
-                style={{
-                  marginBottom: '12px',
-                }}
-                label="Email"
-                required
-                placeholder="Nhập email"
-                error={errors.email && errors.email.message}
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            rules={{ required: 'Không được để trống mật khẩu', }}
-            render={({ field: { ref, ...field } }) => (
-              <PasswordInput
-                {...field}
-                elementRef={ref}
-                style={{
-                  marginBottom: '12px',
-                }}
-                label="Mật khẩu"
-                required
-                placeholder="Nhập mật khẩu"
-                error={errors.password && errors.password.message}
-              />
-            )}
-          />
-          <Button type="submit">Đăng nhập</Button>
-        </form>
-      </Paper>
+    <div className="login" style={{ backgroundImage: 'url(/images/bg1.jpg)' , backgroundSize: 'cover', height: '100vh' }}>
+      <div style={{ background: 'rgba(0,0,0,0.5)', position: 'absolute', width: '100%', height: '100vh' }}>
+        <a className="hiddenanchor" id="signup"></a>
+        <a className="hiddenanchor" id="signin"></a>
+
+        <div className="login_wrapper">
+          <div className="animate form login_form">
+            <section className="login_content">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <h1><img src="/images/fpd_logo_small.png" alt="" />  Đăng nhập hệ thống</h1>
+                <div>
+                  <Controller
+                    name="email"
+                    control={control}
+                    rules={{ required: 'Không được để trống email' }}
+                    render={({ field: { ref, ...field } }) => (
+                      <div>
+                        <input
+                          {...field}
+                          ref={ref}
+                          type="text"
+                          className="form-control"
+                          placeholder="Email"
+                          required
+                        />
+                        {errors.email && <span>{errors.email.message}</span>}
+                      </div>
+                    )}
+                  />
+                </div>
+                <div>
+                  <Controller
+                    name="password"
+                    control={control}
+                    rules={{ required: 'Không được để trống mật khẩu' }}
+                    render={({ field: { ref, ...field } }) => (
+                      <div>
+                        <input
+                          {...field}
+                          ref={ref}
+                          type="password"
+                          className="form-control"
+                          placeholder="Mật khẩu"
+                          required
+                        />
+                        {errors.password && <span>{errors.password.message}</span>}
+                      </div>
+                    )}
+                  />
+                </div>
+                <div>
+                  <button className="btn btn-default submit">Đăng nhập</button>
+                  <a className="reset_pass" href="#">Quên mật khẩu ?</a>
+                </div>
+
+                <div className="clearfix"></div>
+
+                <div className="separator">
+                  <p className="change_link">Chưa có tài khoản ?
+                    <a href="#signup" className="to_register"> Tạo mới </a>
+                  </p>
+
+                  <div className="clearfix"></div>
+                  <br />
+
+                  <div>
+                    <p>©2020</p>
+                  </div>
+                </div>
+              </form>
+            </section>
+          </div>
+
+          <div id="register" className="animate form registration_form">
+            <section className="login_content">
+              <form>
+                <h1>Tạo tài khoản</h1>
+                <div>
+                  <input type="text" className="form-control" placeholder="Tên đăng nhập" required />
+                </div>
+                <div>
+                  <input type="email" className="form-control" placeholder="Email" required />
+                </div>
+                <div>
+                  <input type="password" className="form-control" placeholder="Mật khẩu" required />
+                </div>
+                <div>
+                  <a className="btn btn-default submit" href="index.html">Đăng ký</a>
+                </div>
+
+                <div className="clearfix"></div>
+
+                <div className="separator">
+                  <p className="change_link">Đã là thành viên ?
+                    <a href="#signin" className="to_register"> Đăng nhập </a>
+                  </p>
+
+                  <div className="clearfix"></div>
+                  <br />
+
+                  <div>
+                  
+                    <p>©2020</p>
+                  </div>
+                </div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

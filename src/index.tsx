@@ -1,3 +1,5 @@
+import { GlobalStyles, MantineProvider, NormalizeCSS } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -7,15 +9,14 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './app/store';
 import App from './app/App';
 
+import './styles/custom.css';
 import './styles/index.scss';
-import { GlobalStyles, MantineProvider, NormalizeCSS } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
 
 ReactDOM.render(
   <MantineProvider>
     <NotificationsProvider>
-      <NormalizeCSS />
-      <GlobalStyles />
+      {/* <NormalizeCSS />
+      <GlobalStyles /> */}
       <Provider store={store}>
         <Router>
           <Switch>

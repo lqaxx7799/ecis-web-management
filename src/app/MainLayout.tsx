@@ -95,9 +95,9 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         className="nav child_menu"
                         style={{ display: activeSideItem === 'company' ? 'block' : 'none' }}
                       >                  
-                        <li><a href="fpd_evaluation.html">Tự đánh giá</a></li>
-                        <li><a href="fpd_evaluation_add_new.html">Thêm mới, cập nhật</a></li>
-                        <li><a href="fpd_evaluation_browse.html">Duyệt thông tin</a></li>
+                        <li><Link to="/support-verification">Tự đánh giá</Link></li>
+                        <li><Link to="/verification-add-new">Thêm mới, cập nhật</Link></li>
+                        <li><Link to="/verification-browse">Duyệt thông tin</Link></li>
                       </ul>
                     </li>
                     <li
@@ -144,8 +144,8 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         className="nav child_menu"
                         style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
                       >
-                        <li><a href="fpd_class_approve.html">Duyệt kết quả phân loại</a></li>
-                        <li><a href="fpd_class_browse.html">Xem kết quả phân loại</a></li>
+                        <li><Link to="/verification-reviewed">Duyệt kết quả phân loại</Link></li>
+                        <li><Link to="/verification-finished">Xem kết quả phân loại</Link></li>
                       </ul>
                     </li>
                     <li
@@ -160,10 +160,10 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         className="nav child_menu"
                         style={{ display: activeSideItem === 'report' ? 'block' : 'none' }}
                       >
-                        <li><a href="fpd_complaint.html">Xem khiếu lại</a></li>
-                        <li><a href="fpd_complaint_assign.html">Phân công giải quyết</a></li>
-                        <li><a href="fpd_complaint_result.html">Kết quả giải quyết</a></li>
-                        <li><a href="fpd_complaint_approve.html">Duyệt</a></li>
+                        <li><Link to="/report">Xem khiếu nại</Link></li>
+                        <li><Link to="/report/assign">Phân công giải quyết</Link></li>
+                        <li><Link to="/report/result">Kết quả giải quyết</Link></li>
+                        <li><Link to="/report/browse">Duyệt</Link></li>
                       </ul>
                     </li>                      
                   </ul>

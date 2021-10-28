@@ -26,7 +26,7 @@ const VerifyCompleteCriteriaGroup = (props: Props) => {
     {
       name: 'Tên tiêu chí',
       selector: (row) => {
-        const criteria = _.find(criterias, (item) => item.id === row.criteriaId);
+        const criteria = _.find(criterias, (item) => item.id === row.criteriaDetailId);
         return <div>{criteria?.criteriaName ?? ''}</div>;
       },
     },

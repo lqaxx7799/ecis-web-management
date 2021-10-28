@@ -60,7 +60,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
   };
 
   const groupedCriteria = _.groupBy(verificationCriterias, (editingCriteria) => {
-    const found = _.find(criterias, criteria => criteria.id === editingCriteria.criteriaId);
+    const found = _.find(criterias, criteria => criteria.id === editingCriteria.criteriaDetailId);
     return found?.criteriaTypeId;
   });
 

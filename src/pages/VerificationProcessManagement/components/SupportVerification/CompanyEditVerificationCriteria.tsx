@@ -14,7 +14,7 @@ const CompanyEditVerificationCriteria = (props: Props) => {
   return (
     <div className="criteria-group">
       {_.map(verificationCriterias, (item, index) => {
-        const criteria = _.find(criterias, criteria => criteria.id === item.criteriaId);
+        const criteria = _.find(criterias, criteria => criteria.id === item.criteriaDetailId);
         return (
           <VerificationCriteriaForm
             key={index}

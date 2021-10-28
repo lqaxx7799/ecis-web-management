@@ -65,7 +65,7 @@ const App = () => {
         <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Company"]} />
+        <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
       </Switch>
     </div>

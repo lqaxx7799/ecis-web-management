@@ -329,7 +329,6 @@ html , body{
     float: left;
     background: #EDEDED;
     border-bottom: 1px solid #D9DEE4;
-    margin-bottom: 10px;
     width: 100%;
     position: relative
 }
@@ -339,13 +338,14 @@ html , body{
     }
 }
 .nav-md .container.body .col-md-3.left_col {
-    min-height: 100%;
+    height: 100vh;
     width: 230px;
     padding: 0;
     position: absolute;
     display: -ms-flexbox;
     display: flex;
-    z-index: 1
+    z-index: 1;
+    overflow-y: auto;
 }
 .nav-md .container.body .col-md-3.left_col.menu_fixed {
     height: 100%;
@@ -356,7 +356,9 @@ body .container.body .right_col {
 }
 .nav-md .container.body .right_col {
     padding: 10px 20px 0;
-    margin-left: 230px
+    margin-left: 230px;
+    height: calc(100vh - 58px);
+    overflow-y: auto;
 }
 .nav_title {
     width: 230px;

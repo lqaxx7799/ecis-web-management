@@ -16,7 +16,7 @@ const SupportVerificationList = (props: Props) => {
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllPending());
+    dispatch(verificationProcessActions.getAllSupport());
   }, [dispatch]);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [

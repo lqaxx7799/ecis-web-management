@@ -15,6 +15,8 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
   const authentication = useAppSelector((state) => state.authentication);
 
   const [activeSideItem, setActiveSideItem] = useState('');
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const [isMenuNavBarOpen, setIsMenuNavBarOpen] = useState(false);
 
   const onSidebarClick = (e: MouseEvent, key: string) => {
     e.preventDefault();
@@ -30,12 +32,20 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
     });
   };
 
+  const toggleSideBar = () => {
+    setIsSideBarOpen((value) => !value);
+  };
+
+  const toggleNavBarMenu = () => {
+    setIsMenuNavBarOpen((value) => !value);
+  };
+
   const logOut = () => {
     dispatch(authenticationActions.logOut());
   };
 
   return (
-    <div className="nav-md">
+    <div className={isSideBarOpen ? 'nav-md' : 'nav-sm'}>
       <div className="container body">
         <div className="main_container">
           <div className="col-md-3 left_col">
@@ -195,13 +205,19 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
             <div className="nav_menu">
               <nav>
                 <div className="nav toggle">
-                  <a id="menu_toggle"><i className="fa fa-bars"></i></a>
+                  <a onClick={toggleSideBar} id="menu_toggle"><i className="fa fa-bars" /></a>
                 </div>
 
                 <ul className="nav navbar-nav navbar-right">
-                  <li className="">
-                    <a href="javascript:;" className="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img src="/images/user.png" alt="" />Ông A
+                  <li className={isMenuNavBarOpen ? 'open' : ''}>
+                    <a
+                      onClick={toggleNavBarMenu}
+                      href="javascript:;"
+                      className="user-profile dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img src="/images/user.png" alt="" /> {authentication.account?.email}
                       <span className=" fa fa-angle-down"></span>
                     </a>
                     <ul className="dropdown-menu dropdown-usermenu pull-right">
@@ -212,7 +228,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         </a>
                       </li>
                       <li><a href="javascript:;">Trợ giúp</a></li>
-                      <li><a href="login.html"><i className="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
+                      <li><a href="javascript:;" onClick={logOut}><i className="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
                     </ul>
                   </li>
                 </ul>

@@ -235,6 +235,23 @@ function updateCriteriaField(
   };
 }
 
+function updateVerificationCriteria(data: Partial<VerificationCriteria>): AppThunk<Promise<VerificationCriteria>> {
+  return async (dispatch, getState) => {
+    const state = getState();
+    
+    const { verificationCriterias } = state.verificationProcessManagement;
+
+    const updated = await verificationCriteriaServices.update(data);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED',
+      payload: _.map(verificationCriterias, (item) => item.id === data.id ? updated : item),
+    });
+
+    return updated;
+  };
+}
+
 function submitVerifyReview(verificationProcessId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch, getState) => {
     // const state = getState();
@@ -326,6 +343,7 @@ const verificationProcessManagementActions = {
 
   updateCriteriaCompliance,
   updateCriteriaField,
+  updateVerificationCriteria,
 };
 
 export default verificationProcessManagementActions;

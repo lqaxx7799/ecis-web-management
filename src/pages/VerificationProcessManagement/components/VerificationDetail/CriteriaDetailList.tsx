@@ -77,6 +77,9 @@ const CriteriaDetailList = (props: Props) => {
           />
         );
       },
+      wrap: true,
+      style: { paddingTop: '8px', paddingRight: '8px' },
+      width: '150px',
     },
     {
       name: 'Góp ý',
@@ -103,7 +106,6 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        console.log(111111111, currentCriteria)
         return currentCriteria.approvedStatus === 'VERIFIED' ? 'Đồng ý'
           : currentCriteria.approvedStatus === 'REJECTED' ? 'Không đồng ý'
           : 'Chưa đánh giá';

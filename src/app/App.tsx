@@ -13,8 +13,8 @@ import VerifyPendingProcessList from '../pages/VerificationProcessManagement/com
 // import SupportVerificationList from '../pages/VerificationProcessManagement/components/SupportVerification/SupportVerificationList';
 import CompanyEditVerification from '../pages/VerificationProcessManagement/components/SupportVerification/CompanyEditVerification';
 import VerifyPendingProcessDetail from '../pages/VerificationProcessManagement/components/VerificationDetail/VerifyPendingProcessDetail';
-import VerifyCompleteList from '../pages/VerificationProcessManagement/components/CompleteVerification/VerifyCompleteList';
-import VerifyCompleteDetail from '../pages/VerificationProcessManagement/components/CompleteVerification/VerifyCompleteDetail';
+import ReviewedVerificationList from '../pages/VerificationProcessManagement/components/ReviewedVerificationList';
+import VerifyCompleteDetail from '../pages/VerificationProcessManagement/components/ReviewedVerificationList/VerifyCompleteDetail';
 import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfirm/components/AssignedVerificationConfirmList';
 import CompanyTypeModificationResult from '../pages/CompanyTypeModificationResult/components';
 import CompanyManagement from '../pages/CompanyManagement/components';
@@ -45,16 +45,17 @@ const App = () => {
 
         {/* <AppRoute path="/qua-trinh-danh-gia/ho-tro/:id" component={CompanyEditVerification} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
         {/* <AppRoute path="/qua-trinh-danh-gia/ho-tro" component={SupportVerificationList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
-        <AppRoute path="/qua-trinh-danh-gia/phan-loai/:id" component={VerifyPendingProcessDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        {/* <AppRoute path="/qua-trinh-danh-gia/phan-loai/:id" component={VerifyPendingProcessDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/phan-loai" component={VerifyPendingProcessList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan/:id" component={VerifyCompleteDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute path="/qua-trinh-danh-gia/xac-nhan" component={VerifyCompleteList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/qua-trinh-danh-gia/xac-nhan" component={VerifyCompleteList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
 
         <AppRoute path="/support-verification/:id" component={SupportVerificationDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/support-verification" component={SupportVerificationList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification/:id" component={VerifyPendingProcessDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification" component={VerificationProcessManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
-
+        
+        <AppRoute path="/verification-reviewed" component={ReviewedVerificationList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification-result" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />

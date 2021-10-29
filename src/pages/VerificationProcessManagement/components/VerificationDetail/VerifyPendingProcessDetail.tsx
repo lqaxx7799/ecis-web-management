@@ -1,10 +1,11 @@
 import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
 import CriteriaListTab from "./CriteriaListTab";
 
@@ -25,6 +26,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
     loading,
   } = useAppSelector((state) => state.verificationProcessManagement);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
+  const { companyTypes } = useAppSelector((state) => state.companyType);
 
   const [selectedTabId, setSelectedTabId] = useState(-1);
 
@@ -36,6 +38,28 @@ const VerifyPendingProcessDetail = (props: Props) => {
         setSelectedTabId(_.get(criteriaTypes, '0.id'));
       });
   }, [dispatch, id]);
+
+  const editVerificationCompanyType = (e: ChangeEvent<HTMLSelectElement>) => {
+    const updated: Partial<VerificationProcess> = {
+      ...editingProcess,
+      companyTypeId: e.target.value ? parseInt(e.target.value) : undefined,
+    };
+    dispatch(verificationProcessManagementActions.updateProcess(updated))
+      .then(() => {
+        // notifications.showNotification({
+        //   color: 'green',
+        //   title: 'Thành công',
+        //   message: 'Lưu đánh giá thành công',
+        // });
+      })
+      .catch(() => {
+        // notifications.showNotification({
+        //   color: 'red',
+        //   title: 'Lỗi hệ thống',
+        //   message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
+        // });
+      });
+  };
 
   const submitVerify = () => {
     dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id)))
@@ -85,6 +109,24 @@ const VerifyPendingProcessDetail = (props: Props) => {
               />
             ))
           }
+        </div>
+        <div style={{ marginTop: '24px' }}>
+          <label>
+            Phân loại doanh nghiệp
+          </label>
+          <select
+            placeholder="Chọn phân loại"
+            className="form-control"
+            value={editingProcess?.companyTypeId}
+            onChange={editVerificationCompanyType}
+          >
+            <option value={undefined}>-</option>
+            {
+              _.map(companyTypes, (type) => (
+                <option value={type.id}>{type.typeName}</option>
+              ))
+            }
+          </select>
         </div>
         <div style={{ marginTop: '24px' }}>
           <button onClick={submitVerify}>Duyệt kết quả</button>

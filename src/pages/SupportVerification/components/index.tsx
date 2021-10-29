@@ -16,7 +16,7 @@ const SupportVerificationList = (props: Props) => {
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllSupport());
+    dispatch(verificationProcessActions.getAllPending());
   }, [dispatch]);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
@@ -40,7 +40,7 @@ const SupportVerificationList = (props: Props) => {
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Link to={`/support-verification/${row.id}`}>Xem chi tiết</Link>
+        <Link className="btn btn-default" to={`/support-verification/${row.id}`}>Xem chi tiết</Link>
       ),
     },
   ];

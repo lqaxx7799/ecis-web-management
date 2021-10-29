@@ -42,7 +42,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
             <div className="left_col scroll-view">
               <div className="navbar nav_title" style={{ border: 0 }}>
                 <a href="index.html" className="site_title">
-                  <img src="/images/fpd_logo_small.png" />
+                  <img src="/images/fpd_logo_small.png" alt="" />
                   <span>Cục kiểm lâm</span>
                 </a>
               </div>
@@ -145,7 +145,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
                       >
                         <li><Link to="/verification-reviewed">Duyệt kết quả phân loại</Link></li>
-                        <li><Link to="/verification-finished">Xem kết quả phân loại</Link></li>
+                        <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
                       </ul>
                     </li>
                     <li

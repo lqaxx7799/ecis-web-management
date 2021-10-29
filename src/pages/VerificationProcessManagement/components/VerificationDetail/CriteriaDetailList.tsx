@@ -3,6 +3,7 @@ import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { Criteria, CriteriaDetail } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
+import CellEditing from "./CellEditing";
 import CriteriaForm from "./CriteriaForm";
 
 type Props = {
@@ -22,6 +23,16 @@ const CriteriaDetailList = (props: Props) => {
 
   const markCompliance = (verificationCriteriaId: number, value: boolean) => {
     dispatch(verificationProcessManagementActions.updateCriteriaCompliance(value, verificationCriteriaId))
+      .then(() => {
+        console.log('ok');
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  };
+
+  const editCriteriaField = (fieldName: string, verificationCriteriaId: number, value: string) => {
+    return dispatch(verificationProcessManagementActions.updateCriteriaField(fieldName, verificationCriteriaId, value))
       .then(() => {
         console.log('ok');
       })
@@ -59,7 +70,12 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        return currentCriteria.reviewResult;
+        return (
+          <CellEditing
+            onOk={(value) => editCriteriaField('reviewResult', currentCriteria.id, value)}
+            value={currentCriteria.reviewResult}
+          />
+        );
       },
     },
     {
@@ -69,8 +85,16 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        return currentCriteria.reviewComment;
+        return (
+          <CellEditing
+            onOk={(value) => editCriteriaField('reviewComment', currentCriteria.id, value)}
+            value={currentCriteria.reviewComment}
+          />
+        );
       },
+      wrap: true,
+      style: { paddingTop: '8px', paddingRight: '8px' },
+      width: '150px',
     },
     {
       name: 'Đánh giá',
@@ -79,6 +103,7 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
+        console.log(111111111, currentCriteria)
         return currentCriteria.approvedStatus === 'VERIFIED' ? 'Đồng ý'
           : currentCriteria.approvedStatus === 'REJECTED' ? 'Không đồng ý'
           : 'Chưa đánh giá';
@@ -86,12 +111,19 @@ const CriteriaDetailList = (props: Props) => {
     },
     {
       name: 'Thao tác',
-      selector: (row) => (
-        <div>
-          <a onClick={() => markCompliance(row.id, true)}><i className="fa fa-check-square-o" aria-hidden="true" />Đồng ý</a>
-          <a onClick={() => markCompliance(row.id, true)}><i className="fa fa-times-circle" aria-hidden="true" />Không đồng ý</a>
-        </div>
-      ),
+      selector: (row) => {
+        const currentCriteria = _.find(verificationCriterias, (item) => item.criteriaDetailId === row.id);
+        if (!currentCriteria) {
+          return null;
+        }
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <a style={{ marginBottom: '4px' }} onClick={() => markCompliance(currentCriteria.id, true)}><i className="fa fa-check-square-o" aria-hidden="true" />Đồng ý</a>
+            <a onClick={() => markCompliance(currentCriteria.id, false)}><i className="fa fa-times-circle" aria-hidden="true" />Không đồng ý</a>
+          </div>
+        )
+      },
+      wrap: true,
     },
   ];
 

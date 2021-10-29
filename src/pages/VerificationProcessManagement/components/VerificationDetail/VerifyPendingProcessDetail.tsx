@@ -2,7 +2,7 @@ import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import verificationProcessManagementActions from "../../action";
@@ -17,7 +17,8 @@ type RouteParams = {
 };
 
 const VerifyPendingProcessDetail = (props: Props) => {
-  const notifications = useNotifications();
+  // const notifications = useNotifications();
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const {
     editingProcess,
@@ -30,24 +31,28 @@ const VerifyPendingProcessDetail = (props: Props) => {
   let { id } = useParams<RouteParams>();
 
   useEffect(() => {
-    dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(id)));
+    dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(id)))
+      .then(() => {
+        setSelectedTabId(_.get(criteriaTypes, '0.id'));
+      });
   }, [dispatch, id]);
 
   const submitVerify = () => {
     dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id)))
       .then(() => {
-        notifications.showNotification({
-          color: 'green',
-          title: 'Thành công',
-          message: 'Lưu đánh giá thành công',
-        });
+        history.push('/verification');
+        // notifications.showNotification({
+        //   color: 'green',
+        //   title: 'Thành công',
+        //   message: 'Lưu đánh giá thành công',
+        // });
       })
       .catch(() => {
-        notifications.showNotification({
-          color: 'red',
-          title: 'Lỗi hệ thống',
-          message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
-        });
+        // notifications.showNotification({
+        //   color: 'red',
+        //   title: 'Lỗi hệ thống',
+        //   message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
+        // });
       });
   };
 
@@ -82,7 +87,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
           }
         </div>
         <div style={{ marginTop: '24px' }}>
-          <button onClick={submitVerify}>Gửi lên</button>
+          <button onClick={submitVerify}>Duyệt kết quả</button>
         </div>
       </div>
     </>

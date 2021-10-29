@@ -77,7 +77,7 @@ const SupportVerificationDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <div className="x_title">
-        <h2>Đánh giá cho công ty {'A'}</h2>
+        <h2>Đánh giá cho công ty {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
       </div>
       <div className="x_content">

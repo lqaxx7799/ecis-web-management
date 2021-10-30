@@ -136,7 +136,7 @@ const verficationProcessManagementReducer = (
       return {
         ...state,
         loading: false,
-      }
+      };
     case "VERIFICATION_PROCESS_MANAGEMENT_DOCUMENT_CREATED":
       return {
         ...state,

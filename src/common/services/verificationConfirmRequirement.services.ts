@@ -2,8 +2,12 @@ import { VerificationConfirmRequirementDTO, VerificationConfirmUpdateDTO } from 
 import { VerificationConfirmRequirement } from '../../types/models';
 import request from '../utils/request';
 
-function getAssigned(agentId: number): Promise<VerificationConfirmRequirement[]> {
-  return request.get(`/VerificationConfirmRequirement/Assigned/${agentId}`);
+function getAssignedPending(agentId: number): Promise<VerificationConfirmRequirement[]> {
+  return request.get(`/VerificationConfirmRequirement/AssignedPending/${agentId}`);
+}
+
+function getAssignedFinished(agentId: number): Promise<VerificationConfirmRequirement[]> {
+  return request.get(`/VerificationConfirmRequirement/AssignedFinished/${agentId}`);
 }
 
 function getByProcessId(processId: number): Promise<VerificationConfirmRequirement> {
@@ -27,7 +31,8 @@ function finishConfirm(data: VerificationConfirmUpdateDTO): Promise<Verification
 }
 
 const verificationConfirmRequirementServices = {
-  getAssigned,
+  getAssignedPending,
+  getAssignedFinished,
   getByProcessId,
   getById,
   create,

@@ -30,6 +30,7 @@ export interface VerificationConfirmRequirementDTO {
   isUsingAnnounceAgentFile?: boolean;
   verificationProcessId: number;
   assignedAgentId: string;
+  verificationCriteriaId: number;
 };
 
 export interface VerificationConfirmUpdateDTO {

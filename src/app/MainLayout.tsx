@@ -135,7 +135,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                             className="nav child_menu"
                             style={{ display: activeSideItem === 'verification_verify' ? 'block' : 'none' }}
                           >
-                            <li><Link to="/verify-verification-assign">Phân công cán bộ</Link></li>
+                            <li><Link to="/verify-verification-browse">Duyệt yêu cầu xác minh</Link></li>
                             <li><Link to="/verify-verification-result">Kết quả xác minh</Link></li>
                             <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li>
                           </ul>

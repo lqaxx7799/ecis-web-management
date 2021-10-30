@@ -27,6 +27,9 @@ import SupportVerificationDetail from '../pages/SupportVerification/components/S
 import NotFound from '../pages/NotFound/components';
 import CompanyDetail from '../pages/CompanyManagement/components/CompanyDetail';
 import { ToastContainer } from 'react-toastify';
+import AssignVerify from '../pages/AssignVerify/components';
+import ConfirmVerificationRequirement from '../pages/AssignedVerificationConfirm/components/ConfirmVerificationRequirement';
+import VerificationConfirmResult from '../pages/VerificationConfirmResult/components';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +55,11 @@ const App = () => {
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan/:id" component={VerifyCompleteDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan" component={VerifyCompleteList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
 
+        <AppRoute path="/verify-verification-assign" component={AssignVerify} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verify-verification-browse/:id" component={ConfirmVerificationRequirement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verify-verification-browse" component={AssignedVerificationConfirmList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verify-verification-result" component={VerificationConfirmResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+
         <AppRoute path="/support-verification/:id" component={SupportVerificationDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/support-verification" component={SupportVerificationList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification/:id" component={VerifyPendingProcessDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
@@ -63,7 +71,6 @@ const App = () => {
         <AppRoute path="/company/:id" component={CompanyDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company" component={CompanyManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         

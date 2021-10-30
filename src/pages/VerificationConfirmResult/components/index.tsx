@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
-import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationConfirmRequirementActions from "../../../common/actions/verificationConfirmRequirement.action";
 import { VerificationConfirmRequirement } from "../../../types/models";
@@ -11,14 +10,13 @@ type Props = {
 
 };
 
-
-const AssignedVerificationConfirmList = (props: Props) => {
+const VerificationConfirmResult = (props: Props) => {
   const dispatch = useAppDispatch();
   const { agent } = useAppSelector((state) => state.authentication);
   const { verificationConfirmRequirements, loading } = useAppSelector((state) => state.verificationConfirmRequirement);
 
   useEffect(() => {
-    dispatch(verificationConfirmRequirementActions.getAssignedPending(agent?.id ?? 0));
+    dispatch(verificationConfirmRequirementActions.getAssignedFinished(agent?.id ?? 0));
   }, []);
 
   const columns: IDataTableColumn<VerificationConfirmRequirement>[] = [
@@ -48,15 +46,14 @@ const AssignedVerificationConfirmList = (props: Props) => {
       wrap: true,
     },
     {
+      name: 'Kết quả',
+      selector: 'confirmDocumentContent',
+      wrap: true,
+    },
+    {
       name: 'Thời gian tạo',
       selector: 'createdAt',
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
-    },
-    {
-      name: 'Thao tác',
-      cell: (row, index) => (
-        <Link className="btn btn-default" to={`/verify-verification-browse/${row.id}`}>Xác minh</Link>
-      ),
     },
   ];
 
@@ -83,4 +80,4 @@ const AssignedVerificationConfirmList = (props: Props) => {
   );
 };
 
-export default AssignedVerificationConfirmList;
+export default VerificationConfirmResult;

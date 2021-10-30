@@ -25,6 +25,10 @@ function getById(id: number): Promise<VerificationProcess> {
   return request.get(`/VerificationProcess/${id}`);
 }
 
+function getCurrentPendingByCompanyId(companyId: number): Promise<VerificationProcess> {
+  return request.get(`/VerificationProcess/GetCurrentPending/${companyId}`);
+}
+
 function generate(companyId: number): Promise<VerificationProcess> {
   return request.post(`/VerificationProcess/Generate/${companyId}`);
 }
@@ -48,6 +52,7 @@ const verificationProcessServices = {
   getAllSupport,
   getAllReviewed,
   getById,
+  getCurrentPendingByCompanyId,
   generate,
   submitVerifyReview,
   update,

@@ -5,13 +5,34 @@ import { VerificationConfirmRequirementActionTypes } from '../reducers/verificat
 import verificationConfirmRequirementServices from '../services/verificationConfirmRequirement.services';
 import { AppThunk } from './type';
 
-function getAssigned(agentId: number): AppThunk<Promise<VerificationConfirmRequirement[]>> {
+function getAssignedPending(agentId: number): AppThunk<Promise<VerificationConfirmRequirement[]>> {
   return async (dispatch: AppDispatch) => {
     dispatch<VerificationConfirmRequirementActionTypes>({
       type: 'VERIFICATION_CONFIRM_REQUIREMENT_LOADING',
     });
     try {
-      const result = await verificationConfirmRequirementServices.getAssigned(agentId);
+      const result = await verificationConfirmRequirementServices.getAssignedPending(agentId);
+      dispatch<VerificationConfirmRequirementActionTypes>({
+        type: 'VERIFICATION_CONFIRM_REQUIREMENT_LOADED',
+        payload: result,
+      });
+      return result;
+    } catch (e) {
+      dispatch<VerificationConfirmRequirementActionTypes>({
+        type: 'VERIFICATION_CONFIRM_REQUIREMENT_LOAD_FAILED',
+      });
+      return [];
+    }
+  };
+}
+
+function getAssignedFinished(agentId: number): AppThunk<Promise<VerificationConfirmRequirement[]>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<VerificationConfirmRequirementActionTypes>({
+      type: 'VERIFICATION_CONFIRM_REQUIREMENT_LOADING',
+    });
+    try {
+      const result = await verificationConfirmRequirementServices.getAssignedFinished(agentId);
       dispatch<VerificationConfirmRequirementActionTypes>({
         type: 'VERIFICATION_CONFIRM_REQUIREMENT_LOADED',
         payload: result,
@@ -91,7 +112,8 @@ function finishConfirm(data: VerificationConfirmUpdateDTO): AppThunk<Promise<Ver
 }
 
 const verificationConfirmRequirementActions = {
-  getAssigned,
+  getAssignedPending,
+  getAssignedFinished,
   getByProcessId,
   getById,
   create,

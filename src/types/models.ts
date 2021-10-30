@@ -85,6 +85,7 @@ export interface VerificationCriteria extends BaseModel {
   reviewComment: string;
   verificationProcessId?: number;
   criteriaDetailId?: number;
+  criteriaDetail?: CriteriaDetail;
 };
 
 export interface VerificationDocument extends BaseModel {
@@ -147,6 +148,7 @@ export interface VerificationConfirmRequirement extends BaseModel {
   verificationProcessId: number;
   assignedAgentId: number;
   confirmCompanyTypeId: number;
+  verificationCriteriaId: number;
 };
 
 export interface CompanyTypeModification extends BaseModel {

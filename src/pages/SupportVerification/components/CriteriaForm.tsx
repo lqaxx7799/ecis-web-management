@@ -30,7 +30,13 @@ const CriteriaForm = (props: Props) => {
       ...currentCriteria,
       companyRate: rate,
     };
-    dispatch(verificationProcessManagementActions.updateVerificationCriteria(updated));
+    dispatch(verificationProcessManagementActions.updateVerificationCriteria(updated))
+      .then(() => {
+        toast.success('Cập nhật đánh giá thành công.');
+      })
+      .catch(() => {
+        toast.error('Đã xảy ra lỗi trong quá trình cập nhật đánh giá. Vui lòng thử lại sau.');
+      });
   };
 
   const updateCompanyOpinion = () => {
@@ -38,7 +44,13 @@ const CriteriaForm = (props: Props) => {
       ...currentCriteria,
       companyOpinion: opinion,
     };
-    dispatch(verificationProcessManagementActions.updateVerificationCriteria(updated));
+    dispatch(verificationProcessManagementActions.updateVerificationCriteria(updated))
+      .then(() => {
+        toast.success('Cập nhật đánh giá thành công.');
+      })
+      .catch(() => {
+        toast.error('Đã xảy ra lỗi trong quá trình cập nhật đánh giá. Vui lòng thử lại sau.');
+      });
   };
 
   const handleUploadedFiles = (e: ChangeEvent<HTMLInputElement>) => {

@@ -114,7 +114,15 @@ const VerifyPendingProcessDetail = (props: Props) => {
           </select>
         </div>
         <div style={{ marginTop: '24px' }}>
-          <button onClick={submitVerify}>Duyệt kết quả</button>
+          <button className="btn btn-primary" onClick={submitVerify}>Duyệt kết quả</button>
+        </div>
+        <div style={{ marginTop: '24px' }}>
+          <Link
+            className="btn btn-default"
+            to={`/verify-verification-assign?companyId=${editingProcess?.companyId}`}
+          >
+            Yêu cầu xác thực
+          </Link>
         </div>
       </div>
     </>

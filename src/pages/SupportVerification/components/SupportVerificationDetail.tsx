@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessManagementActions from "../../VerificationProcessManagement/action";
 import CriteriaListTab from "./CriteriaListTab";
@@ -31,7 +32,6 @@ const SupportVerificationDetail = (props: Props) => {
         setSelectedTabId(_.get(criteriaTypes, '0.id'));
       });
   }, [dispatch]);
-
 
   const noData = (
     <div>

@@ -3,6 +3,7 @@ import { VerificationProcess } from '../../types/models';
 export const VERIFICATION_PROCESS_LOADING = 'VERIFICATION_PROCESS_LOADING';
 export const VERIFICATION_PROCESS_LOADED = 'VERIFICATION_PROCESS_LOADED';
 export const VERIFICATION_PROCESS_LOAD_FAILED = 'VERIFICATION_PROCESS_LOAD_FAILED';
+export const VERIFICATION_PROCESS_DETAIL_LOADED = 'VERIFICATION_PROCESS_DETAIL_LOADED';
 
 interface VerificationProcessLoading {
   type: typeof VERIFICATION_PROCESS_LOADING;
@@ -17,19 +18,27 @@ interface VerificationProcessLoadFailed {
   type: typeof VERIFICATION_PROCESS_LOAD_FAILED;
 };
 
+interface VerificationProcessDetailLoaded {
+  type: typeof VERIFICATION_PROCESS_DETAIL_LOADED;
+  payload: VerificationProcess;
+};
+
 export type VerificationProcessActionTypes = 
   | VerificationProcessLoading
   | VerificationProcessLoaded
-  | VerificationProcessLoadFailed;
+  | VerificationProcessLoadFailed
+  | VerificationProcessDetailLoaded;
 
 export type VerificationProcessState = {
   records: VerificationProcess[];
   loading: boolean;
+  editingProcess?: VerificationProcess;
 };
 
 const initialState: VerificationProcessState = {
   records: [],
   loading: false,
+  editingProcess: undefined,
 };
 
 const verificationProcessReducer = (state = initialState, action: VerificationProcessActionTypes): VerificationProcessState => {
@@ -48,6 +57,12 @@ const verificationProcessReducer = (state = initialState, action: VerificationPr
     case VERIFICATION_PROCESS_LOAD_FAILED:
       return {
         ...state,
+        loading: false,
+      };
+    case VERIFICATION_PROCESS_DETAIL_LOADED:
+      return {
+        ...state,
+        editingProcess: action.payload,
         loading: false,
       };
     default:

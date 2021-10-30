@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { ChangeEvent, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationDocumentActions from "../../../common/actions/verificationDocument.action";
 import fileServices from "../../../common/services/file.services";
@@ -57,14 +58,10 @@ const CriteriaForm = (props: Props) => {
           })
       ))
         .then((result) => {
-          console.log('ok');
+          toast.success('Tải tài liệu thành công.');
         })
         .catch(() => {
-          // notifications.showNotification({
-          //   color: 'red',
-          //   title: 'Lỗi hệ thống',
-          //   message: 'Đã xảy ra lỗi trong quá trình tải tập tin, vui lòng thử lại sau.',
-          // });
+          toast.error('Đã xảy ra lỗi trong quá trình tải tài liệu. Vui lòng thử lại sau.');
         });
     }
   };

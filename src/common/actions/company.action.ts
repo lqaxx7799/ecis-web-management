@@ -26,6 +26,27 @@ function getAll(): AppThunk<Promise<Company[]>> {
   };
 }
 
+function getById(id: number): AppThunk<Promise<Company>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<CompanyActionTypes>({
+      type: 'COMPANY_LOADING',
+    });
+    try {
+      const data = await companyServices.getById(id);
+      dispatch<CompanyActionTypes>({
+        type: 'COMPANY_DETAIL_LOADED',
+        payload: data,
+      });
+      return data;
+    } catch (e) {
+      dispatch<CompanyActionTypes>({
+        type: 'COMPANY_LOAD_FAILED',
+      });
+      throw e;
+    }
+  };
+}
+
 function registerCompany(payload: CompanyRegistrationDTO): AppThunk<Promise<CompanyRegistrationDTO>> {
   return (dispatch: AppDispatch) => {
     return companyServices.registerCompany(payload);
@@ -34,6 +55,7 @@ function registerCompany(payload: CompanyRegistrationDTO): AppThunk<Promise<Comp
 
 const companyActions = {
   getAll,
+  getById,
   registerCompany,
 };
 

@@ -25,6 +25,10 @@ function getById(id: number): Promise<VerificationProcess> {
   return request.get(`/VerificationProcess/${id}`);
 }
 
+function generate(companyId: number): Promise<VerificationProcess> {
+  return request.post(`/VerificationProcess/Generate/${companyId}`);
+}
+
 function submitVerifyReview(id: number): Promise<VerificationProcess> {
   return request.put(`/VerificationProcess/SubmitReview/${id}`);
 }
@@ -44,6 +48,7 @@ const verificationProcessServices = {
   getAllSupport,
   getAllReviewed,
   getById,
+  generate,
   submitVerifyReview,
   update,
   finishVerify,

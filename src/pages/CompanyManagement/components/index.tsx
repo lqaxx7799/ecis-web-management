@@ -40,42 +40,31 @@ const CompanyManagement = (props: Props) => {
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Group>
-          <Tooltip label="Xem chi tiết">
-            <Button><EyeOpenIcon /></Button>
-          </Tooltip>
-          <Tooltip label="Cập nhật">
-            <Button><Pencil2Icon /></Button>
-          </Tooltip>
-        </Group>
+        <div>
+          <Link className="btn btn-default" to={`/company/${row.id}`}>Xem chi tiết</Link>
+        </div>
       ),
     },
   ];
 
   return (
-    <div>
-      <Helmet>
-        <title>Quản lý doanh nghiệp</title>
-      </Helmet>
-      <Title order={1}>Quản lý doanh nghiệp</Title>
-
-      <LoadingOverlay visible={loading} />
-
-      <div style={{ marginTop: '24px' }}>
-        <Text className="link-block" variant="link" component={Link} to="/doanh-nghiep/bao-cao">
-          Báo cáo vi phạm
-        </Text>
-        <Text className="link-block" variant="link" component={Link} to="/doanh-nghiep/duyet-bao-cao">
-          Duyệt vi phạm
-        </Text>
+    <div className="x_panel">
+      <div className="x_title">
+        <h2>Quản lý doanh nghiệp</h2>
+        <div className="clearfix"></div>
       </div>
-
-      <div style={{ marginTop: '24px' }}>
-        <DataTable
-          title={<Title order={2}>Danh sách doanh nghiệp</Title>}
-          data={companies}
-          columns={columns}
-        />
+      <div className="x_content">
+        <div className="clearfix"></div>
+        <div className="col-xs-12 table">
+          <DataTable
+            noHeader
+            striped
+            highlightOnHover
+            columns={columns}
+            data={companies}
+            noDataComponent="Không có yêu cầu"
+          />
+        </div>
       </div>
     </div>
   );

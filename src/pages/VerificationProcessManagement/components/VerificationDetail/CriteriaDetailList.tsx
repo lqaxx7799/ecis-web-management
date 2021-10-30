@@ -1,5 +1,6 @@
 import _ from "lodash";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { Criteria, CriteriaDetail } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
@@ -24,20 +25,20 @@ const CriteriaDetailList = (props: Props) => {
   const markCompliance = (verificationCriteriaId: number, value: boolean) => {
     dispatch(verificationProcessManagementActions.updateCriteriaCompliance(value, verificationCriteriaId))
       .then(() => {
-        console.log('ok');
+        toast.success('Lưu đánh giá thành công.');
       })
       .catch(() => {
-        console.log('error');
+        toast.error('Đã xảy ra lỗi trong quá trình lưu đánh giá. Vui lòng thử lại sau.');
       });
   };
 
   const editCriteriaField = (fieldName: string, verificationCriteriaId: number, value: string) => {
     return dispatch(verificationProcessManagementActions.updateCriteriaField(fieldName, verificationCriteriaId, value))
       .then(() => {
-        console.log('ok');
+        toast.success('Lưu thành công.');
       })
       .catch(() => {
-        console.log('error');
+        toast.error('Đã xảy ra lỗi trong quá trình cập nhật. Vui lòng thử lại sau.');
       });
   };
   

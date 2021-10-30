@@ -67,6 +67,7 @@ export interface VerificationProcess extends BaseModel {
   isOpenedByAgent: boolean;
   isSubmitted: boolean;
   isReviewed: boolean;
+  isFinished: boolean;
   submitMethod: string;
   companyTypeId?: number;
   assignedAgentId?: number;

@@ -109,12 +109,20 @@ function getAllReviewed(): AppThunk<Promise<VerificationProcess[]>> {
   };
 }
 
+function generate(companyId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch: AppDispatch) => {
+    const data = await verificationProcessServices.generate(companyId);
+    return data;
+  };
+}
+
 const verificationProcessActions = {
   getAll,
   getAllByCompany,
   getAllPending,
   getAllSupport,
   getAllReviewed,
+  generate,
 };
 
 export default verificationProcessActions;

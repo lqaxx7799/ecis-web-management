@@ -25,6 +25,8 @@ import BlankLayout from './BlankLayout';
 import SupportVerificationList from '../pages/SupportVerification/components';
 import SupportVerificationDetail from '../pages/SupportVerification/components/SupportVerificationDetail';
 import NotFound from '../pages/NotFound/components';
+import CompanyDetail from '../pages/CompanyManagement/components/CompanyDetail';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +41,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Switch>        
         <AppRoute path='/login' component={LogIn} layout={BlankLayout} />
 
@@ -58,6 +60,9 @@ const App = () => {
         <AppRoute path="/verification-reviewed" component={ReviewedVerificationList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification-result" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
+        <AppRoute path="/company/:id" component={CompanyDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/company" component={CompanyManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        
         <AppRoute path="/yeu-cau-xac-thuc" component={AssignedVerificationConfirmList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
@@ -66,13 +71,13 @@ const App = () => {
 
         <AppRoute path="/doanh-nghiep/duyet-bao-cao/:id?" component={VerifyViolationReport} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/doanh-nghiep/bao-cao" component={ReportViolation} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute path="/doanh-nghiep" component={CompanyManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
       </Switch>
-    </div>
+      <ToastContainer />
+    </>
   );
 }
 

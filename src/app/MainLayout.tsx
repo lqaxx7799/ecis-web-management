@@ -94,16 +94,16 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                       </ul>
                     </li>
                     <li
-                      key="company"
-                      className={`${activeSideItem === 'company' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'company')}
+                      key="support"
+                      className={`${activeSideItem === 'support' ? 'active' : ''}`}
+                      onClick={(e) => onSidebarClick(e, 'support')}
                     >
                       <a>
                         <i className="fa fa-edit" /> Hỗ trợ doanh nghiệp<span className="fa fa-chevron-down" />
                       </a>
                       <ul
                         className="nav child_menu"
-                        style={{ display: activeSideItem === 'company' ? 'block' : 'none' }}
+                        style={{ display: activeSideItem === 'support' ? 'block' : 'none' }}
                       >                  
                         <li><Link to="/support-verification">Tự đánh giá</Link></li>
                         <li><Link to="/verification-add-new">Thêm mới, cập nhật</Link></li>
@@ -135,9 +135,9 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                             className="nav child_menu"
                             style={{ display: activeSideItem === 'verification_verify' ? 'block' : 'none' }}
                           >
-                            <li><a href="fpd_verify_implement_assign.html">Phân công cán bộ</a></li>
-                            <li><a href="fpd_verify_implement_result.html">Kết quả xác minh</a></li>
-                            <li><a href="fpd_verify_implement_aprrove.html">Duyệt kết quả xác minh</a></li>
+                            <li><Link to="/verify-verification-assign">Phân công cán bộ</Link></li>
+                            <li><Link to="/verify-verification-result">Kết quả xác minh</Link></li>
+                            <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li>
                           </ul>
                         </li>
                       </ul>
@@ -175,7 +175,22 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         <li><Link to="/report/result">Kết quả giải quyết</Link></li>
                         <li><Link to="/report/browse">Duyệt</Link></li>
                       </ul>
-                    </li>                      
+                    </li>
+                    <li
+                      key="company"
+                      className={`${activeSideItem === 'company' ? 'active' : ''}`}
+                      onClick={(e) => onSidebarClick(e, 'company')}
+                    >
+                      <a>
+                        <i className="fa fa-desktop" /> Quản lý doanh nghiệp <span className="fa fa-chevron-down" />
+                      </a>
+                      <ul
+                        className="nav child_menu"
+                        style={{ display: activeSideItem === 'company' ? 'block' : 'none' }}
+                      >
+                        <li><Link to="/company">Duyệt doanh nghiệp</Link></li>
+                      </ul>
+                    </li>
                   </ul>
                 </div>              
               </div>

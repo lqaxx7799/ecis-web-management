@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import verificationProcessActions from "../../../../common/actions/verificationProcess.action";
 import { VerificationProcess } from "../../../../types/models";
@@ -28,10 +29,10 @@ const ReviewedVerificationList = (props: Props) => {
     if (value) {
       dispatch(verificationProcessManagementActions.finishVerify(verificationId))
         .then(() => {
-
+          toast.success('Lưu kết quả thành công.');
         })
         .catch(() => {
-
+          toast.success('Đã xảy ra lỗi trong quá trình lưu kết quả. Vui lòng thử lại sau.');
         });
     }
   };

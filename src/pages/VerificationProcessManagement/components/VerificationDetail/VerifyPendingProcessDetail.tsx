@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
@@ -46,18 +47,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
     };
     dispatch(verificationProcessManagementActions.updateProcess(updated))
       .then(() => {
-        // notifications.showNotification({
-        //   color: 'green',
-        //   title: 'Thành công',
-        //   message: 'Lưu đánh giá thành công',
-        // });
+        toast.success('Lưu kết quả phân loại doanh nghiệp thành công.');
       })
       .catch(() => {
-        // notifications.showNotification({
-        //   color: 'red',
-        //   title: 'Lỗi hệ thống',
-        //   message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
-        // });
+        toast.error('Đã xảy ra lỗi trong quá trình lưu kết quả phân loại doanh nghiệp. Vui lòng thử lại sau.');
       });
   };
 
@@ -65,18 +58,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
     dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id)))
       .then(() => {
         history.push('/verification');
-        // notifications.showNotification({
-        //   color: 'green',
-        //   title: 'Thành công',
-        //   message: 'Lưu đánh giá thành công',
-        // });
+        toast.success('Lưu đánh giá thành công.');
       })
       .catch(() => {
-        // notifications.showNotification({
-        //   color: 'red',
-        //   title: 'Lỗi hệ thống',
-        //   message: 'Đã có lỗi xảy ra trong quá trình lưu đánh giá doanh nghiệp',
-        // });
+        toast.error('Đã xảy ra lỗi trong quá trình lưu đánh giá. Vui lòng thử lại sau.');
       });
   };
 

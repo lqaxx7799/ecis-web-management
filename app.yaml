@@ -1,0 +1,27 @@
+service: ecis-web-management
+runtime: nodejs14
+handlers:
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+    secure: never
+  - url: /vendors/(.*)$
+    static_files: build/vendors/\1
+    upload: build/vendors/(.*)
+    secure: never
+  - url: /images/(.*)$
+    static_files: build/images/\1
+    upload: build/images/(.*)
+    secure: never
+  - url: /static/(.*)$
+    static_files: build/static/\1
+    upload: build/static/(.*)
+    secure: never
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+    redirect_http_response_code: 301
+    secure: never
+    http_headers:
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+      X-Frame-Options: DENY

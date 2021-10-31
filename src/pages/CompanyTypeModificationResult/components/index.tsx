@@ -90,10 +90,10 @@ const CompanyTypeModificationResult = (props: Props) => {
       name: 'Kết quả phân loại',
       selector: (row) => row.updatedCompanyType.typeName,
     },
-    {
-      name: 'Trạng thái',
-      selector: (row) => row.isAnnounced ? "Đã công bố" : "Chưa công bố"
-    },
+    // {
+    //   name: 'Trạng thái',
+    //   selector: (row) => row.isAnnounced ? "Đã công bố" : "Chưa công bố"
+    // },
     {
       name: 'Hành động',
       cell: (row, index) => (

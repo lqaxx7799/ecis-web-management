@@ -16,6 +16,20 @@ type Props = {
 
 };
 
+interface VerificationConfirmRequirementDTOTemp {
+  scheduledTime: Date; 
+  scheduledLocation: string;
+  announceAgentDocumentContent: string;
+  announceAgentDocumentUrl?: string;
+  announceAgentDocumentType?: string;
+  announceAgentDocumentSize?: number;
+  announceAgentDocumentName?: string;
+  isUsingAnnounceAgentFile?: boolean;
+  verificationProcessId: string;
+  assignedAgentId: string;
+  verificationCriteriaId: string;
+};
+
 const AssignVerify = (props: Props) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -26,7 +40,7 @@ const AssignVerify = (props: Props) => {
     handleSubmit,
     setError,
     setValue,
-  } = useForm<VerificationConfirmRequirementDTO>();
+  } = useForm<VerificationConfirmRequirementDTOTemp>();
   
   const { agents } = useAppSelector((state) => state.agent);
   const { editingProcess, verificationCriterias } = useAppSelector((state) => state.verificationProcessManagement);
@@ -37,15 +51,21 @@ const AssignVerify = (props: Props) => {
     dispatch(agentActions.getAll());
     dispatch(assignVerifyActions.getCompanyCurrentPending(companyId))
       .then((result) => {
-        setValue('verificationProcessId', result.id);
+        setValue('verificationProcessId', result.id.toString());
       })
       .catch(() => {
 
       });
   }, [dispatch, companyId]);
 
-  const onSubmit = (data: VerificationConfirmRequirementDTO) => {
-    dispatch(verificationConfirmRequirementActions.create(data))
+  const onSubmit = (data: VerificationConfirmRequirementDTOTemp) => {
+    const formattedData: VerificationConfirmRequirementDTO = {
+      ...data,
+      verificationProcessId: parseInt(data.verificationProcessId),
+      assignedAgentId: parseInt(data.assignedAgentId),
+      verificationCriteriaId: parseInt(data.verificationCriteriaId),
+    };
+    dispatch(verificationConfirmRequirementActions.create(formattedData))
       .then((result) => {
         toast.success('Yêu cầu cán bộ thành công');
         dispatch<VerificationConfirmRequirementActionTypes>({

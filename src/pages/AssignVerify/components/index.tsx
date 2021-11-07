@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Controller, useForm } from "react-hook-form";
 import { Redirect, useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -63,7 +64,10 @@ const AssignVerify = (props: Props) => {
 
   if (!editingProcess) {
     return (
-      <div className="row">            
+      <div className="row">
+        <Helmet>
+          <title>Phân công xác minh sự tuân thủ</title>
+        </Helmet>
         <div className="x_panel">
           <div className="x_title">
             <h2>Phân công xác minh sự tuân thủ</h2>
@@ -82,7 +86,10 @@ const AssignVerify = (props: Props) => {
   }
 
   return (
-    <div className="row">            
+    <div className="row">
+      <Helmet>
+        <title>Phân công xác minh sự tuân thủ</title>
+      </Helmet>
       <div className="x_panel">
         <div className="x_title">
           <h2>Phân công xác minh sự tuân thủ</h2>

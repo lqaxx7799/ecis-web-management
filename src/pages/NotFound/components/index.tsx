@@ -1,6 +1,11 @@
+import { Helmet } from "react-helmet";
+
 const NotFound = () => {
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Lỗi</title>
+      </Helmet>  
       <div className="x_title">
         <h2>Lỗi</h2>
         <div className="clearfix" />

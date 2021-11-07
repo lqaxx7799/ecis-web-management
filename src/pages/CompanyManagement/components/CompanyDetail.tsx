@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import companyActions from "../../../common/actions/company.action";
@@ -76,9 +78,15 @@ const CompanyDetail = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Quản lý doanh nghiệp</title>
+      </Helmet>
       <div className="x_title">
         <h2>Quản lý doanh nghiệp</h2>
         <div className="clearfix"></div>
+      </div>
+      <div className="x_breadcrumb">
+        <Link className="btn btn-default" to="/company">Quay lại</Link>
       </div>
       <div className="x_content">
         <div className="clearfix"></div>

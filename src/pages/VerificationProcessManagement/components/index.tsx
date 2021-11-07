@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessActions from "../../../common/actions/verificationProcess.action";
@@ -53,6 +54,9 @@ const VerificationProcessManagement = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Danh sách yêu cầu đánh giá</title>
+      </Helmet>
       <div className="x_title">
         <h2>Danh sách yêu cầu đánh giá</h2>
         <div className="clearfix"></div>

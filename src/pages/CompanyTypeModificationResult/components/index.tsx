@@ -32,7 +32,6 @@ type Props = {
 
 const CompanyTypeModificationResult = (props: Props) => {
   const dispatch = useAppDispatch();
-  // const notifications = useNotifications();
   const { companyTypeModifications, loading } = useAppSelector((state) => state.companyTypeModification);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -104,6 +103,9 @@ const CompanyTypeModificationResult = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Kết quả phân loại</title>
+      </Helmet>
       <div className="x_title">
         <h2>Kết quả phân loại</h2>
         <div className="clearfix"></div>

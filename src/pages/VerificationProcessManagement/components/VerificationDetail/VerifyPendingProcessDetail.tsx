@@ -19,7 +19,6 @@ type RouteParams = {
 };
 
 const VerifyPendingProcessDetail = (props: Props) => {
-  // const notifications = useNotifications();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const {
@@ -130,6 +129,9 @@ const VerifyPendingProcessDetail = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</title>
+      </Helmet>
       <div className="x_title">
         <h2>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />

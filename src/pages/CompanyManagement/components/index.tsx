@@ -49,6 +49,9 @@ const CompanyManagement = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Quản lý doanh nghiệp</title>
+      </Helmet>
       <div className="x_title">
         <h2>Quản lý doanh nghiệp</h2>
         <div className="clearfix"></div>

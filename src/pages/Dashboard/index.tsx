@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet";
+
 type Props = {
 
 };
@@ -5,6 +7,9 @@ type Props = {
 const Dashboard = (props: Props) => {
   return (
     <div className="row">
+      <Helmet>
+        <title>Trang chủ</title>
+      </Helmet>
       <div className="col-md-6">
         <div className="x_panel">
           <div className="x_title">

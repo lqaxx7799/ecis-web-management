@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessActions from "../../../common/actions/verificationProcess.action";
@@ -47,6 +48,9 @@ const SupportVerificationList = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Hỗ trợ đánh giá cho doanh nghiệp</title>
+      </Helmet>
       <div className="x_title">
         <h2>Hỗ trợ đánh giá cho doanh nghiệp</h2>
         <div className="clearfix" />

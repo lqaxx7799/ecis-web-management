@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationConfirmRequirementActions from "../../../common/actions/verificationConfirmRequirement.action";
@@ -62,6 +63,9 @@ const AssignedVerificationConfirmList = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Duyệt yêu cầu xác minh</title>
+      </Helmet>
       <div className="x_title">
         <h2>Duyệt yêu cầu xác minh</h2>
         <div className="clearfix"></div>

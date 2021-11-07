@@ -68,6 +68,9 @@ const ReviewedVerificationList = (props: Props) => {
 
   return (
     <div className="x_panel">
+      <Helmet>
+        <title>Duyệt kết quả phân loại</title>
+      </Helmet>
       <div className="x_title">
         <h2>Duyệt kết quả phân loại</h2>
         <div className="clearfix" />

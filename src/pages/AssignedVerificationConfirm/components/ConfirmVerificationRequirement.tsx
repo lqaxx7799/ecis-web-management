@@ -1,6 +1,7 @@
 import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import { ChangeEvent, useEffect, useRef } from "react";
+import { Helmet } from "react-helmet";
 import { useForm, Controller } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -84,6 +85,9 @@ const ConfirmVerificationRequirement = (props: Props) => {
   if (loading) {
     return (
       <div className="row">
+        <Helmet>
+          <title>Phân công xác minh sự tuân thủ</title>
+        </Helmet>
         <div className="x_panel">
           <div className="x_title">
             <h2>Phân công xác minh sự tuân thủ</h2>
@@ -101,6 +105,9 @@ const ConfirmVerificationRequirement = (props: Props) => {
 
   return (
     <div className="row">
+      <Helmet>
+        <title>Phân công xác minh sự tuân thủ</title>
+      </Helmet>
       <div className="x_panel">
         <div className="x_title">
           <h2>Phân công xác minh sự tuân thủ</h2>

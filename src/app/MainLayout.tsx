@@ -137,7 +137,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                           >
                             <li><Link to="/verify-verification-browse">Duyệt yêu cầu xác minh</Link></li>
                             <li><Link to="/verify-verification-result">Kết quả xác minh</Link></li>
-                            <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li>
+                            {/* <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li> */}
                           </ul>
                         </li>
                       </ul>

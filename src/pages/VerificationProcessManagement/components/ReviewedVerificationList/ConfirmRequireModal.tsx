@@ -189,7 +189,7 @@ const ConfirmRequireModal = (props: Props) => {
           </Col>
         </Grid>
 
-        <Controller
+        {/* <Controller
           name="assignedAgentId"
           control={control}
           rules={{ required: 'Không được để trống cán bộ' }}
@@ -210,7 +210,7 @@ const ConfirmRequireModal = (props: Props) => {
               }))}
             />
           )}
-        />
+        /> */}
 
         <Title order={3} style={{ marginTop: '12px' }}>Soạn thảo văn bản thông báo</Title>
         

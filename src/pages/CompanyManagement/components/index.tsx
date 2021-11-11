@@ -65,7 +65,7 @@ const CompanyManagement = (props: Props) => {
             highlightOnHover
             columns={columns}
             data={companies}
-            noDataComponent="Không có yêu cầu"
+            noDataComponent="Không có dữ liệu"
           />
         </div>
       </div>

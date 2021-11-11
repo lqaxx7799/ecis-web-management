@@ -91,11 +91,9 @@ function getById(processId: number): AppThunk<Promise<VerificationConfirmRequire
 
 function create(data: VerificationConfirmRequirementDTO): AppThunk<Promise<VerificationConfirmRequirement>> {
   return (dispatch: AppDispatch) => {
-    const formattedData: Partial<VerificationConfirmRequirement> = {
-      ...data,
-      assignedAgentId: parseInt(data.assignedAgentId),
-    };
-    return verificationConfirmRequirementServices.create(formattedData);
+    return verificationConfirmRequirementServices.create(
+      data as Partial<VerificationConfirmRequirement>
+    );
   };
 }
 

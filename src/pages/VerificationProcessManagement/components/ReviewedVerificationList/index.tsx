@@ -43,7 +43,7 @@ const ReviewedVerificationList = (props: Props) => {
       selector: (row, index) => index + 1,
     },
     {
-      name: 'Công ty',
+      name: 'Doanh nghiệp',
       selector: (row) => `${_.get(row, 'company.companyNameVI')} (${_.get(row, 'company.companyCode')})`,
     },
     {

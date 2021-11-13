@@ -87,7 +87,7 @@ const CompanyTypeModificationResult = (props: Props) => {
     },
     {
       name: 'Kết quả phân loại',
-      selector: (row) => row.updatedCompanyType.typeName,
+      selector: (row) => _.get(row, 'updatedCompanyType.typeName', 'Không có'),
     },
     // {
     //   name: 'Trạng thái',

@@ -48,7 +48,7 @@ const ReviewedVerificationList = (props: Props) => {
     },
     {
       name: 'Kết quả phân loại',
-      selector: (row) => row.companyType?.typeName ?? 'Không có đánh giá',
+      selector: (row) => _.get(row, 'companyType.typeName', 'Không có đánh giá'),
     },
     {
       name: 'Thao tác',

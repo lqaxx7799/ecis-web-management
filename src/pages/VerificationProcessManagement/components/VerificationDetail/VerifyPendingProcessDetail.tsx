@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Popup from "reactjs-popup";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
@@ -54,6 +55,9 @@ const VerifyPendingProcessDetail = (props: Props) => {
   };
 
   const submitVerify = () => {
+    if (!editingProcess?.companyTypeId) {
+      return;
+    }
     dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id)))
       .then(() => {
         history.push('/verification');
@@ -113,7 +117,18 @@ const VerifyPendingProcessDetail = (props: Props) => {
           </select>
         </div>
         <div style={{ marginTop: '24px' }}>
-          <button className="btn btn-primary" onClick={submitVerify}>Duyệt kết quả</button>
+          {
+            editingProcess?.companyTypeId ? (
+              <button className="btn btn-primary" onClick={submitVerify}>Duyệt kết quả</button>
+            ) : (
+              <Popup
+                trigger={<span><button className="btn btn-primary" disabled>Duyệt kết quả</button></span>}
+                on={['hover']}
+              >
+                Phân loại doanh nghiệp trước khi duyệt kết quả
+              </Popup>
+            )
+          }
         </div>
         <div style={{ marginTop: '24px' }}>
           <Link

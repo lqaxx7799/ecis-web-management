@@ -11,6 +11,8 @@ import App from './app/App';
 import './styles/custom.css';
 import './styles/index.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-responsive-modal/styles.css';
+import 'reactjs-popup/dist/index.css';
 
 ReactDOM.render(
   <MantineProvider>

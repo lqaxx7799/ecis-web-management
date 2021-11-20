@@ -1,5 +1,3 @@
-import { Button, Group, LoadingOverlay, Title, Tooltip } from '@mantine/core';
-import { EyeOpenIcon, Pencil2Icon } from '@radix-ui/react-icons';
 import dayjs from 'dayjs';
 import _ from "lodash";
 import { useEffect, useState } from 'react';
@@ -62,36 +60,33 @@ const CompanyReportManagement = (props: Props) => {
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Group>
-          <Tooltip label="Xem chi tiết">
-            <Button
-              component={Link}
-              to={`/xu-ly-yeu-cau/${row.id}`}
-            >
-              <EyeOpenIcon />
-            </Button>
-          </Tooltip>
-        </Group>
+        <Link to={`/verification-request/${row.id}`} className="btn btn-default">Xem chi tiết</Link>
       ),
     },
   ];
+
   return (
-    <div>
+    <div className="x_panel">
       <Helmet>
-        <title>Quản lý doanh nghiệp</title>
+        <title>Yêu cầu đánh giá đánh giá trước thời hạn</title>
       </Helmet>
-      <Title order={1}>Quản lý doanh nghiệp</Title>
-
-      <LoadingOverlay visible={loading} />
-
-      <div style={{ marginTop: '24px' }}>
-        <DataTable
-          title={<Title order={2}>Danh sách doanh nghiệp</Title>}
-          data={companyReports}
-          columns={columns}
-        />
+      <div className="x_title">
+        <h2>Yêu cầu đánh giá đánh giá trước thời hạn</h2>
+        <div className="clearfix"></div>
       </div>
-
+      <div className="x_content">
+        <div className="clearfix"></div>
+        <div className="col-xs-12 table">
+          <DataTable
+            noHeader
+            striped
+            highlightOnHover
+            columns={columns}
+            data={companyReports}
+            noDataComponent="Không có yêu cầu"
+          />
+        </div>
+      </div>
       <CompanyReportModal
         isOpening={showModal}
       />

@@ -75,9 +75,9 @@ const App = () => {
 
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute path="/xu-ly-yeu-cau/:id?" component={CompanyReportManagement} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verification-request/:id?" component={CompanyReportManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
-        <AppRoute path="/doanh-nghiep/duyet-bao-cao/:id?" component={VerifyViolationReport} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/doanh-nghiep/duyet-bao-cao/:id?" component={VerifyViolationReport} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />

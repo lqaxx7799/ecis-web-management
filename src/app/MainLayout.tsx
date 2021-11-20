@@ -164,16 +164,14 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                       onClick={(e) => onSidebarClick(e, 'report')}
                     >
                       <a>
-                        <i className="fa fa-desktop" /> Giải quyết khiếu nại<span className="fa fa-chevron-down" />
+                        <i className="fa fa-desktop" /> Giải quyết yêu cầu<span className="fa fa-chevron-down" />
                       </a>
                       <ul
                         className="nav child_menu"
                         style={{ display: activeSideItem === 'report' ? 'block' : 'none' }}
                       >
-                        <li><Link to="/report">Xem khiếu nại</Link></li>
-                        <li><Link to="/report/assign">Phân công giải quyết</Link></li>
-                        <li><Link to="/report/result">Kết quả giải quyết</Link></li>
-                        <li><Link to="/report/browse">Duyệt</Link></li>
+                        <li><Link to="/violation-report">Hoạt động sai phạm</Link></li>
+                        <li><Link to="/verification-request">Yêu cầu đánh giá trước thời hạn</Link></li>
                       </ul>
                     </li>
                     <li

@@ -59,6 +59,11 @@ const CompanyManagement = (props: Props) => {
       <div className="x_content">
         <div className="clearfix"></div>
         <div className="col-xs-12 table">
+          <div>
+            <Link className="btn btn-primary" to="/company/create">
+              Thêm mới
+            </Link>
+          </div>
           <DataTable
             noHeader
             striped

@@ -1,5 +1,3 @@
-import { Anchor, Breadcrumbs, Button, Group, LoadingOverlay, Title, Tooltip } from "@mantine/core";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect, useState } from "react";
@@ -63,50 +61,43 @@ const VerifyViolationReport = (props: Props) => {
     {
       name: 'Hành động',
       cell: (row, index) => (
-        <Group>
-          <Tooltip label="Xem chi tiết">
-            <Button
-              component={Link}
-              to={`/doanh-nghiep/duyet-bao-cao/${row.id}`}
-            >
-              <EyeOpenIcon />
-            </Button>
-          </Tooltip>
-        </Group>
+        <Link
+          className="btn btn-default"
+          to={`/violation-report/${row.id}`}
+        >
+          Xem chi tiết
+        </Link>
       ),
     },
   ];
- 
+
   return (
-    <div>
+    <div className="x_panel">
       <Helmet>
-        <title>Duyệt báo cáo vi phạm của doanh nghiệp</title>
+        <title>Hoạt động sai phạm</title>
       </Helmet>
-
-      <Title order={1}>Duyệt báo cáo vi phạm của doanh nghiệp</Title>
-
-      <LoadingOverlay visible={loading} />
-
-      <div style={{ marginTop: '12px' }}>
-        <Breadcrumbs>
-          <Anchor component={Link} to="/">Trang chủ</Anchor>
-          <Anchor component={Link} to="/doanh-nghiep">Quản lý doanh nghiệp</Anchor>
-        </Breadcrumbs>
+      <div className="x_title">
+        <h2>Hoạt động sai phạm</h2>
+        <div className="clearfix"></div>
       </div>
-
-      <div style={{ marginTop: '24px' }}>
-        <DataTable
-          title={<Title order={2}>Danh sách doanh nghiệp</Title>}
-          data={violationReports}
-          columns={columns}
-        />
+      <div className="x_content">
+        <div className="clearfix"></div>
+        <div className="col-xs-12 table">
+          <DataTable
+            noHeader
+            striped
+            highlightOnHover
+            columns={columns}
+            data={violationReports}
+            noDataComponent="Không có báo cáo"
+          />
+        </div>
       </div>
-
       <ViolationReportModal
         isOpening={showModal}
       />
     </div>
-  );
+  ); 
 };
 
 export default VerifyViolationReport;

@@ -174,6 +174,7 @@ const ReportViolation = (props: Props) => {
                     onChange={handleFileUpload}
                   />
                   <button
+                    type="button"
                     className="btn btn-default"
                     onClick={showFileDialog}
                     style={{ marginBottom: '12px' }}
@@ -188,7 +189,7 @@ const ReportViolation = (props: Props) => {
                           <FileIcon /> {field.documentName}
                         </div>
                         
-                        <button className="btn btn-danger" onClick={() => remove(index)}>
+                        <button type="button" className="btn btn-danger" onClick={() => remove(index)}>
                           <TrashIcon /> Gỡ tài liệu
                         </button>
                       </div>

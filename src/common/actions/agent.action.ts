@@ -22,11 +22,33 @@ function getAll(): AppThunk<Promise<Agent[]>> {
       });
       return [];
     }
-  }
+  };
+}
+
+function getAllAgents(): AppThunk<Promise<Agent[]>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<AgentActionTypes>({
+      type: 'AGENT_LOADING',
+    });
+    try {
+      const result = await agentServices.getAllAgents();
+      dispatch<AgentActionTypes>({
+        type: 'AGENT_LOADED',
+        payload: result,
+      });
+      return result;
+    } catch (e) {
+      dispatch<AgentActionTypes>({
+        type: 'AGENT_LOAD_FAILED',
+      });
+      return [];
+    }
+  };
 }
 
 const agentActions = {
   getAll,
+  getAllAgents,
 };
 
 export default agentActions;

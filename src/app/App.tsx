@@ -31,6 +31,7 @@ import ConfirmVerificationRequirement from '../pages/AssignedVerificationConfirm
 import VerificationConfirmResult from '../pages/VerificationConfirmResult/components';
 import ReportViolation from '../pages/ReportViolation/components';
 import CompanyCreate from '../pages/CompanyManagement/components/CompanyCreate';
+import AgentManagement from '../pages/AgentManagement/components';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -70,14 +71,16 @@ const App = () => {
         <AppRoute path="/verification-result" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/company/report-violation" component={ReportViolation} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute path="/company/create" component={CompanyCreate} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/company/create" component={CompanyCreate} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/company/:id" component={CompanyDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company" component={CompanyManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
+        <AppRoute path="/agent" component={AgentManagement} layout={MainLayout} needAuth roles={["Admin"]} />
+
         <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute path="/verification-request/:id?" component={CompanyReportManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
-        <AppRoute path="/violation-report/:id?" component={VerifyViolationReport} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verification-request/:id?" component={CompanyReportManagement} layout={MainLayout} needAuth roles={["Admin"]} />
+        <AppRoute path="/violation-report/:id?" component={VerifyViolationReport} layout={MainLayout} needAuth roles={["Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />

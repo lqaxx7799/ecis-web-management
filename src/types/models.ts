@@ -211,3 +211,15 @@ export interface CompanyReportDocument extends BaseModel {
   documentSize: number;
   companyReportId: number;
 };
+
+export interface Province extends BaseModel {
+  id: number;
+  provinceCode: string;
+  provinceName: string;
+};
+
+export interface AgentAssignment extends BaseModel {
+  id: number;
+  agentId: string;
+  provinceId: string;
+};

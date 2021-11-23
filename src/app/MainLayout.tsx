@@ -1,5 +1,4 @@
-import { Button, Container, Divider, Menu, MenuItem, MenuLabel, Text, Title } from '@mantine/core';
-import { PersonIcon, PinLeftIcon, TriangleDownIcon } from '@radix-ui/react-icons';
+import _ from "lodash";
 import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import authenticationActions from '../common/actions/authentication.actions';
@@ -43,6 +42,8 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
   const logOut = () => {
     dispatch(authenticationActions.logOut());
   };
+
+  const isAdmin = _.get(authentication, 'role.roleName') === 'Admin';
 
   return (
     <div className={isSideBarOpen ? 'nav-md' : 'nav-sm'}>
@@ -158,22 +159,26 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
                       </ul>
                     </li>
-                    <li
-                      key="report"
-                      className={`${activeSideItem === 'report' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'report')}
-                    >
-                      <a>
-                        <i className="fa fa-desktop" /> Giải quyết yêu cầu<span className="fa fa-chevron-down" />
-                      </a>
-                      <ul
-                        className="nav child_menu"
-                        style={{ display: activeSideItem === 'report' ? 'block' : 'none' }}
-                      >
-                        <li><Link to="/violation-report">Hoạt động sai phạm</Link></li>
-                        <li><Link to="/verification-request">Yêu cầu đánh giá trước thời hạn</Link></li>
-                      </ul>
-                    </li>
+                    {
+                      isAdmin && (
+                        <li
+                          key="report"
+                          className={`${activeSideItem === 'report' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'report')}
+                        >
+                          <a>
+                            <i className="fa fa-desktop" /> Giải quyết yêu cầu<span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem === 'report' ? 'block' : 'none' }}
+                          >
+                            <li><Link to="/violation-report">Hoạt động sai phạm</Link></li>
+                            <li><Link to="/verification-request">Yêu cầu đánh giá trước thời hạn</Link></li>
+                          </ul>
+                        </li>
+                      )
+                    }
                     <li
                       key="company"
                       className={`${activeSideItem === 'company' ? 'active' : ''}`}
@@ -190,6 +195,25 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         <li><Link to="/company/report-violation">Báo cáo sai phạm</Link></li>
                       </ul>
                     </li>
+                    {
+                      isAdmin && (
+                        <li
+                          key="agent"
+                          className={`${activeSideItem === 'agent' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'agent')}
+                        >
+                          <a>
+                            <i className="fa fa-desktop" /> Quản lý kiểm lâm tỉnh<span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem === 'agent' ? 'block' : 'none' }}
+                          >
+                            <li><Link to="/agent">Duyệt kiểm lâm tỉnh</Link></li>
+                          </ul>
+                        </li>
+                      )
+                    }
                   </ul>
                 </div>              
               </div>

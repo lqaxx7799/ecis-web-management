@@ -5,31 +5,35 @@ import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
-import companyActions from "../../../common/actions/company.action";
-import { Company } from "../../../types/models";
+import agentActions from "../../../common/actions/agent.action";
+import { Agent } from "../../../types/models";
 
 type Props = {
 
 };
 
-const CompanyManagement = (props: Props) => {
+const AgentManagement = (props: Props) => {
   const dispatch = useAppDispatch();
 
-  const { loading, companies } = useAppSelector((state) => state.company);
+  const { loading, agents } = useAppSelector((state) => state.agent);
   const { role } = useAppSelector((state) => state.authentication);
 
   useEffect(() => {
-    dispatch(companyActions.getAll());
+    dispatch(agentActions.getAllAgents());
   }, [dispatch]);
 
-  const columns: IDataTableColumn<Company>[] = [
+  const columns: IDataTableColumn<Agent>[] = [
     {
       name: 'STT',
       selector: (row, index) => index + 1,
     },
     {
-      name: 'Công ty',
-      selector: (row) => `${_.get(row, 'companyNameVI')} (${_.get(row, 'companyCode')})`,
+      name: 'Họ tên',
+      selector: (row) => `${_.get(row, 'lastName')} ${_.get(row, 'firstName')}`,
+    },
+    {
+      name: 'Email',
+      selector: (row) => _.get(row, 'account.email'),
     },
     {
       name: 'Thời gian tạo',
@@ -40,7 +44,7 @@ const CompanyManagement = (props: Props) => {
       name: 'Hành động',
       cell: (row, index) => (
         <div>
-          <Link className="btn btn-default" to={`/company/${row.id}`}>Xem chi tiết</Link>
+          <Link className="btn btn-default" to={`/agent/${row.id}`}>Xem chi tiết</Link>
         </div>
       ),
     },
@@ -49,10 +53,10 @@ const CompanyManagement = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>Quản lý doanh nghiệp</title>
+        <title>Quản lý kiểm lâm tỉnh</title>
       </Helmet>
       <div className="x_title">
-        <h2>Quản lý doanh nghiệp</h2>
+        <h2>Quản lý kiểm lâm tỉnh</h2>
         <div className="clearfix"></div>
       </div>
       <div className="x_content">
@@ -61,7 +65,7 @@ const CompanyManagement = (props: Props) => {
           {
             _.get(role, 'roleName') === 'Admin' && (
               <div>
-                <Link className="btn btn-primary" to="/company/create">
+                <Link className="btn btn-primary" to="/agent/create">
                   Thêm mới
                 </Link>
               </div>
@@ -72,7 +76,7 @@ const CompanyManagement = (props: Props) => {
             striped
             highlightOnHover
             columns={columns}
-            data={companies}
+            data={agents}
             noDataComponent="Không có dữ liệu"
           />
         </div>
@@ -81,4 +85,4 @@ const CompanyManagement = (props: Props) => {
   );
 };
 
-export default CompanyManagement;
+export default AgentManagement;

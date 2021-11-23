@@ -5,6 +5,7 @@ export interface CompanyRegistrationDTO {
   companyCode: string;
   companyNameVI: string;
   companyNameEN: string;
+  provinceId: number;
 };
 
 export interface LogInDTO {

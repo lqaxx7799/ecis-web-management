@@ -1,4 +1,4 @@
-import { ViolationReportDocument } from "./models";
+import { VerificationConfirmDocument, ViolationReportDocument } from "./models";
 
 export interface CompanyRegistrationDTO {
   email: string;
@@ -24,11 +24,6 @@ export interface VerificationConfirmRequirementDTO {
   scheduledTime: Date; 
   scheduledLocation: string;
   announceAgentDocumentContent: string;
-  announceAgentDocumentUrl?: string;
-  announceAgentDocumentType?: string;
-  announceAgentDocumentSize?: number;
-  announceAgentDocumentName?: string;
-  isUsingAnnounceAgentFile?: boolean;
   verificationProcessId: number;
   assignedAgentId: number;
   verificationCriteriaId: number;
@@ -41,8 +36,7 @@ export interface VerificationConfirmUpdateDTO {
   documentType?: string;
   documentSize?: number;
   documentName?: string;
-  isUsingFile?: boolean;
-  companyTypeId?: number;
+  verificationConfirmDocuments: Partial<VerificationConfirmDocument>[];
 };
 
 export interface ViolationReportDTO {

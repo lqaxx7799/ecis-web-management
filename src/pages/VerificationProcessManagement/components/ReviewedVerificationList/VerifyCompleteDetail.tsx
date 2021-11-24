@@ -13,7 +13,6 @@ import FileInfo from "../../../../common/components/FileInfo";
 import { DEFAULT_DATETIME_FORMAT } from "../../../../common/constants/app";
 import { VerificationProcess } from "../../../../types/models";
 import verificationProcessManagementActions from "../../action";
-import ConfirmRequireModal from "./ConfirmRequireModal";
 import VerifyCompleteCriteriaGroup from "./VerifyCompleteCriteriaGroup";
 
 type Props = {
@@ -173,18 +172,7 @@ const VerifyCompleteDetail = (props: Props) => {
                   <div>
                     Văn bản xác thực:
                     <div>
-                      {editingRequirement?.isUsingConfirmFile ? (
-                        <FileInfo
-                          data={{
-                            name: editingRequirement?.confirmDocumentName ?? '',
-                            type: editingRequirement?.confirmDocumentType ?? '',
-                            size: editingRequirement?.confirmDocumentSize ?? 0,
-                            url: editingRequirement?.confirmDocumentUrl ?? '',
-                          }}
-                        />
-                      ) : (
-                        <Paper dangerouslySetInnerHTML={{ __html: editingRequirement?.confirmDocumentContent ?? '' }} />
-                      )}
+                      <Paper dangerouslySetInnerHTML={{ __html: editingRequirement?.confirmDocumentContent ?? '' }} />
                     </div>
                   </div>
                 </div>
@@ -227,11 +215,6 @@ const VerifyCompleteDetail = (props: Props) => {
           </Button>
         </Group>
       </div>
-
-      <ConfirmRequireModal
-        isOpening={showConfirmRequireModal}
-        setIsOpening={setShowConfirmRequireModal}
-      />
 
       <Modal
         opened={showSubmitModal}

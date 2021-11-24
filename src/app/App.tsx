@@ -5,16 +5,11 @@ import { useAppDispatch, useAppSelector } from './store';
 import { useEffect } from 'react';
 import authenticationActions from '../common/actions/authentication.actions';
 
-import ManagementLayout from './ManagementLayout';
 import LogIn from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import VerificationProcessManagement from '../pages/VerificationProcessManagement/components';
-import VerifyPendingProcessList from '../pages/VerificationProcessManagement/components/ReviewVerification/VerifyPendingProcessList';
-// import SupportVerificationList from '../pages/VerificationProcessManagement/components/SupportVerification/SupportVerificationList';
-import CompanyEditVerification from '../pages/VerificationProcessManagement/components/SupportVerification/CompanyEditVerification';
 import VerifyPendingProcessDetail from '../pages/VerificationProcessManagement/components/VerificationDetail/VerifyPendingProcessDetail';
 import ReviewedVerificationList from '../pages/VerificationProcessManagement/components/ReviewedVerificationList';
-import VerifyCompleteDetail from '../pages/VerificationProcessManagement/components/ReviewedVerificationList/VerifyCompleteDetail';
 import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfirm/components/AssignedVerificationConfirmList';
 import CompanyTypeModificationResult from '../pages/CompanyTypeModificationResult/components';
 import CompanyManagement from '../pages/CompanyManagement/components';
@@ -50,8 +45,6 @@ const App = () => {
       <Switch>        
         <AppRoute path='/login' component={LogIn} layout={BlankLayout} />
 
-        {/* <AppRoute path="/qua-trinh-danh-gia/ho-tro/:id" component={CompanyEditVerification} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
-        {/* <AppRoute path="/qua-trinh-danh-gia/ho-tro" component={SupportVerificationList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} /> */}
         {/* <AppRoute path="/qua-trinh-danh-gia/phan-loai/:id" component={VerifyPendingProcessDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/phan-loai" component={VerifyPendingProcessList} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/qua-trinh-danh-gia/xac-nhan/:id" component={VerifyCompleteDetail} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
@@ -77,7 +70,7 @@ const App = () => {
 
         <AppRoute path="/agent" component={AgentManagement} layout={MainLayout} needAuth roles={["Admin"]} />
 
-        <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={ManagementLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute path="/verification-request/:id?" component={CompanyReportManagement} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/violation-report/:id?" component={VerifyViolationReport} layout={MainLayout} needAuth roles={["Admin"]} />

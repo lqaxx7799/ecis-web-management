@@ -1,4 +1,3 @@
-import { useNotifications } from "@mantine/notifications";
 import _ from "lodash";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
@@ -145,11 +144,14 @@ const VerifyPendingProcessDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</title>
+        <title>{`Đánh giá sự tuân thủ của công ty ${editingProcess?.company.companyNameVI}`}</title>
       </Helmet>
       <div className="x_title">
         <h2>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
+      </div>
+      <div className="x_breadcrumb">
+        <Link className="btn btn-default" to="/verification">Quay lại</Link>
       </div>
       <div className="x_content">
         {

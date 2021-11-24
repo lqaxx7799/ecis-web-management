@@ -20,11 +20,6 @@ interface VerificationConfirmRequirementDTOTemp {
   scheduledTime: Date; 
   scheduledLocation: string;
   announceAgentDocumentContent: string;
-  announceAgentDocumentUrl?: string;
-  announceAgentDocumentType?: string;
-  announceAgentDocumentSize?: number;
-  announceAgentDocumentName?: string;
-  isUsingAnnounceAgentFile?: boolean;
   verificationProcessId: string;
   assignedAgentId: string;
   verificationCriteriaId: string;

@@ -1,4 +1,3 @@
-import { Button, Paper, PasswordInput, TextInput, Title } from '@mantine/core';
 import { Helmet } from 'react-helmet';
 import { Controller, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';

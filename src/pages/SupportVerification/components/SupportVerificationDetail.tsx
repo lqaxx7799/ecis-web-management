@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessManagementActions from "../../VerificationProcessManagement/action";
@@ -78,11 +78,14 @@ const SupportVerificationDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>Đánh giá cho công ty {editingProcess?.company.companyNameVI}</title>
+        <title>{`Đánh giá cho công ty ${editingProcess?.company.companyNameVI}`}</title>
       </Helmet>
       <div className="x_title">
         <h2>Đánh giá cho công ty {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
+      </div>
+      <div className="x_breadcrumb">
+        <Link className="btn btn-default" to="/support-verification">Quay lại</Link>
       </div>
       <div className="x_content">
         {

@@ -1,8 +1,8 @@
-import { useNotifications } from "@mantine/notifications";
+import { FileIcon, TrashIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import { ChangeEvent, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ const ConfirmVerificationRequirement = (props: Props) => {
   const history = useHistory();
   const { id: confirmId } = useParams<RouteParams>();
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const {
     control,
@@ -37,6 +37,11 @@ const ConfirmVerificationRequirement = (props: Props) => {
   } = useForm<VerificationConfirmUpdateDTO>();
   const watcher = watch();
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'verificationConfirmDocuments',  
+  });
+
   const { editingRequirement, loading } = useAppSelector((state) => state.verificationConfirmRequirement);
 
   useEffect(() => {
@@ -46,26 +51,29 @@ const ConfirmVerificationRequirement = (props: Props) => {
       });
   }, [dispatch, confirmId]);
 
-  // const onSelectFileDialog = () => {
-  //   fileInputRef?.current?.click();
-  // };
+  const showFileDialog = () => {
+    fileRef.current?.click();
+  };
 
-  // const handleAnnounceFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const { files } = e.target;
-  //   if (files?.length) {
-  //     fileServices.uploadFile(files[0])
-  //       .then((result) => {
-  //         toast.success('Tải tài liệu thành công.');
-  //         setValue('documentName', result.name);
-  //         setValue('documentType', result.type);
-  //         setValue('documentUrl', result.url);
-  //         setValue('documentSize', result.size);
-  //       })
-  //       .catch((err) => {
-  //         toast.error('Đã xảy ra lỗi trong quá trình tải tài liệu. Vui lòng thử lại sau.');
-  //       });
-  //   }
-  // };
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files?.length) {
+      Promise.all(Array.from(files).map((file) => fileServices.uploadFile(file)))
+        .then((result) => {
+          _.forEach(result, (item) => {
+            append({
+              documentName: item.name,
+              documentType: item.type,
+              documentUrl: item.url,
+              documentSize: item.size,
+            });
+          });
+        })
+        .catch(() => {
+          toast.error('Đã xảy ra lỗi trong quá trình tải tập tin. Vui lòng thử lại sau.');
+        });
+    }
+  };
 
   const onSubmit = (data: VerificationConfirmUpdateDTO) => {
     dispatch(verificationConfirmRequirementActions.finishConfirm(data))
@@ -169,6 +177,40 @@ const ConfirmVerificationRequirement = (props: Props) => {
                       </div>
                     )}
                   />
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="control-label col-md-3 col-sm-3 col-xs-3">Tải tài liệu</label>
+                <div className="col-md-6 col-sm-6 col-xs-6">
+                  <input
+                    type="file"
+                    style={{ display: 'none' }}
+                    ref={fileRef}
+                    multiple
+                    onChange={handleFileUpload}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-default"
+                    onClick={showFileDialog}
+                    style={{ marginBottom: '12px' }}
+                  >
+                    Tải tập tin
+                  </button>
+
+                  <div style={{ width: '400px' }}>
+                    {fields.map((field, index) => (
+                      <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                        <div>
+                          <FileIcon /> {field.documentName}
+                        </div>
+                        
+                        <button type="button" className="btn btn-danger" onClick={() => remove(index)}>
+                          <TrashIcon /> Gỡ tài liệu
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               <div className="form-group">

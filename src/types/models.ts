@@ -125,30 +125,21 @@ export interface VerificationConfirmRequirement extends BaseModel {
   confirmedAt?: Date; 
 
   announceAgentDocumentContent?: string;
-  announceAgentDocumentUrl?: string;
-  announceAgentDocumentType?: string;
-  announceAgentDocumentSize?: number;
-  announceAgentDocumentName?: string;
-  isUsingAnnounceAgentFile: boolean;
-
-  announceCompanyDocumentContent?: string;
-  announceCompanyDocumentUrl?: string;
-  announceCompanyDocumentType?: string;
-  announceCompanyDocumentSize?: number;
-  announceCompanyDocumentName?: string;
-  isUsingAnnounceCompanyFile: boolean;
-
   confirmDocumentContent?: string;
-  confirmDocumentUrl?: string;
-  confirmDocumentType?: string;
-  confirmDocumentSize?: number;
-  confirmDocumentName?: string;
-  isUsingConfirmFile: boolean;
 
   verificationProcessId: number;
   assignedAgentId: number;
   confirmCompanyTypeId: number;
   verificationCriteriaId: number;
+};
+
+export interface VerificationConfirmDocument extends BaseModel {
+  id: number;
+  documentType: string;
+  documentUrl: string;
+  documentName: string;
+  documentSize: number;
+  verificationConfirmRequirementId: number;
 };
 
 export interface CompanyTypeModification extends BaseModel {

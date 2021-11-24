@@ -1,5 +1,3 @@
-import { Anchor, Breadcrumbs, Button, Group, LoadingOverlay, Text, Title, Tooltip } from "@mantine/core";
-import { CheckIcon, EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect } from "react";

@@ -5,8 +5,8 @@ import Modal from "react-responsive-modal";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Popup from "reactjs-popup";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
-import agentActions from "../../../../common/actions/agent.action";
 import verificationProcessManagementActions from "../../action";
 import CriteriaListTab from "./CriteriaListTab";
 
@@ -26,34 +26,32 @@ const VerifyPendingProcessDetail = (props: Props) => {
     loading,
   } = useAppSelector((state) => state.verificationProcessManagement);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
-  const { agents } = useAppSelector((state) => state.agent);
+  const { companyTypes } = useAppSelector((state) => state.companyType);
 
   const [selectedTabId, setSelectedTabId] = useState(-1);
   const [openingSubmitModal, setOpeningSubmitModal] = useState(false);
-  const [assignedAgentId, setAssignedAgentId] = useState<string | undefined>(undefined);
+  const [companyTypeId, setCompanyTypeId] = useState<string | undefined>(undefined);
 
   let { id } = useParams<RouteParams>();
 
   useEffect(() => {
-    dispatch(agentActions.getAllAgents());
     dispatch(verificationProcessManagementActions.loadSelfVerification(parseInt(id)))
       .then(() => {
         setSelectedTabId(_.get(criteriaTypes, '0.id'));
       });
   }, [dispatch, id]);
 
-  const submitVerify = () => {
-    console.log(11111111, assignedAgentId)
-    if (!assignedAgentId || assignedAgentId === '-') {
+  const submitClassify = () => {
+    if (!companyTypeId || companyTypeId === '-') {
       return;
     }
-    dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id), parseInt(assignedAgentId)))
+    dispatch(verificationProcessManagementActions.submitClassify(parseInt(id), parseInt(companyTypeId)))
       .then(() => {
-        history.push('/verification');
-        toast.success('Lưu đánh giá thành công.');
+        history.push('/verification-classify');
+        toast.success('Gửi phân loại thành công.');
       })
       .catch(() => {
-        toast.error('Đã xảy ra lỗi trong quá trình lưu đánh giá. Vui lòng thử lại sau.');
+        toast.error('Đã xảy ra lỗi trong quá trình gửi phân loại. Vui lòng thử lại sau.');
       });
   };
 
@@ -88,13 +86,32 @@ const VerifyPendingProcessDetail = (props: Props) => {
           }
         </div>
         <div style={{ marginTop: '24px' }}>
-          <Link
-            className="btn btn-default"
-            to={`/verify-verification-assign?companyId=${editingProcess?.companyId}`}
+          <select
+            placeholder="Chọn loại doanh nghiệp"
+            className="form-control"
+            value={companyTypeId}
+            onChange={(e) => setCompanyTypeId(e.target.value)}
+            style={{ marginBottom: '12px' }}
           >
-            Yêu cầu xác thực
-          </Link>
-          <button className="btn btn-primary" onClick={() => setOpeningSubmitModal(true)}>Duyệt kết quả</button>
+            <option value={undefined}>-</option>
+            {
+              _.map(companyTypes, (companyType) => (
+                <option value={companyType.id} key={companyType.id}>{companyType.typeName}</option>
+              ))
+            }
+          </select>
+          {
+            !companyTypeId ? (
+              <Popup
+                trigger={<span><button className="btn btn-primary" disabled>Phân loại</button></span>}
+                on={['hover']}
+              >
+                Vui lòng chọn phân loại
+              </Popup>
+            ) : (
+              <button className="btn btn-primary" onClick={() => setOpeningSubmitModal(true)}>Phân loại</button>
+            )
+          }
         </div>
       </div>
     </>
@@ -103,14 +120,14 @@ const VerifyPendingProcessDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>{`Đánh giá sự tuân thủ của công ty ${editingProcess?.company.companyNameVI}`}</title>
+        <title>{`Phân loại đánh giá của công ty ${editingProcess?.company.companyNameVI}`}</title>
       </Helmet>
       <div className="x_title">
-        <h2>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</h2>
+        <h2>Phân loại đánh giá của công ty {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
       </div>
       <div className="x_breadcrumb">
-        <Link className="btn btn-default" to="/verification">Quay lại</Link>
+        <Link className="btn btn-default" to="/verification-classify">Quay lại</Link>
       </div>
       <div className="x_content">
         {
@@ -126,27 +143,12 @@ const VerifyPendingProcessDetail = (props: Props) => {
           <h3>Xác nhận gửi đánh giá</h3>
         </div>
         <div>
-          Kiểm tra đầy đủ nội dung đánh giá và chỉ định cán bộ phân loại kết quả đánh giá
-        </div>
-        <div style={{ marginTop: '12px' }}>
-          <select
-            placeholder="Chọn cán bộ"
-            className="form-control"
-            value={assignedAgentId}
-            onChange={(e) => setAssignedAgentId(e.target.value)}
-          >
-            <option value={undefined}>-</option>
-            {
-              _.map(agents, (agent) => (
-                <option value={agent.id} key={agent.id}>{agent.lastName} {agent.firstName}</option>
-              ))
-            }
-          </select>
+          Sau khi gửi kết quả phân loại, FPD sẽ duyệt kết quả và công bó cho doanh nghiệp.
         </div>
         <div style={{ marginTop: '12px' }}>
           <button
             className="btn btn-primary"
-            onClick={submitVerify}
+            onClick={submitClassify}
           >
             Xác nhận
           </button>

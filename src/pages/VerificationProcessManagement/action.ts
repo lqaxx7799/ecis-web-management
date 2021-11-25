@@ -252,17 +252,22 @@ function updateVerificationCriteria(data: Partial<VerificationCriteria>): AppThu
   };
 }
 
-function submitVerifyReview(verificationProcessId: number): AppThunk<Promise<VerificationProcess>> {
+function submitVerifyReview(verificationProcessId: number, assignedAgentId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch, getState) => {
-    // const state = getState();
-    
-    // const { verificationCriterias } = state.verificationProcessManagement;
-    // const verificationCriteria = _.find(
-    //   verificationCriterias,
-    //   (item) => item.id === verificationCriteriaId
-    // );
+    const updated = await verificationProcessServices.submitVerifyReview(verificationProcessId, assignedAgentId);
 
-    const updated = await verificationProcessServices.submitVerifyReview(verificationProcessId);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED',
+      payload: updated,
+    });
+
+    return updated;
+  };
+}
+
+function submitClassify(verificationProcessId: number, companyTypeId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch, getState) => {
+    const updated = await verificationProcessServices.submitClassify(verificationProcessId, companyTypeId);
 
     dispatch<VerificationProcessManagementActionTypes>({
       type: 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED',
@@ -322,12 +327,34 @@ function finishVerify(processId: number): AppThunk<Promise<VerificationProcess>>
   };
 }
 
+function rejectClassified(processId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch: AppDispatch, getState) => {
+    const result = await verificationProcessServices.rejectClassified(processId);
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: "VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED",
+      payload: result,
+    });
+
+    const state = getState();
+    const updatedRecords = _.reject(state.verificationProcess.records, (item) => item.id === processId);
+
+    dispatch<VerificationProcessActionTypes>({
+      type: "VERIFICATION_PROCESS_LOADED",
+      payload: updatedRecords,
+    });
+
+    return result;
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
+  submitClassify,
   changeVerifyCompleteDrawerState,
   updateProcess,
   finishVerify,
+  rejectClassified,
 
   createDocument,
   editDocument,

@@ -107,8 +107,6 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         style={{ display: activeSideItem === 'support' ? 'block' : 'none' }}
                       >                  
                         <li><Link to="/support-verification">Tự đánh giá</Link></li>
-                        <li><Link to="/verification-add-new">Thêm mới, cập nhật</Link></li>
-                        <li><Link to="/verification-browse">Duyệt thông tin</Link></li>
                       </ul>
                     </li>
                     <li
@@ -144,18 +142,37 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                       </ul>
                     </li>
                     <li
-                      key="result"
-                      className={`${activeSideItem === 'result' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'result')}
+                      key="classify"
+                      className={`${activeSideItem === 'classify' ? 'active' : ''}`}
+                      onClick={(e) => onSidebarClick(e, 'classify')}
                     >
                       <a>
                         <i className="fa fa-desktop" /> Phân loại <span className="fa fa-chevron-down" />
                       </a>
                       <ul
                         className="nav child_menu"
+                        style={{ display: activeSideItem === 'classify' ? 'block' : 'none' }}
+                      >
+                        <li><Link to="/verification-classify">Phân loại đánh giá</Link></li>
+                      </ul>
+                    </li>
+                    <li
+                      key="result"
+                      className={`${activeSideItem === 'result' ? 'active' : ''}`}
+                      onClick={(e) => onSidebarClick(e, 'result')}
+                    >
+                      <a>
+                        <i className="fa fa-desktop" /> Công bố kết quả <span className="fa fa-chevron-down" />
+                      </a>
+                      <ul
+                        className="nav child_menu"
                         style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
                       >
-                        <li><Link to="/verification-reviewed">Duyệt kết quả phân loại</Link></li>
+                        {
+                          isAdmin && (
+                            <li><Link to="/verification-classified">Duyệt kết quả phân loại</Link></li>
+                          )
+                        }
                         <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
                       </ul>
                     </li>

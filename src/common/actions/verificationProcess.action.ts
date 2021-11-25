@@ -109,6 +109,27 @@ function getAllReviewed(): AppThunk<Promise<VerificationProcess[]>> {
   };
 }
 
+function getAllClassified(): AppThunk<Promise<VerificationProcess[]>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<VerificationProcessActionTypes>({
+      type: 'VERIFICATION_PROCESS_LOADING',
+    });
+    try {
+      const result = await verificationProcessServices.getAllClassified();
+      dispatch<VerificationProcessActionTypes>({
+        type: 'VERIFICATION_PROCESS_LOADED',
+        payload: result,
+      });
+      return result;
+    } catch (e) {
+      dispatch<VerificationProcessActionTypes>({
+        type: 'VERIFICATION_PROCESS_LOAD_FAILED',
+      });
+      return [];
+    }
+  };
+}
+
 function generate(companyId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch: AppDispatch) => {
     const data = await verificationProcessServices.generate(companyId);
@@ -122,6 +143,7 @@ const verificationProcessActions = {
   getAllPending,
   getAllSupport,
   getAllReviewed,
+  getAllClassified,
   generate,
 };
 

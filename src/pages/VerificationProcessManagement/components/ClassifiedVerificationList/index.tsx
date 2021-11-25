@@ -14,18 +14,26 @@ type Props = {
 
 };
 
-const ReviewedVerificationList = (props: Props) => {
+const ClassifiedVerificationList = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllReviewed());
+    dispatch(verificationProcessActions.getAllClassified());
   }, []);
 
   const completeVerification = (verificationId: number, value: boolean) => {
     if (value) {
       dispatch(verificationProcessManagementActions.finishVerify(verificationId))
+        .then(() => {
+          toast.success('Lưu kết quả thành công.');
+        })
+        .catch(() => {
+          toast.success('Đã xảy ra lỗi trong quá trình lưu kết quả. Vui lòng thử lại sau.');
+        });
+    } else {
+      dispatch(verificationProcessManagementActions.rejectClassified(verificationId))
         .then(() => {
           toast.success('Lưu kết quả thành công.');
         })
@@ -92,4 +100,4 @@ const ReviewedVerificationList = (props: Props) => {
   );
 };
 
-export default ReviewedVerificationList;
+export default ClassifiedVerificationList;

@@ -9,7 +9,7 @@ import LogIn from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import VerificationProcessManagement from '../pages/VerificationProcessManagement/components';
 import VerifyPendingProcessDetail from '../pages/VerificationProcessManagement/components/VerificationDetail/VerifyPendingProcessDetail';
-import ReviewedVerificationList from '../pages/VerificationProcessManagement/components/ReviewedVerificationList';
+import ClassifiedVerificationList from '../pages/VerificationProcessManagement/components/ClassifiedVerificationList';
 import AssignedVerificationConfirmList from '../pages/AssignedVerificationConfirm/components/AssignedVerificationConfirmList';
 import CompanyTypeModificationResult from '../pages/CompanyTypeModificationResult/components';
 import CompanyManagement from '../pages/CompanyManagement/components';
@@ -27,6 +27,8 @@ import VerificationConfirmResult from '../pages/VerificationConfirmResult/compon
 import ReportViolation from '../pages/ReportViolation/components';
 import CompanyCreate from '../pages/CompanyManagement/components/CompanyCreate';
 import AgentManagement from '../pages/AgentManagement/components';
+import ClassifyVerification from '../pages/VerificationProcessManagement/components/ClassifyVerification';
+import ClassifyVerificationDetail from '../pages/VerificationProcessManagement/components/ClassifyVerification/ClassifyVerificationDetail';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +62,10 @@ const App = () => {
         <AppRoute path="/verification/:id" component={VerifyPendingProcessDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification" component={VerificationProcessManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         
-        <AppRoute path="/verification-reviewed" component={ReviewedVerificationList} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verification-classify/:id" component={ClassifyVerificationDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        <AppRoute path="/verification-classify" component={ClassifyVerification} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+
+        <AppRoute path="/verification-classified" component={ClassifiedVerificationList} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/verification-result" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/company/report-violation" component={ReportViolation} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />

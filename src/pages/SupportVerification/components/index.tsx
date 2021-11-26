@@ -35,10 +35,6 @@ const SupportVerificationList = (props: Props) => {
       format: (row) => dayjs(row.createdAt).format('DD/MM/YYYY'),
     },
     {
-      name: 'Trạng thái',
-      selector: 'status',
-    },
-    {
       name: 'Hành động',
       cell: (row, index) => (
         <Link className="btn btn-default" to={`/support-verification/${row.id}`}>Xem chi tiết</Link>

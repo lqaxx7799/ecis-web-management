@@ -5,6 +5,7 @@ import Modal from "react-responsive-modal";
 import { useHistory, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Popup from "reactjs-popup";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import agentActions from "../../../../common/actions/agent.action";
 import verificationProcessManagementActions from "../../action";
@@ -23,6 +24,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
   const dispatch = useAppDispatch();
   const {
     editingProcess,
+    verificationCriterias,
     loading,
   } = useAppSelector((state) => state.verificationProcessManagement);
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
@@ -31,6 +33,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
   const [selectedTabId, setSelectedTabId] = useState(-1);
   const [openingSubmitModal, setOpeningSubmitModal] = useState(false);
   const [assignedAgentId, setAssignedAgentId] = useState<string | undefined>(undefined);
+  const [submitting, setSubmitting] = useState(false);
 
   let { id } = useParams<RouteParams>();
 
@@ -43,19 +46,25 @@ const VerifyPendingProcessDetail = (props: Props) => {
   }, [dispatch, id]);
 
   const submitVerify = () => {
-    console.log(11111111, assignedAgentId)
     if (!assignedAgentId || assignedAgentId === '-') {
       return;
     }
+    setSubmitting(true);
     dispatch(verificationProcessManagementActions.submitVerifyReview(parseInt(id), parseInt(assignedAgentId)))
       .then(() => {
+        setSubmitting(false);
         history.push('/verification');
         toast.success('Lưu đánh giá thành công.');
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã xảy ra lỗi trong quá trình lưu đánh giá. Vui lòng thử lại sau.');
       });
   };
+
+  const canSubmit = _(verificationCriterias)
+    .filter((criteria) => criteria.approvedStatus === 'PENDING')
+    .isEmpty();
 
   const mainBody = (
     <>
@@ -94,7 +103,30 @@ const VerifyPendingProcessDetail = (props: Props) => {
           >
             Yêu cầu xác thực
           </Link>
-          <button className="btn btn-primary" onClick={() => setOpeningSubmitModal(true)}>Duyệt kết quả</button>
+          {
+            canSubmit ? (
+              <button
+                className="btn btn-primary"
+                onClick={() => setOpeningSubmitModal(true)}
+              >
+                Duyệt kết quả
+              </button>
+            ) : (
+              <Popup
+                on={['hover']}
+                position="top center"
+                trigger={(
+                  <span>
+                    <button className="btn btn-primary" disabled>
+                      Duyệt kết quả
+                    </button>
+                  </span>
+                )}
+              >
+                Vui lòng đánh giá đầy đủ tiêu chí trước khi duyệt kết quả
+              </Popup>
+            )
+          }
         </div>
       </div>
     </>
@@ -147,6 +179,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
           <button
             className="btn btn-primary"
             onClick={submitVerify}
+            disabled={submitting}
           >
             Xác nhận
           </button>

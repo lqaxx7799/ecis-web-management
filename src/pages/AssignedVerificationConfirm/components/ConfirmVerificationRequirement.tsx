@@ -1,6 +1,6 @@
 import { FileIcon, TrashIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { useHistory, useParams } from "react-router";
@@ -24,6 +24,7 @@ const ConfirmVerificationRequirement = (props: Props) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const { id: confirmId } = useParams<RouteParams>();
+  const [submitting, setSubmitting] = useState(false);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -76,8 +77,10 @@ const ConfirmVerificationRequirement = (props: Props) => {
   };
 
   const onSubmit = (data: VerificationConfirmUpdateDTO) => {
+    setSubmitting(true);
     dispatch(verificationConfirmRequirementActions.finishConfirm(data))
       .then((result) => {
+        setSubmitting(false);
         toast.success('Xác minh yêu cầu thành công.');
         dispatch<VerificationConfirmRequirementActionTypes>({
           type: 'VERIFICATION_CONFIRM_REQUIREMENT_EDITING_LOADED',
@@ -86,6 +89,7 @@ const ConfirmVerificationRequirement = (props: Props) => {
         history.push('/verify-verification-browse');
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã xảy ra lỗi trong quá trình xác minh yêu cầu. Vui lòng thử lại sau.');
       });
   };
@@ -216,7 +220,13 @@ const ConfirmVerificationRequirement = (props: Props) => {
               <div className="form-group">
                 <div className="col-md-6 col-md-offset-3">
                   <Link to='/verify-verification-browse' className="btn btn-primary">Hủy bỏ</Link>
-                  <button type="submit" className="btn btn-success">Thực hiện</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    disabled={submitting}
+                  >
+                    Thực hiện
+                  </button>
                 </div>
             </div>
             </form>

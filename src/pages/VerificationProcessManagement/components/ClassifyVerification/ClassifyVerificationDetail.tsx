@@ -31,6 +31,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
   const [selectedTabId, setSelectedTabId] = useState(-1);
   const [openingSubmitModal, setOpeningSubmitModal] = useState(false);
   const [companyTypeId, setCompanyTypeId] = useState<string | undefined>(undefined);
+  const [submitting, setSubmitting] = useState(false);
 
   let { id } = useParams<RouteParams>();
 
@@ -45,12 +46,15 @@ const VerifyPendingProcessDetail = (props: Props) => {
     if (!companyTypeId || companyTypeId === '-') {
       return;
     }
+    setSubmitting(true);
     dispatch(verificationProcessManagementActions.submitClassify(parseInt(id), parseInt(companyTypeId)))
       .then(() => {
+        setSubmitting(false);
         history.push('/verification-classify');
         toast.success('Gửi phân loại thành công.');
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã xảy ra lỗi trong quá trình gửi phân loại. Vui lòng thử lại sau.');
       });
   };
@@ -86,6 +90,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
           }
         </div>
         <div style={{ marginTop: '24px' }}>
+          <label>Phân loại doanh nghiệp</label>
           <select
             placeholder="Chọn loại doanh nghiệp"
             className="form-control"
@@ -105,6 +110,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
               <Popup
                 trigger={<span><button className="btn btn-primary" disabled>Phân loại</button></span>}
                 on={['hover']}
+                position="top center"
               >
                 Vui lòng chọn phân loại
               </Popup>
@@ -149,6 +155,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
           <button
             className="btn btn-primary"
             onClick={submitClassify}
+            disabled={submitting}
           >
             Xác nhận
           </button>

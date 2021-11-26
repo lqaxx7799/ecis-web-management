@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-responsive-modal";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ const CompanyReportModal = (props: Props) => {
 
   const { editingCompanyReport, companyReportDocuments } = useAppSelector((state) => state.companyReport);
   const { companyTypes } = useAppSelector((state) => state.companyType);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     dispatch(companyTypeActions.getAll());
@@ -28,23 +29,29 @@ const CompanyReportModal = (props: Props) => {
   };
 
   const approveReport = () => {
+    setSubmitting(true);
     dispatch(companyReportActions.approve(editingCompanyReport?.id ?? 0))
       .then(() => {
+        setSubmitting(false);
         toast.success('Xác nhận doanh nghiệp vi phạm thành công.');
         closeModal();
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã có lỗi xảy ra trong quá trình xác nhận vi phạm. Xin vui lòng thử lại sau.');
       });
   };
 
   const rejectReport = () => {
+    setSubmitting(true);
     dispatch(companyReportActions.reject(editingCompanyReport?.id ?? 0))
       .then(() => {
+        setSubmitting(false);
         toast.success('Từ chối doanh nghiệp vi phạm thành công.');
         closeModal();
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error( 'Đã có lỗi xảy ra trong quá trình từ chối vi phạm. Xin vui lòng thử lại sau.');
       });
   };
@@ -116,7 +123,7 @@ const CompanyReportModal = (props: Props) => {
       </div>
       <div style={{ marginTop: "24px" }}>
         <button
-          disabled={editingCompanyReport?.isHandled}
+          disabled={editingCompanyReport?.isHandled || submitting}
           onClick={approveReport}
           className="btn btn-primary"
         >
@@ -125,7 +132,7 @@ const CompanyReportModal = (props: Props) => {
         <button
           onClick={rejectReport}
           className="btn btn-danger"
-          disabled={editingCompanyReport?.isHandled}
+          disabled={editingCompanyReport?.isHandled || submitting}
         >
           Từ chối
         </button>

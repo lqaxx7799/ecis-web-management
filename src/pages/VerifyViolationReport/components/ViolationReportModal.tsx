@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-responsive-modal";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ const ViolationReportModal = (props: Props) => {
 
   const { editingViolationReport, violationReportDocuments } = useAppSelector((state) => state.violationReport);
   const { companyTypes } = useAppSelector((state) => state.companyType);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     dispatch(companyTypeActions.getAll());
@@ -28,23 +29,29 @@ const ViolationReportModal = (props: Props) => {
   };
 
   const approveReport = () => {
+    setSubmitting(true);
     dispatch(violationReportActions.approve(editingViolationReport?.id ?? 0))
       .then(() => {
+        setSubmitting(false);
         toast.success('Xác nhận doanh nghiệp vi phạm thành công.');
         closeModal();
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error( 'Đã có lỗi xảy ra trong quá trình xác nhận vi phạm. Vui lòng thử lại sau.');
       });
   };
 
   const rejectReport = () => {
+    setSubmitting(true);
     dispatch(violationReportActions.reject(editingViolationReport?.id ?? 0))
       .then(() => {
+        setSubmitting(false);
         toast.success('Từ chối doanh nghiệp vi phạm thành công.');
         closeModal();
       })
       .catch(() => {
+        setSubmitting(false);
         toast.success( 'Đã có lỗi xảy ra trong quá trình từ chối vi phạm. Vui lòng thử lại sau.');
       });
   };
@@ -113,7 +120,7 @@ const ViolationReportModal = (props: Props) => {
       </div>
       <div style={{ marginTop: '24px' }}>
         <button
-          disabled={editingViolationReport?.status !== 'PENDING'}
+          disabled={editingViolationReport?.status !== 'PENDING' || submitting}
           onClick={approveReport}
           className="btn btn-primary"
         >
@@ -122,7 +129,7 @@ const ViolationReportModal = (props: Props) => {
         <button
           onClick={rejectReport}
           className="btn btn-danger"
-          disabled={editingViolationReport?.status !== 'PENDING'}
+          disabled={editingViolationReport?.status !== 'PENDING' || submitting}
         >
           Từ chối
         </button>

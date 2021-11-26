@@ -316,7 +316,7 @@ function finishVerify(processId: number): AppThunk<Promise<VerificationProcess>>
     });
 
     const state = getState();
-    const updatedRecords = _.map(state.verificationProcess.records, (item) => item.id === result.id ? result : item);
+    const updatedRecords = _.reject(state.verificationProcess.records, (item) => item.id === processId);
 
     dispatch<VerificationProcessActionTypes>({
       type: "VERIFICATION_PROCESS_LOADED",

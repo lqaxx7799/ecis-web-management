@@ -39,7 +39,7 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        return currentCriteria.reviewResult;
+        return currentCriteria.reviewResult ?? '-';
       },
       wrap: true,
       style: { paddingTop: '8px', paddingRight: '8px' },
@@ -52,7 +52,7 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        return currentCriteria.reviewComment;
+        return currentCriteria.reviewComment ?? '-';
       },
       wrap: true,
       style: { paddingTop: '8px', paddingRight: '8px' },
@@ -65,9 +65,17 @@ const CriteriaDetailList = (props: Props) => {
         if (!currentCriteria) {
           return null;
         }
-        return currentCriteria.approvedStatus === 'VERIFIED' ? 'Đồng ý'
-          : currentCriteria.approvedStatus === 'REJECTED' ? 'Không đồng ý'
-          : 'Chưa đánh giá';
+        return currentCriteria.approvedStatus === 'VERIFIED' ? (
+          <>
+            <i className="fa fa-thumbs-up" aria-hidden="true" /> Đạt
+          </>
+        ) : currentCriteria.approvedStatus === 'REJECTED' ? (
+          <>
+            <i className="fa fa-thumbs-down" aria-hidden="true" /> Không đạt
+          </>
+        ) : (
+          'Chưa có kết quả'
+        );
       },
     },
   ];

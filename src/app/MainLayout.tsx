@@ -94,88 +94,100 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         <li><Link to="/">Dashboard</Link></li>
                       </ul>
                     </li>
-                    <li
-                      key="support"
-                      className={`${activeSideItem === 'support' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'support')}
-                    >
-                      <a>
-                        <i className="fa fa-edit" /> Hỗ trợ doanh nghiệp<span className="fa fa-chevron-down" />
-                      </a>
-                      <ul
-                        className="nav child_menu"
-                        style={{ display: activeSideItem === 'support' ? 'block' : 'none' }}
-                      >                  
-                        <li><Link to="/support-verification">Tự đánh giá</Link></li>
-                      </ul>
-                    </li>
-                    <li
-                      key="verification"
-                      className={`${activeSideItem.startsWith('verification') ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'verification')}
-                    >
-                      <a>
-                        <i className="fa fa-edit" /> Đánh giá, xác minh<span className="fa fa-chevron-down" />
-                      </a>
-                      <ul
-                        className="nav child_menu"
-                        style={{ display: activeSideItem.startsWith('verification') ? 'block' : 'none' }}
-                      >
-                        <li><Link to="/verification">Đánh giá sự tuân thủ</Link></li>
+                    {
+                      !isAdmin && (
                         <li
-                          key="verification_verify"
-                          className={`${activeSideItem === 'verification_verify' ? 'active' : ''}`}
-                          onClick={(e) => onSidebarClick(e, 'verification_verify')}
+                          key="support"
+                          className={`${activeSideItem === 'support' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'support')}
                         >
                           <a>
-                            <i className="fa fa-edit" /> Xác minh sự tuân thủ<span className="fa fa-chevron-down" />
+                            <i className="fa fa-edit" /> Hỗ trợ doanh nghiệp<span className="fa fa-chevron-down" />
                           </a>
                           <ul
                             className="nav child_menu"
-                            style={{ display: activeSideItem === 'verification_verify' ? 'block' : 'none' }}
-                          >
-                            <li><Link to="/verify-verification-browse">Duyệt yêu cầu xác minh</Link></li>
-                            <li><Link to="/verify-verification-result">Kết quả xác minh</Link></li>
-                            {/* <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li> */}
+                            style={{ display: activeSideItem === 'support' ? 'block' : 'none' }}
+                          >                  
+                            <li><Link to="/support-verification">Tự đánh giá</Link></li>
                           </ul>
                         </li>
-                      </ul>
-                    </li>
-                    <li
-                      key="classify"
-                      className={`${activeSideItem === 'classify' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'classify')}
-                    >
-                      <a>
-                        <i className="fa fa-desktop" /> Phân loại <span className="fa fa-chevron-down" />
-                      </a>
-                      <ul
-                        className="nav child_menu"
-                        style={{ display: activeSideItem === 'classify' ? 'block' : 'none' }}
-                      >
-                        <li><Link to="/verification-classify">Phân loại đánh giá</Link></li>
-                      </ul>
-                    </li>
-                    <li
-                      key="result"
-                      className={`${activeSideItem === 'result' ? 'active' : ''}`}
-                      onClick={(e) => onSidebarClick(e, 'result')}
-                    >
-                      <a>
-                        <i className="fa fa-desktop" /> Công bố kết quả <span className="fa fa-chevron-down" />
-                      </a>
-                      <ul
-                        className="nav child_menu"
-                        style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
-                      >
-                        {
-                          isAdmin && (
+                      )
+                    }
+                    {
+                      !isAdmin && (
+                        <li
+                          key="verification"
+                          className={`${activeSideItem.startsWith('verification') ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'verification')}
+                        >
+                          <a>
+                            <i className="fa fa-edit" /> Đánh giá, xác minh<span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem.startsWith('verification') ? 'block' : 'none' }}
+                          >
+                            <li><Link to="/verification">Đánh giá sự tuân thủ</Link></li>
+                            <li
+                              key="verification_verify"
+                              className={`${activeSideItem === 'verification_verify' ? 'active' : ''}`}
+                              onClick={(e) => onSidebarClick(e, 'verification_verify')}
+                            >
+                              <a>
+                                <i className="fa fa-edit" /> Xác minh sự tuân thủ<span className="fa fa-chevron-down" />
+                              </a>
+                              <ul
+                                className="nav child_menu"
+                                style={{ display: activeSideItem === 'verification_verify' ? 'block' : 'none' }}
+                              >
+                                <li><Link to="/verify-verification-browse">Duyệt yêu cầu xác minh</Link></li>
+                                <li><Link to="/verify-verification-result">Kết quả xác minh</Link></li>
+                                {/* <li><Link to="/verify-verification-aprrove">Duyệt kết quả xác minh</Link></li> */}
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      )
+                    }
+                    {
+                      !isAdmin && (
+                        <li
+                          key="classify"
+                          className={`${activeSideItem === 'classify' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'classify')}
+                        >
+                          <a>
+                            <i className="fa fa-desktop" /> Phân loại <span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem === 'classify' ? 'block' : 'none' }}
+                          >
+                            <li><Link to="/verification-classify">Phân loại đánh giá</Link></li>
+                          </ul>
+                        </li>
+                      )
+                    }
+                    {
+                      isAdmin && (
+                        <li
+                          key="result"
+                          className={`${activeSideItem === 'result' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'result')}
+                        >
+                          <a>
+                            <i className="fa fa-desktop" /> Công bố kết quả <span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
+                          >
                             <li><Link to="/verification-classified">Duyệt kết quả phân loại</Link></li>
-                          )
-                        }
-                        <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
-                      </ul>
-                    </li>
+                            <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
+                          </ul>
+                        </li>
+                      )
+                    }
                     {
                       isAdmin && (
                         <li

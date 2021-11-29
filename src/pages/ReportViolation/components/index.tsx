@@ -1,6 +1,6 @@
 import { FileIcon, TrashIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Helmet from "react-helmet";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
@@ -29,12 +29,14 @@ const ReportViolation = (props: Props) => {
   const dispatch = useAppDispatch();
   const { companies } = useAppSelector((state) => state.company);
   const { agent } = useAppSelector((state) => state.authentication);
+  const [submitting, setSubmitting] = useState(false);
   
   const {
     control,
     formState: { errors },
     handleSubmit,
     watch,
+    setError,
   } = useForm<ViolationReportDTOTemp>();
   const watcher = watch();
 
@@ -74,17 +76,24 @@ const ReportViolation = (props: Props) => {
   };
 
   const onSubmit = (data: ViolationReportDTOTemp) => {
+    if (data.companyId === '-- Chọn doanh nghiệp --') {
+      setError('companyId', { message: 'Không được để trống doanh nghiệp' });
+      return;
+    }
     const formattedData: ViolationReportDTO = {
       ...data,
       companyId: parseInt(data.companyId),
       reportAgentId: agent?.id ?? 0,
     };
+    setSubmitting(true);
     dispatch(violationReportActions.create(formattedData))
       .then(() => {
+        setSubmitting(false);
         toast.success('Gửi báo cáo vi phạm thành công.');
         history.push('/company');
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã xảy ra lỗi trong quá trình gửi báo cáo vi phạm. Vui lòng thử lại sau.');
       });
   };
@@ -201,7 +210,13 @@ const ReportViolation = (props: Props) => {
               <div className="form-group">
                 <div className="col-md-6 col-md-offset-3">
                   <Link to="/company" className="btn btn-primary">Hủy bỏ</Link>
-                  <button type="submit" className="btn btn-success">Thực hiện</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    disabled={submitting}
+                  >
+                    Thực hiện
+                  </button>
                 </div>
             </div>
             </form>

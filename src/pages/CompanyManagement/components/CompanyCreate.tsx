@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
@@ -25,6 +25,7 @@ const CompanyCreate = (props: Props) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const { provinces } = useAppSelector((state) => state.province);
+  const [submitting, setSubmitting] = useState(false);
 
   const {
     control,
@@ -39,12 +40,14 @@ const CompanyCreate = (props: Props) => {
   }, [dispatch]);
 
   const onSubmit = (data: CompanyRegistrationDTOTemp) => {
+    setSubmitting(true);
     const formattedData: CompanyRegistrationDTO = {
       ...data,
       provinceId: parseInt(data.provinceId),
     };
     dispatch(companyActions.registerCompany(formattedData))
       .then((result) => {
+        setSubmitting(false);
         toast.success('Thêm mới doanh nghiệp thành công');
         history.push('/company');
       })
@@ -59,7 +62,8 @@ const CompanyCreate = (props: Props) => {
           return;
         }
         toast.error('Đã có lỗi xảy ra trong quá trình thêm mới doanh nghiệp. Vui lòng thử lại sau.');
-      });
+        setSubmitting(false);
+      })
   };
 
   return (
@@ -188,7 +192,13 @@ const CompanyCreate = (props: Props) => {
               <div className="form-group">
                 <div className="col-md-6 col-md-offset-3">
                   <Link to="/company" className="btn btn-primary">Hủy bỏ</Link>
-                  <button type="submit" className="btn btn-success">Thực hiện</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    disabled={submitting}
+                  >
+                    Thực hiện
+                  </button>
                 </div>
             </div>
             </form>

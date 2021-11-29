@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Controller, useForm } from "react-hook-form";
 import { Redirect, useHistory } from "react-router";
@@ -28,6 +28,7 @@ interface VerificationConfirmRequirementDTOTemp {
 const AssignVerify = (props: Props) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const [submitting, setSubmitting] = useState(false);
   
   const {
     control,
@@ -35,6 +36,7 @@ const AssignVerify = (props: Props) => {
     handleSubmit,
     setError,
     setValue,
+    reset,
   } = useForm<VerificationConfirmRequirementDTOTemp>();
   
   const { agents } = useAppSelector((state) => state.agent);
@@ -54,6 +56,16 @@ const AssignVerify = (props: Props) => {
   }, [dispatch, companyId]);
 
   const onSubmit = (data: VerificationConfirmRequirementDTOTemp) => {
+    if (data.verificationCriteriaId === '-- Chọn tiêu chí --') {
+      setError('verificationCriteriaId', { message: 'Không được để trống tiêu chí' });
+      return;
+    }
+    if (data.assignedAgentId === '-- Chọn cán bộ --') {
+      setError('assignedAgentId', { message: 'Không được để trống cán bộ' });
+      return;
+    }
+
+    setSubmitting(true);
     const formattedData: VerificationConfirmRequirementDTO = {
       ...data,
       verificationProcessId: parseInt(data.verificationProcessId),
@@ -62,13 +74,16 @@ const AssignVerify = (props: Props) => {
     };
     dispatch(verificationConfirmRequirementActions.create(formattedData))
       .then((result) => {
+        setSubmitting(false);
         toast.success('Yêu cầu cán bộ thành công');
         dispatch<VerificationConfirmRequirementActionTypes>({
           type: 'VERIFICATION_CONFIRM_REQUIREMENT_EDITING_LOADED',
           payload: result,
         });
+        reset();
       })
       .catch(() => {
+        setSubmitting(false);
         toast.error('Đã có lỗi xảy ra trong quá trình yêu cầu cán bộ. Vui lòng thử lại sau.');
       });
   };
@@ -126,12 +141,12 @@ const AssignVerify = (props: Props) => {
                 </div>
               </div>
               <div className="form-group">
-                <label className="control-label col-md-3 col-sm-3 col-xs-3">Nội dung cần xác minh</label>
+                <label className="control-label col-md-3 col-sm-3 col-xs-3">Tiêu chí cần xác minh</label>
                 <div className="col-md-6 col-sm-6 col-xs-6">
                   <Controller
                     name="verificationCriteriaId"
                     control={control}
-                    rules={{ required: 'Không được để trống nội dung' }}
+                    rules={{ required: 'Không được để trống tiêu chí' }}
                     render={({ field: { ref, ...field } }) => (
                       <div>
                         <select
@@ -139,7 +154,7 @@ const AssignVerify = (props: Props) => {
                           ref={ref}
                           className="form-control"
                         >
-                          <option value={undefined}>-- Chọn nội dung --</option>
+                          <option value={undefined}>-- Chọn tiêu chí --</option>
                           {
                             _.map(verificationCriterias, (criteria) => (
                               <option key={criteria.id} value={criteria.id}>{criteria?.criteriaDetail?.criteriaDetailName}</option>
@@ -203,7 +218,13 @@ const AssignVerify = (props: Props) => {
               <div className="form-group">
                 <div className="col-md-6 col-md-offset-3">
                   <Link to={`/verification/${editingProcess.id}`} className="btn btn-primary">Hủy bỏ</Link>
-                  <button type="submit" className="btn btn-success">Thực hiện</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success"
+                    disabled={submitting}
+                  >
+                    Thực hiện
+                  </button>
                 </div>
             </div>
             </form>

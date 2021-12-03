@@ -36,6 +36,8 @@ const CriteriaDetailList = (props: Props) => {
         <CriteriaForm data={row} />
       ),
       style: { paddingTop: '12px', paddingBottom: '12px' },
+      wrap: true,
+      width: '240px',
     },
   ];
 

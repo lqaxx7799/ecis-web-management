@@ -30,6 +30,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
 
   const [selectedTabId, setSelectedTabId] = useState(-1);
   const [openingSubmitModal, setOpeningSubmitModal] = useState(false);
+  const [openingRejectModal, setOpeningRejectModal] = useState(false);
   const [companyTypeId, setCompanyTypeId] = useState<string | undefined>(undefined);
   const [submitting, setSubmitting] = useState(false);
 
@@ -51,11 +52,25 @@ const VerifyPendingProcessDetail = (props: Props) => {
       .then(() => {
         setSubmitting(false);
         history.push('/verification-classify');
-        toast.success('Gửi phân loại thành công.');
+        toast.success('Phân loại thành công.');
       })
       .catch(() => {
         setSubmitting(false);
-        toast.error('Đã xảy ra lỗi trong quá trình gửi phân loại. Vui lòng thử lại sau.');
+        toast.error('Đã xảy ra lỗi trong quá trình phân loại. Vui lòng thử lại sau.');
+      });
+  };
+
+  const rejectReviewed = () => {
+    setSubmitting(true);
+    dispatch(verificationProcessManagementActions.rejectReviewed(parseInt(id)))
+      .then(() => {
+        setSubmitting(false);
+        history.push('/verification-classify');
+        toast.success('Yêu cầu đánh giá lại thành công.');
+      })
+      .catch(() => {
+        setSubmitting(false);
+        toast.error('Đã xảy ra lỗi trong quá trình yêu cầu đánh giá lại. Vui lòng thử lại sau.');
       });
   };
 
@@ -118,6 +133,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
               <button className="btn btn-primary" onClick={() => setOpeningSubmitModal(true)}>Phân loại</button>
             )
           }
+          <button className="btn btn-default" onClick={() => setOpeningRejectModal(true)}>Yêu cầu đánh giá lại</button>
         </div>
       </div>
     </>
@@ -126,10 +142,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>{`Phân loại đánh giá của công ty ${editingProcess?.company.companyNameVI}`}</title>
+        <title>{`Phân loại đánh giá của doanh nghiệp ${editingProcess?.company.companyNameVI}`}</title>
       </Helmet>
       <div className="x_title">
-        <h2>Phân loại đánh giá của công ty {editingProcess?.company.companyNameVI}</h2>
+        <h2>Phân loại đánh giá của doanh nghiệp {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
       </div>
       <div className="x_breadcrumb">
@@ -146,10 +162,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
         onClose={() => setOpeningSubmitModal(false)}
       >
         <div>
-          <h3>Xác nhận gửi đánh giá</h3>
+          <h3>Xác nhận phân loại</h3>
         </div>
         <div>
-          Sau khi gửi kết quả phân loại, FPD sẽ duyệt kết quả và công bó cho doanh nghiệp.
+          Sau khi phân loại, kết quả sẽ được công bố cho doanh nghiệp.
         </div>
         <div style={{ marginTop: '12px' }}>
           <button
@@ -162,6 +178,34 @@ const VerifyPendingProcessDetail = (props: Props) => {
           <button
             className="btn btn-default"
             onClick={() => setOpeningSubmitModal(false)}
+          >
+            Hủy
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        styles={{ modal: { width: '400px' } }}
+        open={openingRejectModal}
+        onClose={() => setOpeningRejectModal(false)}
+      >
+        <div>
+          <h3>Xác nhận yêu cầu đánh giá lại</h3>
+        </div>
+        <div>
+          Nếu cán bộ thấy kết quả đánh giá chưa đáp ứng yêu cầu, cán bộ có thể yêu cầu đánh giá lại.
+        </div>
+        <div style={{ marginTop: '12px' }}>
+          <button
+            className="btn btn-primary"
+            onClick={rejectReviewed}
+            disabled={submitting}
+          >
+            Xác nhận
+          </button>
+          <button
+            className="btn btn-default"
+            onClick={() => setOpeningRejectModal(false)}
           >
             Hủy
           </button>

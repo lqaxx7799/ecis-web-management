@@ -45,7 +45,7 @@ const AssignVerify = (props: Props) => {
   const companyId = parseInt(qs.get('companyId') ?? '0');
 
   useEffect(() => {
-    dispatch(agentActions.getAll());
+    dispatch(agentActions.getAllAgents());
     dispatch(assignVerifyActions.getCompanyCurrentPending(companyId))
       .then((result) => {
         setValue('verificationProcessId', result.id.toString());
@@ -130,7 +130,7 @@ const AssignVerify = (props: Props) => {
           <div className="col-xs-12 table">
             <form className="form-horizontal form-label-left" onSubmit={handleSubmit(onSubmit)}>
               <div className="form-group">
-                <label className="control-label col-md-3 col-sm-3 col-xs-3">Công ty cần xác minh</label>
+                <label className="control-label col-md-3 col-sm-3 col-xs-3">Doanh nghiệp cần xác minh</label>
                 <div className="col-md-6 col-sm-6 col-xs-6">
                   <input
                     type="text"

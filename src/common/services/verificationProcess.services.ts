@@ -17,6 +17,10 @@ function getAllReviewed(): Promise<VerificationProcess[]> {
   return request.get(`/VerificationProcess/GetReviewed`);
 }
 
+/**
+ * @deprecated
+ * @returns 
+ */
 function getAllClassified(): Promise<VerificationProcess[]> {
   return request.get(`/VerificationProcess/GetClassified`);
 }
@@ -41,18 +45,33 @@ function submitVerifyReview(id: number, assignedAgentId: number): Promise<Verifi
   return request.put(`/VerificationProcess/SubmitReview/${id}?assignedAgentId=${assignedAgentId}`);
 }
 
+/**
+ * @deprecated
+ * @param id
+ * @param companyTypeId
+ * @returns
+ */
 function submitClassify(id: number, companyTypeId: number): Promise<VerificationProcess> {
   return request.put(`/VerificationProcess/SubmitClassify/${id}?companyTypeId=${companyTypeId}`);
+}
+
+function rejectReviewed(id: number): Promise<VerificationProcess> {
+  return request.put(`/VerificationProcess/RejectReviewed/${id}`);
 }
 
 function update(data: Partial<VerificationProcess>): Promise<VerificationProcess> {
   return request.put(`/VerificationProcess/Update`, data);
 }
 
-function finishVerify(id: number): Promise<VerificationProcess> {
-  return request.put(`/VerificationProcess/Finish/${id}`);
+function finishVerify(id: number, companyTypeId: number): Promise<VerificationProcess> {
+  return request.put(`/VerificationProcess/Finish/${id}?companyTypeId=${companyTypeId}`);
 }
 
+/**
+ * @deprecated
+ * @param id
+ * @returns
+ */
 function rejectClassified(id: number): Promise<VerificationProcess> {
   return request.put(`/VerificationProcess/RejectClassified/${id}`);
 }
@@ -69,6 +88,7 @@ const verificationProcessServices = {
   generate,
   submitVerifyReview,
   submitClassify,
+  rejectReviewed,
   update,
   finishVerify,
   rejectClassified,

@@ -27,16 +27,27 @@ const CriteriaForm = (props: Props) => {
   return (
     <div>
       <div className="inline-radio-group">
-        <label>Có</label>
-        <input
-          type="radio"
-          checked={currentCriteria.companyRate}
-        />
-        <label>Không</label>
-        <input
-          type="radio"
-          checked={currentCriteria.companyRate === false}
-        />
+        <div>
+          <input
+            type="radio"
+            checked={currentCriteria.companyRate === true}
+          />
+          <label>Có</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            checked={currentCriteria.companyRate === false}
+          />
+          <label>Không</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            checked={currentCriteria.companyRate === null}
+          />
+          <label>Không phải loại hình của DN</label>
+        </div>
       </div>
       {
         currentCriteria.companyOpinion && (

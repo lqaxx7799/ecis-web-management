@@ -101,7 +101,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
             className="btn btn-default"
             to={`/verify-verification-assign?companyId=${editingProcess?.companyId}`}
           >
-            Yêu cầu xác thực
+            Yêu cầu xác minh
           </Link>
           {
             canSubmit ? (
@@ -135,10 +135,10 @@ const VerifyPendingProcessDetail = (props: Props) => {
   return (
     <div className="x_panel">
       <Helmet>
-        <title>{`Đánh giá sự tuân thủ của công ty ${editingProcess?.company.companyNameVI}`}</title>
+        <title>{`Đánh giá sự tuân thủ của doanh nghiệp ${editingProcess?.company.companyNameVI}`}</title>
       </Helmet>
       <div className="x_title">
-        <h2>Đánh giá sự tuân thủ của công ty {editingProcess?.company.companyNameVI}</h2>
+        <h2>Đánh giá sự tuân thủ của doanh nghiệp {editingProcess?.company.companyNameVI}</h2>
         <div className="clearfix" />
       </div>
       <div className="x_breadcrumb">

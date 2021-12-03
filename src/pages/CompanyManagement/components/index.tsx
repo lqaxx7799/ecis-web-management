@@ -28,7 +28,7 @@ const CompanyManagement = (props: Props) => {
       selector: (row, index) => index + 1,
     },
     {
-      name: 'Công ty',
+      name: 'Doanh nghiệp',
       selector: (row) => `${_.get(row, 'companyNameVI')} (${_.get(row, 'companyCode')})`,
     },
     {

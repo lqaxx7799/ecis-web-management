@@ -29,7 +29,7 @@ const VerificationProcessManagement = (props: Props) => {
       width: '50px',
     },
     {
-      name: 'Công ty',
+      name: 'Doanh nghiệp',
       selector: (row) => `${_.get(row, 'company.companyNameVI')} (${_.get(row, 'company.companyCode')})`,
     },
     {

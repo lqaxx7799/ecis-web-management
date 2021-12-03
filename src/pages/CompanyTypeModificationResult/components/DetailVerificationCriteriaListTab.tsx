@@ -1,15 +1,15 @@
 import _ from "lodash";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
-import { useAppSelector } from "../../../../app/store";
-import { Criteria } from "../../../../types/models";
-import CriteriaDetailList from "./CriteriaDetailList";
+import { useAppSelector } from "../../../app/store";
+import { Criteria } from "../../../types/models";
+import DetailVerificationCriteriaDetailList from "./DetailVerificationCriteriaDetailList";
 
 type Props = {
   criteriaTypeId: number;
   isSelected: boolean;
 };
 
-const CriteriaListTab = (props: Props) => {
+const DetailVerificationCriteriaListTab = (props: Props) => {
   const { criteriaTypes } = useAppSelector((state) => state.criteriaType);
   const { criterias } = useAppSelector((state) => state.criteria);
   const criteriaType = _.find(criteriaTypes, (type) => type.id === props.criteriaTypeId);
@@ -43,11 +43,11 @@ const CriteriaListTab = (props: Props) => {
         columns={columns}
         data={filteredCriterias}
         expandableRows
-        expandableRowsComponent={<CriteriaDetailList />}
-        className="verification-table"
+        expandableRowsComponent={<DetailVerificationCriteriaDetailList />}
+        className="classify-verification-table"
       />
     </div>
   );
 };
 
-export default CriteriaListTab;
+export default DetailVerificationCriteriaListTab;

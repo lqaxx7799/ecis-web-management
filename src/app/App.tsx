@@ -29,6 +29,7 @@ import CompanyCreate from '../pages/CompanyManagement/components/CompanyCreate';
 import AgentManagement from '../pages/AgentManagement/components';
 import ClassifyVerification from '../pages/VerificationProcessManagement/components/ClassifyVerification';
 import ClassifyVerificationDetail from '../pages/VerificationProcessManagement/components/ClassifyVerification/ClassifyVerificationDetail';
+import ModificationResultDetail from '../pages/CompanyTypeModificationResult/components/ModificationResultDetail';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -65,11 +66,13 @@ const App = () => {
         <AppRoute path="/verification-classify/:id" component={ClassifyVerificationDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification-classify" component={ClassifyVerification} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
-        <AppRoute path="/verification-classified" component={ClassifiedVerificationList} layout={MainLayout} needAuth roles={["Admin"]} />
+        {/* <AppRoute path="/verification-classified" component={ClassifiedVerificationList} layout={MainLayout} needAuth roles={["Admin"]} /> */}
+        <AppRoute path="/verification-result/:id" component={ModificationResultDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/verification-result" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
         <AppRoute path="/company/report-violation" component={ReportViolation} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company/create" component={CompanyCreate} layout={MainLayout} needAuth roles={["Admin"]} />
+        <AppRoute path="/company/modification/:id" component={ModificationResultDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company/:id" component={CompanyDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company" component={CompanyManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 

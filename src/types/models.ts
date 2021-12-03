@@ -79,7 +79,7 @@ export interface VerificationProcess extends BaseModel {
 export interface VerificationCriteria extends BaseModel {
   id: number;
   approvedStatus?: string;
-  companyRate?: boolean;
+  companyRate?: boolean | null;
   companyOpinion: string;
   reviewResult: string;
   reviewComment: string;
@@ -154,6 +154,7 @@ export interface CompanyTypeModification extends BaseModel {
   modificationTypeId: number;
   company: Company;
   updatedCompanyType: CompanyType;
+  previousCompanyType: CompanyType;
 };
 
 export interface ViolationReport extends BaseModel {

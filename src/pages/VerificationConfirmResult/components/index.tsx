@@ -27,7 +27,7 @@ const VerificationConfirmResult = (props: Props) => {
       width: '50px',
     },
     {
-      name: 'Công ty cần xác minh',
+      name: 'Doanh nghiệp cần xác minh',
       selector: (row) => `${_.get(row, 'verificationProcess.company.companyNameVI')} (${_.get(row, 'verificationProcess.company.companyCode')})`,
       wrap: true,
     },

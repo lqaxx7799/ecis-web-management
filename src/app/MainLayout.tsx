@@ -168,26 +168,22 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         </li>
                       )
                     }
-                    {
-                      isAdmin && (
-                        <li
-                          key="result"
-                          className={`${activeSideItem === 'result' ? 'active' : ''}`}
-                          onClick={(e) => onSidebarClick(e, 'result')}
-                        >
-                          <a>
-                            <i className="fa fa-desktop" /> Công bố kết quả <span className="fa fa-chevron-down" />
-                          </a>
-                          <ul
-                            className="nav child_menu"
-                            style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
-                          >
-                            <li><Link to="/verification-classified">Duyệt kết quả phân loại</Link></li>
-                            <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
-                          </ul>
-                        </li>
-                      )
-                    }
+                    <li
+                      key="result"
+                      className={`${activeSideItem === 'result' ? 'active' : ''}`}
+                      onClick={(e) => onSidebarClick(e, 'result')}
+                    >
+                      <a>
+                        <i className="fa fa-desktop" /> Kết quả phân loại <span className="fa fa-chevron-down" />
+                      </a>
+                      <ul
+                        className="nav child_menu"
+                        style={{ display: activeSideItem === 'result' ? 'block' : 'none' }}
+                      >
+                        {/* <li><Link to="/verification-classified">Duyệt kết quả phân loại</Link></li> */}
+                        <li><Link to="/verification-result">Xem kết quả phân loại</Link></li>
+                      </ul>
+                    </li>
                     {
                       isAdmin && (
                         <li

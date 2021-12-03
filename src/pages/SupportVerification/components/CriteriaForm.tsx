@@ -25,7 +25,7 @@ const CriteriaForm = (props: Props) => {
   const currentDocuments = _.filter(verificationDocuments, (item) => item.verificationCriteriaId === currentCriteria?.id);
   const [opinion, setOpinion] = useState(currentCriteria?.companyOpinion ?? '');
 
-  const updateCompanyRate = (rate: boolean) => {
+  const updateCompanyRate = (rate: boolean | null) => {
     const updated: Partial<VerificationCriteria> = {
       ...currentCriteria,
       companyRate: rate,
@@ -85,18 +85,30 @@ const CriteriaForm = (props: Props) => {
   return (
     <div>
       <div className="inline-radio-group">
-        <label>Có</label>
-        <input
-          onClick={() => updateCompanyRate(true)}
-          type="radio"
-          checked={currentCriteria.companyRate}
-        />
-        <label>Không</label>
-        <input
-          onClick={() => updateCompanyRate(false)}
-          type="radio"
-          checked={currentCriteria.companyRate === false}
-        />
+        <div>
+          <input
+            onClick={() => updateCompanyRate(true)}
+            type="radio"
+            checked={currentCriteria.companyRate === true}
+          />
+          <label>Có</label>
+        </div>
+        <div>
+          <input
+            onClick={() => updateCompanyRate(false)}
+            type="radio"
+            checked={currentCriteria.companyRate === false}
+          />
+          <label>Không</label>
+        </div>
+        <div>
+          <input
+            onClick={() => updateCompanyRate(null)}
+            type="radio"
+            checked={currentCriteria.companyRate === null}
+          />
+          <label>Không phải loại hình của DN</label>
+        </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <div>

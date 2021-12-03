@@ -267,11 +267,40 @@ function submitVerifyReview(verificationProcessId: number, assignedAgentId: numb
 
 function submitClassify(verificationProcessId: number, companyTypeId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch, getState) => {
-    const updated = await verificationProcessServices.submitClassify(verificationProcessId, companyTypeId);
+    const updated = await verificationProcessServices.finishVerify(verificationProcessId, companyTypeId);
 
     dispatch<VerificationProcessManagementActionTypes>({
       type: 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED',
       payload: updated,
+    });
+
+    const state = getState();
+    const updatedRecords = _.reject(state.verificationProcess.records, (item) => item.id === verificationProcessId);
+
+    dispatch<VerificationProcessActionTypes>({
+      type: "VERIFICATION_PROCESS_LOADED",
+      payload: updatedRecords,
+    });
+
+    return updated;
+  };
+}
+
+function rejectReviewed(verificationProcessId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch, getState) => {
+    const updated = await verificationProcessServices.rejectReviewed(verificationProcessId);
+
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED',
+      payload: updated,
+    });
+
+    const state = getState();
+    const updatedRecords = _.reject(state.verificationProcess.records, (item) => item.id === verificationProcessId);
+
+    dispatch<VerificationProcessActionTypes>({
+      type: "VERIFICATION_PROCESS_LOADED",
+      payload: updatedRecords,
     });
 
     return updated;
@@ -307,9 +336,14 @@ function updateProcess(process: Partial<VerificationProcess>): AppThunk<Promise<
   };
 }
 
+/**
+ * @deprecated
+ * @param processId 
+ * @returns 
+ */
 function finishVerify(processId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch: AppDispatch, getState) => {
-    const result = await verificationProcessServices.finishVerify(processId);
+    const result = await verificationProcessServices.finishVerify(processId, 0);
     dispatch<VerificationProcessManagementActionTypes>({
       type: "VERIFICATION_PROCESS_MANAGEMENT_PROCESS_UPDATED",
       payload: result,
@@ -327,6 +361,11 @@ function finishVerify(processId: number): AppThunk<Promise<VerificationProcess>>
   };
 }
 
+/**
+ * @deprecated
+ * @param processId 
+ * @returns 
+ */
 function rejectClassified(processId: number): AppThunk<Promise<VerificationProcess>> {
   return async (dispatch: AppDispatch, getState) => {
     const result = await verificationProcessServices.rejectClassified(processId);
@@ -351,6 +390,7 @@ const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
   submitClassify,
+  rejectReviewed,
   changeVerifyCompleteDrawerState,
   updateProcess,
   finishVerify,

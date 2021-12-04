@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationProcessActions from "../../../common/actions/verificationProcess.action";
+import { VerificationProcessRatingDTO } from "../../../types/dto";
 import { VerificationProcess } from "../../../types/models";
 
 import '../verificationProcessManagement.scss';
@@ -17,10 +18,16 @@ type Props = {
 const VerificationProcessManagement = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
+  const [ratings, setRatings] = useState<VerificationProcessRatingDTO[]>([]);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllPending());
-  }, []);
+    dispatch(verificationProcessActions.getAllPending())
+      .then(async (result) => {
+        const processIds = _.map(result, 'id');
+        const ratingResult = await dispatch(verificationProcessActions.getRatingCount(processIds));
+        setRatings(ratingResult);
+      });
+  }, [dispatch]);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
     {
@@ -41,6 +48,21 @@ const VerificationProcessManagement = (props: Props) => {
       name: 'Hạn đánh giá',
       selector: 'submitDeadline',
       format: (row) => dayjs(row.submitDeadline).format('DD/MM/YYYY'),
+    },
+    {
+      name: 'Kết quả đánh giá',
+      selector: (row) => {
+        const rating = _.find(ratings, (item) => item.verificationProcessId === row.id);
+        if (!rating) {
+          return '';
+        }
+        return (
+          <>
+            <div>Đạt: {rating.verifiedCount}/{rating.totalCount}</div>
+            <div>Không đạt: {rating.rejectedCount}/{rating.totalCount}</div>
+          </>
+        );
+      },
     },
     {
       name: 'Hành động',

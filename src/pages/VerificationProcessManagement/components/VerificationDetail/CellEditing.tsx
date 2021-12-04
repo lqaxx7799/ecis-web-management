@@ -7,13 +7,13 @@ type Props = {
 };
 
 const CellEditing = (props: Props) => {
-  const [editing, setEditing] = useState(false);
+  // const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(props.value);
 
-  const edit = () => {
-    setEditing(true);
-    setValue(props.value);
-  };
+  // const edit = () => {
+  //   setEditing(true);
+  //   setValue(props.value);
+  // };
 
   const submit = async () => {
     const result = props.onOk(value);
@@ -21,22 +21,22 @@ const CellEditing = (props: Props) => {
       await result;
     }
     setValue(props.value);
-    setEditing(false);
+    // setEditing(false);
   }
 
   const cancel = () => {
-    setValue(props.value);
-    setEditing(false);
+    setValue(props.value ?? '');
+    // setEditing(false);
     props.onCancel?.();
   };
 
-  if (!editing) {
-    return (
-      <div onClick={edit}>
-        {props.value ?? '-'}
-      </div>
-    );
-  }
+  // if (!editing) {
+  //   return (
+  //     <div onClick={edit}>
+  //       {props.value ?? '-'}
+  //     </div>
+  //   );
+  // }
   return (
     <div>
       <textarea
@@ -44,12 +44,14 @@ const CellEditing = (props: Props) => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <button className="btn btn-sm btn-primary" onClick={submit}>
-        Lưu
-      </button>
-      <button className="btn btn-sm" onClick={cancel}>
-        Hủy
-      </button>
+      <div style={{ marginTop: '8px' }}>
+        <button className="btn btn-sm btn-primary" onClick={submit}>
+          Lưu
+        </button>
+        <button className="btn btn-sm" onClick={cancel}>
+          Hủy
+        </button>
+      </div>
     </div>
   );
 }

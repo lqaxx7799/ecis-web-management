@@ -1,10 +1,11 @@
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
 import verificationProcessActions from "../../../../common/actions/verificationProcess.action";
+import { VerificationProcessRatingDTO } from "../../../../types/dto";
 import { VerificationProcess } from "../../../../types/models";
 
 type Props = {
@@ -14,9 +15,15 @@ type Props = {
 const ClassifyVerification = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loading, records } = useAppSelector((state) => state.verificationProcess);
+  const [ratings, setRatings] = useState<VerificationProcessRatingDTO[]>([]);
 
   useEffect(() => {
-    dispatch(verificationProcessActions.getAllReviewed());
+    dispatch(verificationProcessActions.getAllReviewed())
+      .then(async (result) => {
+        const processIds = _.map(result, 'id');
+        const ratingResult = await dispatch(verificationProcessActions.getRatingCount(processIds));
+        setRatings(ratingResult);
+      });
   }, [dispatch]);
 
   const columns: IDataTableColumn<VerificationProcess>[] = [
@@ -27,6 +34,21 @@ const ClassifyVerification = (props: Props) => {
     {
       name: 'Doanh nghiệp',
       selector: (row) => `${_.get(row, 'company.companyNameVI')} (${_.get(row, 'company.companyCode')})`,
+    },
+    {
+      name: 'Kết quả đánh giá',
+      selector: (row) => {
+        const rating = _.find(ratings, (item) => item.verificationProcessId === row.id);
+        if (!rating) {
+          return '';
+        }
+        return (
+          <>
+            <div>Đạt: {rating.verifiedCount}/{rating.totalCount}</div>
+            <div>Không đạt: {rating.rejectedCount}/{rating.totalCount}</div>
+          </>
+        );
+      },
     },
     {
       name: 'Thao tác',

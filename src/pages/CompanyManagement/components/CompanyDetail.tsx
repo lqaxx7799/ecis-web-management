@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import _ from "lodash";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DataTable, { IDataTableColumn } from "react-data-table-component";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router";
@@ -27,6 +27,7 @@ const CompanyDetail = (props: Props) => {
   const { loading, editingCompany } = useAppSelector((state) => state.company);
   const { records: verifications } = useAppSelector((state) => state.verificationProcess);
   const { companyTypeModifications } = useAppSelector((state) => state.companyTypeModification);
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     const companyIdInt = parseInt(companyId);
@@ -41,12 +42,15 @@ const CompanyDetail = (props: Props) => {
     if (pendingVerification) {
       return;
     }
+    setGenerating(true);
     dispatch(verificationProcessActions.generate(parseInt(companyId)))
       .then(() => {
         toast.success('Tạo yêu cầu đánh giá thành công.');
+        setGenerating(false);
       })
       .catch(() => {
         toast.error('Đã xảy ra lỗi trong quá trình tạo yêu cầu đánh giá. Vui lòng thử lại sau.');
+        setGenerating(false);
       });
   };
 
@@ -120,7 +124,7 @@ const CompanyDetail = (props: Props) => {
         <button
           className="btn btn-primary"
           onClick={generateVerification}
-          disabled={!!pendingVerification}
+          disabled={!!pendingVerification || generating}
         >
           Yêu cầu đánh giá
         </button>

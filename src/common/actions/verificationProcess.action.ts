@@ -1,4 +1,5 @@
 import { AppDispatch } from '../../app/store';
+import { VerificationProcessRatingDTO } from '../../types/dto';
 import { VerificationProcess } from '../../types/models';
 import { VerificationProcessActionTypes } from '../reducers/verificationProcess.reducer';
 import verificationProcessServices from '../services/verificationProcess.services';
@@ -130,9 +131,25 @@ function getAllClassified(): AppThunk<Promise<VerificationProcess[]>> {
   };
 }
 
-function generate(companyId: number): AppThunk<Promise<VerificationProcess>> {
+function getRatingCount(processIds: number[]): AppThunk<Promise<VerificationProcessRatingDTO[]>> {
   return async (dispatch: AppDispatch) => {
+    const result = await verificationProcessServices.getRatingCount(processIds);
+    return result;
+  };
+}
+
+function generate(companyId: number): AppThunk<Promise<VerificationProcess>> {
+  return async (dispatch: AppDispatch, getState) => {
     const data = await verificationProcessServices.generate(companyId);
+    const state = getState();
+    const updatedProcesses = [
+      ...state.verificationProcess.records,
+      data,
+    ];
+    dispatch<VerificationProcessActionTypes>({
+      type: 'VERIFICATION_PROCESS_LOADED',
+      payload: updatedProcesses,
+    });
     return data;
   };
 }
@@ -144,6 +161,7 @@ const verificationProcessActions = {
   getAllSupport,
   getAllReviewed,
   getAllClassified,
+  getRatingCount,
   generate,
 };
 

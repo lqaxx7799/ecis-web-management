@@ -1,3 +1,4 @@
+import { VerificationProcessRatingDTO } from '../../types/dto';
 import { VerificationProcess } from '../../types/models';
 import request from '../utils/request';
 
@@ -27,6 +28,11 @@ function getAllClassified(): Promise<VerificationProcess[]> {
 
 function getAllByCompany(companyId: number): Promise<VerificationProcess[]> {
   return request.get(`/VerificationProcess/GetByCompany/${companyId}`);
+}
+
+function getRatingCount(processIds: number[]): Promise<VerificationProcessRatingDTO[]> {
+  const input = processIds.join(',');
+  return request.get(`/VerificationProcess/RatingCount?processIds=${input}`);
 }
 
 function getById(id: number): Promise<VerificationProcess> {
@@ -83,6 +89,7 @@ const verificationProcessServices = {
   getAllSupport,
   getAllReviewed,
   getAllClassified,
+  getRatingCount,
   getById,
   getCurrentPendingByCompanyId,
   generate,

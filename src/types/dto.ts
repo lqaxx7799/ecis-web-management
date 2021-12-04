@@ -45,3 +45,11 @@ export interface ViolationReportDTO {
   reportAgentId: number; 
   violationReportDocuments: Partial<ViolationReportDocument>[];
 };
+
+export interface VerificationProcessRatingDTO {
+  verificationProcessId: number;
+  pendingCount: number;
+  verifiedCount: number;
+  rejectedCount: number;
+  totalCount: number;
+};

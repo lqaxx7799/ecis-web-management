@@ -49,6 +49,7 @@ const DetailVerificationCriteriaDetailList = (props: Props) => {
           'Chưa có kết quả'
         );
       },
+      wrap: true,
     },
     {
       name: 'Ý kiến của cục KL',

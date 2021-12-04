@@ -66,24 +66,24 @@ const CriteriaDetailList = (props: Props) => {
       width: '240px',
       style: { paddingTop: '12px', paddingBottom: '12px' },
     },
-    {
-      name: 'Kết quả',
-      selector: (row) => {
-        const currentCriteria = _.find(verificationCriterias, (item) => item.criteriaDetailId === row.id);
-        if (!currentCriteria) {
-          return null;
-        }
-        return (
-          <CellEditing
-            onOk={(value) => editCriteriaField('reviewResult', currentCriteria.id, value)}
-            value={currentCriteria.reviewResult}
-          />
-        );
-      },
-      wrap: true,
-      style: { paddingTop: '8px', paddingRight: '8px' },
-      width: '150px',
-    },
+    // {
+    //   name: 'Kết quả',
+    //   selector: (row) => {
+    //     const currentCriteria = _.find(verificationCriterias, (item) => item.criteriaDetailId === row.id);
+    //     if (!currentCriteria) {
+    //       return null;
+    //     }
+    //     return (
+    //       <CellEditing
+    //         onOk={(value) => editCriteriaField('reviewResult', currentCriteria.id, value)}
+    //         value={currentCriteria.reviewResult}
+    //       />
+    //     );
+    //   },
+    //   wrap: true,
+    //   style: { paddingTop: '8px', paddingRight: '8px' },
+    //   width: '150px',
+    // },
     {
       name: 'Góp ý',
       selector: (row) => {
@@ -121,6 +121,7 @@ const CriteriaDetailList = (props: Props) => {
           'Chưa có kết quả'
         );
       },
+      wrap: true,
     },
     {
       name: 'Thao tác',

@@ -1,3 +1,4 @@
+import { FileIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -97,18 +98,22 @@ const CriteriaForm = (props: Props) => {
           <input
             onClick={() => updateCompanyRate(false)}
             type="radio"
-            checked={currentCriteria.companyRate === false}
+            checked={props.data?.isRequired ? !currentCriteria.companyRate : currentCriteria.companyRate === false}
           />
           <label>Không</label>
         </div>
-        <div>
-          <input
-            onClick={() => updateCompanyRate(null)}
-            type="radio"
-            checked={currentCriteria.companyRate === null}
-          />
-          <label>Không phải loại hình của DN</label>
-        </div>
+        {
+          !props.data?.isRequired && (
+            <div>
+              <input
+                onClick={() => updateCompanyRate(null)}
+                type="radio"
+                checked={currentCriteria.companyRate === null}
+              />
+              <label>Không phải loại hình của DN</label>
+            </div>
+          )
+        }
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <div>
@@ -133,12 +138,13 @@ const CriteriaForm = (props: Props) => {
           {
             _.map(currentDocuments, (item) => (
               <a
+                className="file-item"
                 key={item.id}
                 target="_blank"
                 rel="noopener noreferrer"
                 href={`${config.BASE_API}${item.resourceUrl}`}
               >
-                {item.documentName}
+                <FileIcon /> {item.documentName}
               </a>
             ))
           }

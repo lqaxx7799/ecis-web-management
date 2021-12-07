@@ -101,6 +101,11 @@ body {
   overflow: auto !important;
 }
 
+.file-item {
+  display: block;
+  margin-bottom: 4px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

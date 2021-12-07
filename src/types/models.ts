@@ -37,6 +37,7 @@ export interface CriteriaDetail extends BaseModel {
   criteriaDetailName: string;
   description: string;
   criteriaId: number;
+  isRequired: boolean;
 };
 
 export interface Company extends BaseModel {

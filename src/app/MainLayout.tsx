@@ -52,10 +52,10 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
           <div className="col-md-3 left_col">
             <div className="left_col scroll-view">
               <div className="navbar nav_title" style={{ border: 0 }}>
-                <a href="index.html" className="site_title">
+                <Link to="/" className="site_title">
                   <img src="/images/fpd_logo_small.png" alt="" />
                   <span>Cục kiểm lâm</span>
-                </a>
+                </Link>
               </div>
 
               <div className="clearfix"></div>
@@ -255,7 +255,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                 <a data-toggle="tooltip" data-placement="top" title="Lock">
                   <span className="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                 </a>
-                <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <a data-toggle="tooltip" data-placement="top" title="Logout" onClick={logOut}>
                   <span className="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
               </div>
@@ -275,7 +275,6 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                   <li className={isMenuNavBarOpen ? 'open' : ''}>
                     <a
                       onClick={toggleNavBarMenu}
-                      href="javascript:;"
                       className="user-profile dropdown-toggle"
                       data-toggle="dropdown"
                       aria-expanded="false"
@@ -284,14 +283,14 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                       <span className=" fa fa-angle-down"></span>
                     </a>
                     <ul className="dropdown-menu dropdown-usermenu pull-right">
-                      <li><a href="javascript:;"> Hồ sơ cá nhân</a></li>
+                      <li><a> Hồ sơ cá nhân</a></li>
                       <li>
-                        <a href="javascript:;">
+                        <a>
                           <span>Cài đặt</span>
                         </a>
                       </li>
-                      <li><a href="javascript:;">Trợ giúp</a></li>
-                      <li><a href="javascript:;" onClick={logOut}><i className="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
+                      <li><a>Trợ giúp</a></li>
+                      <li><a onClick={logOut}><i className="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
                     </ul>
                   </li>
                 </ul>

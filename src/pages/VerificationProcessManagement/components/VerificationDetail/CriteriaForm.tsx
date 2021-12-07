@@ -1,3 +1,4 @@
+import { FileIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import { ChangeEvent, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/store";
@@ -37,17 +38,21 @@ const CriteriaForm = (props: Props) => {
         <div>
           <input
             type="radio"
-            checked={currentCriteria.companyRate === false}
+            checked={props.data?.isRequired ? !currentCriteria.companyRate : currentCriteria.companyRate === false}
           />
           <label>Không</label>
         </div>
-        <div>
-          <input
-            type="radio"
-            checked={currentCriteria.companyRate === null}
-          />
-          <label>Không phải loại hình của DN</label>
-        </div>
+        {
+          !props.data?.isRequired && (
+            <div>
+              <input
+                type="radio"
+                checked={currentCriteria.companyRate === null}
+              />
+              <label>Không phải loại hình của DN</label>
+            </div>
+          )
+        }
       </div>
       {
         currentCriteria.companyOpinion && (
@@ -71,12 +76,13 @@ const CriteriaForm = (props: Props) => {
               ? 'Không có'
               : _.map(currentDocuments, (item) => (
                 <a
+                  className="file-item"
                   key={item.id}
                   target="_blank"
                   rel="noopener noreferrer"
                   href={`${config.BASE_API}${item.resourceUrl}`}
                 >
-                  {item.documentName}
+                  <FileIcon /> {item.documentName}
                 </a>
               ))
           }

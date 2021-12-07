@@ -1,3 +1,4 @@
+import { FileIcon } from "@radix-ui/react-icons";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import Modal from "react-responsive-modal";
@@ -98,12 +99,13 @@ const ViolationReportModal = (props: Props) => {
         ) : (
           _.map(violationReportDocuments, (document) => (
             <a
+              className="file-item"
               key={document.id}
               target="_blank"
               rel="noopener noreferrer"
               href={`${config.BASE_API}${document.documentUrl}`}
             >
-              {document.documentName}
+              <FileIcon /> {document.documentName}
             </a>
           ))
         )}

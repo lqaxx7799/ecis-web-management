@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationDocumentActions from "../../../common/actions/verificationDocument.action";
 import fileServices from "../../../common/services/file.services";
+import helpers from "../../../common/utils/helpers";
 import config from "../../../config";
 import { CriteriaDetail, VerificationCriteria } from "../../../types/models";
 import verificationProcessManagementActions from "../../VerificationProcessManagement/action";
@@ -57,6 +58,12 @@ const CriteriaForm = (props: Props) => {
   const handleUploadedFiles = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files?.length) {
+      const validation = helpers.validateUploadedFiles(files);
+      if (validation) {
+        toast.error(validation);
+        return;
+      }
+
       Promise.all(Array.from(files).map((file) =>
         fileServices.uploadFile(file)
           .then((fileRes) => {

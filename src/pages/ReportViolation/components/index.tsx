@@ -10,6 +10,7 @@ import companyActions from "../../../common/actions/company.action";
 import violationReportActions from "../../../common/actions/violationReport.action";
 import FileInfo from "../../../common/components/FileInfo";
 import fileServices from "../../../common/services/file.services";
+import helpers from "../../../common/utils/helpers";
 import { ViolationReportDTO } from "../../../types/dto";
 import { ViolationReportDocument } from "../../../types/models";
 
@@ -58,6 +59,12 @@ const ReportViolation = (props: Props) => {
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files?.length) {
+      const validation = helpers.validateUploadedFiles(files);
+      if (validation) {
+        toast.error(validation);
+        return;
+      }
+
       Promise.all(Array.from(files).map((file) => fileServices.uploadFile(file)))
         .then((result) => {
           _.forEach(result, (item) => {

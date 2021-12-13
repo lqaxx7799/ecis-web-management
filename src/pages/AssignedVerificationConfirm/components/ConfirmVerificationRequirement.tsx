@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/store";
 import verificationConfirmRequirementActions from "../../../common/actions/verificationConfirmRequirement.action";
 import { VerificationConfirmRequirementActionTypes } from "../../../common/reducers/verificationConfirmRequirement.reducer";
 import fileServices from "../../../common/services/file.services";
+import helpers from "../../../common/utils/helpers";
 import { VerificationConfirmUpdateDTO } from "../../../types/dto";
 
 type Props = {
@@ -59,6 +60,12 @@ const ConfirmVerificationRequirement = (props: Props) => {
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files?.length) {
+      const validation = helpers.validateUploadedFiles(files);
+      if (validation) {
+        toast.error(validation);
+        return;
+      }
+
       Promise.all(Array.from(files).map((file) => fileServices.uploadFile(file)))
         .then((result) => {
           _.forEach(result, (item) => {

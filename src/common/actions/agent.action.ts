@@ -1,4 +1,5 @@
 import { AppDispatch } from '../../app/store';
+import { AgentCreateDTO } from '../../types/dto';
 import { Agent } from '../../types/models';
 import { AgentActionTypes } from '../reducers/agent.reducer';
 import agentServices from '../services/agent.services';
@@ -46,9 +47,16 @@ function getAllAgents(): AppThunk<Promise<Agent[]>> {
   };
 }
 
+function create(payload: AgentCreateDTO): AppThunk<Promise<Agent>> {
+  return (dispatch: AppDispatch) => {
+    return agentServices.create(payload);
+  };
+}
+
 const agentActions = {
   getAll,
   getAllAgents,
+  create,
 };
 
 export default agentActions;

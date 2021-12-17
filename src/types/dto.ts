@@ -59,3 +59,14 @@ export interface ChangePasswordDTO {
   newPassword: string;
   reenterNewPassword: string;
 };
+
+export interface AgentCreateDTO {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  dateOfBirth: string;
+  provinceIds: number[];
+};

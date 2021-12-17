@@ -106,7 +106,7 @@ const ChangePassword = (props: Props) => {
                           className="form-control"
                           type="password"
                         />
-                        {errors.oldPassword && <span>{errors.oldPassword.message}</span>}
+                        {errors.oldPassword && <span className="text-danger">{errors.oldPassword.message}</span>}
                       </div>
                     )}
                   />
@@ -134,7 +134,7 @@ const ChangePassword = (props: Props) => {
                           className="form-control"
                           type="password"
                         />
-                        {errors.newPassword && <span>{errors.newPassword.message}</span>}
+                        {errors.newPassword && <span className="text-danger">{errors.newPassword.message}</span>}
                       </div>
                     )}
                   />
@@ -156,7 +156,7 @@ const ChangePassword = (props: Props) => {
                           className="form-control"
                           type="password"
                         />
-                        {errors.reenterNewPassword && <span>{errors.reenterNewPassword.message}</span>}
+                        {errors.reenterNewPassword && <span className="text-danger">{errors.reenterNewPassword.message}</span>}
                       </div>
                     )}
                   />

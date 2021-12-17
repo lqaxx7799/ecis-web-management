@@ -31,6 +31,8 @@ import ClassifyVerification from '../pages/VerificationProcessManagement/compone
 import ClassifyVerificationDetail from '../pages/VerificationProcessManagement/components/ClassifyVerification/ClassifyVerificationDetail';
 import ModificationResultDetail from '../pages/CompanyTypeModificationResult/components/ModificationResultDetail';
 import ChangePassword from '../pages/ChangePassword/components';
+import AgentCreate from '../pages/AgentManagement/components/AgentCreate';
+import AgentDetail from '../pages/AgentManagement/components/AgentDetail';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -77,6 +79,8 @@ const App = () => {
         <AppRoute path="/company/:id" component={CompanyDetail} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute path="/company" component={CompanyManagement} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
 
+        <AppRoute path="/agent/create" component={AgentCreate} layout={MainLayout} needAuth roles={["Admin"]} />
+        <AppRoute path="/agent/:id" component={AgentDetail} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/agent" component={AgentManagement} layout={MainLayout} needAuth roles={["Admin"]} />
 
         {/* <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} /> */}

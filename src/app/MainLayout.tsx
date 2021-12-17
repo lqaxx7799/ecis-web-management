@@ -284,7 +284,7 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                     </a>
                     <ul className="dropdown-menu dropdown-usermenu pull-right">
                       <li><a> Hồ sơ cá nhân</a></li>
-                      <li><Link to="/change-password">Đổi mật khẩu</Link></li>
+                      <li><Link to="/change-password" onClick={toggleNavBarMenu}>Đổi mật khẩu</Link></li>
                       <li><a>Trợ giúp</a></li>
                       <li><a onClick={logOut}><i className="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
                     </ul>

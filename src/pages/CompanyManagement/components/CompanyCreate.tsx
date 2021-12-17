@@ -55,15 +55,17 @@ const CompanyCreate = (props: Props) => {
         const messageError = _.get(err, 'response.data.message');
         if (messageError === 'EmailAlreadyExisted') {
           setError('email', { message: 'Email đã tồn tại trong hệ thống' });
+          setSubmitting(false);
           return;
         }
         if (messageError === 'CompanyCodeAlreadyExisted') {
           setError('companyCode', { message: 'Mã doanh nghiệp đã tồn tại trong hệ thống' });
+          setSubmitting(false);
           return;
         }
         toast.error('Đã có lỗi xảy ra trong quá trình thêm mới doanh nghiệp. Vui lòng thử lại sau.');
         setSubmitting(false);
-      })
+      });
   };
 
   return (
@@ -107,7 +109,7 @@ const CompanyCreate = (props: Props) => {
                   <Controller
                     name="companyCode"
                     control={control}
-                    rules={{ required: 'Không được mã doanh nghiệp' }}
+                    rules={{ required: 'Không được để trống mã doanh nghiệp' }}
                     render={({ field: { ref, ...field } }) => (
                       <div>
                         <input

@@ -167,7 +167,7 @@ const ChangePassword = (props: Props) => {
                   <button type="button" onClick={resetForm} className="btn btn-primary">Hủy bỏ</button>
                   <button type="submit" className="btn btn-success" disabled={submitting}>Thực hiện</button>
                 </div>
-            </div>
+              </div>
             </form>
           </div>
         </div>

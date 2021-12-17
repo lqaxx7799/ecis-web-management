@@ -53,3 +53,9 @@ export interface VerificationProcessRatingDTO {
   rejectedCount: number;
   totalCount: number;
 };
+
+export interface ChangePasswordDTO {
+  oldPassword: string;
+  newPassword: string;
+  reenterNewPassword: string;
+};

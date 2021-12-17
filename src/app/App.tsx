@@ -30,6 +30,7 @@ import AgentManagement from '../pages/AgentManagement/components';
 import ClassifyVerification from '../pages/VerificationProcessManagement/components/ClassifyVerification';
 import ClassifyVerificationDetail from '../pages/VerificationProcessManagement/components/ClassifyVerification/ClassifyVerificationDetail';
 import ModificationResultDetail from '../pages/CompanyTypeModificationResult/components/ModificationResultDetail';
+import ChangePassword from '../pages/ChangePassword/components';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -78,10 +79,12 @@ const App = () => {
 
         <AppRoute path="/agent" component={AgentManagement} layout={MainLayout} needAuth roles={["Admin"]} />
 
-        <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
+        {/* <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} /> */}
         
         <AppRoute path="/verification-request/:id?" component={CompanyReportManagement} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/violation-report/:id?" component={VerifyViolationReport} layout={MainLayout} needAuth roles={["Admin"]} />
+
+        <AppRoute path="/change-password" component={ChangePassword} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         
         <AppRoute exact path='/' component={Dashboard} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />
         <AppRoute component={NotFound} layout={MainLayout} needAuth roles={["Agent", "Admin"]} />

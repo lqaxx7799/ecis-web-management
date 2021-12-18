@@ -47,6 +47,33 @@ function getAllAgents(): AppThunk<Promise<Agent[]>> {
   };
 }
 
+function getById(id: number): AppThunk<Promise<Agent>> {
+  return async (dispatch: AppDispatch) => {
+    dispatch<AgentActionTypes>({
+      type: 'AGENT_LOADING',
+    });
+    try {
+      const [agent, assignments] = await Promise.all([
+        agentServices.getById(id),
+        agentServices.getAssignmentByAgentId(id),
+      ]);
+      dispatch<AgentActionTypes>({
+        type: 'AGENT_DETAIL_LOADED',
+        payload: {
+          agent,
+          assignments,
+        },
+      });
+      return agent;
+    } catch (e) {
+      dispatch<AgentActionTypes>({
+        type: 'AGENT_LOAD_FAILED',
+      });
+      throw e;
+    }
+  };
+}
+
 function create(payload: AgentCreateDTO): AppThunk<Promise<Agent>> {
   return (dispatch: AppDispatch) => {
     return agentServices.create(payload);
@@ -56,6 +83,7 @@ function create(payload: AgentCreateDTO): AppThunk<Promise<Agent>> {
 const agentActions = {
   getAll,
   getAllAgents,
+  getById,
   create,
 };
 

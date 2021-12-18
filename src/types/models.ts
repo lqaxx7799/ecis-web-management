@@ -115,6 +115,7 @@ export interface Agent extends BaseModel {
   gender: string;
   address: string;
   accountId: number;
+  account: Account;
 };
 
 export interface VerificationConfirmRequirement extends BaseModel {
@@ -215,4 +216,5 @@ export interface AgentAssignment extends BaseModel {
   id: number;
   agentId: string;
   provinceId: string;
+  province: Province;
 };

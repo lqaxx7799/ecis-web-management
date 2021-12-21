@@ -28,7 +28,7 @@ const AgentDetail = (props: Props) => {
 
   const mainBody = (
     <div className="col-xs-12 table">
-      <h3>Thông tin doanh nghiệp</h3>
+      <h3>Thông tin kiểm lâm tỉnh</h3>
       <table className="table table-striped">
         <tbody>
           <tr>

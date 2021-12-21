@@ -49,16 +49,16 @@ const AgentCreate = (props: Props) => {
   };
 
   const onSubmit = (data: AgentCreateDTOTemp) => {
-    setSubmitting(true);
     if (_.isEmpty(data.provinceIds)) {
       setError(
         'provinceIds',
         {
           message: 'Không được để trống tỉnh phụ trách',
         }
-      );
-      return;
-    }
+        );
+        return;
+      }
+    setSubmitting(true);
     const formattedData: AgentCreateDTO = {
       ...data,
       provinceIds: _.map(data.provinceIds, (item) => parseInt(item)),
@@ -76,7 +76,7 @@ const AgentCreate = (props: Props) => {
           setSubmitting(false);
           return;
         }
-        toast.error('Đã có lỗi xảy ra trong quá trình thêm mới doanh nghiệp. Vui lòng thử lại sau.');
+        toast.error('Đã có lỗi xảy ra trong quá trình thêm mới kiểm lâm tỉnh. Vui lòng thử lại sau.');
         setSubmitting(false);
       });
   };

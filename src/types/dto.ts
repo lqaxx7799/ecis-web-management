@@ -70,3 +70,8 @@ export interface AgentCreateDTO {
   dateOfBirth: string;
   provinceIds: number[];
 };
+
+export interface ThirdPartyRegisterDTO {
+  email: string;
+  userName: string;
+};

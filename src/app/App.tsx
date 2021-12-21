@@ -33,6 +33,9 @@ import ModificationResultDetail from '../pages/CompanyTypeModificationResult/com
 import ChangePassword from '../pages/ChangePassword/components';
 import AgentCreate from '../pages/AgentManagement/components/AgentCreate';
 import AgentDetail from '../pages/AgentManagement/components/AgentDetail';
+import ThirdPartyCreate from '../pages/ThirdPartyManagement/components/ThirdPartyCreate';
+import ThirdPartyDetail from '../pages/ThirdPartyManagement/components/ThirdPartyDetail';
+import ThirdPartyManagement from '../pages/ThirdPartyManagement/components';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -82,6 +85,10 @@ const App = () => {
         <AppRoute path="/agent/create" component={AgentCreate} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/agent/:id" component={AgentDetail} layout={MainLayout} needAuth roles={["Admin"]} />
         <AppRoute path="/agent" component={AgentManagement} layout={MainLayout} needAuth roles={["Admin"]} />
+
+        <AppRoute path="/third-party/create" component={ThirdPartyCreate} layout={MainLayout} needAuth roles={["Admin"]} />
+        <AppRoute path="/third-party/:id" component={ThirdPartyDetail} layout={MainLayout} needAuth roles={["Admin"]} />
+        <AppRoute path="/third-party" component={ThirdPartyManagement} layout={MainLayout} needAuth roles={["Admin"]} />
 
         {/* <AppRoute path="/ket-qua-danh-gia" component={CompanyTypeModificationResult} layout={MainLayout} needAuth roles={["Agent", "Admin"]} /> */}
         

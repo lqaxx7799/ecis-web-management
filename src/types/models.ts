@@ -218,3 +218,13 @@ export interface AgentAssignment extends BaseModel {
   provinceId: string;
   province: Province;
 };
+
+export interface ThirdParty extends BaseModel {
+  id: number;
+  userName: string;
+  clientId: string;
+  clientSecret: string;
+  isActive: string;
+  accountId: number;
+  account: Account;
+};

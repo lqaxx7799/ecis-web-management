@@ -18,6 +18,7 @@ import violationReportReducer, { ViolationReportActionTypes } from '../common/re
 import companyReportReducer, { CompanyReportActionTypes } from '../common/reducers/companyReport.reducer';
 import criteriaDetailReducer, { CriteriaDetailActionTypes } from '../common/reducers/criteriaDetail.reducer';
 import provinceReducer, { ProvinceActionTypes } from '../common/reducers/province.reducer';
+import thirdPartyReducer, { ThirdPartyActionTypes } from '../common/reducers/thirdParty.reducer';
 
 const getMiddleware = () => {
   if (process.env.NODE_ENV === 'production') {
@@ -39,6 +40,7 @@ const allReducers = combineReducers({
   criteriaDetail: criteriaDetailReducer,
   criteriaType: criteriaTypeReducer,
   province: provinceReducer,
+  thirdParty: thirdPartyReducer,
   verificationConfirmRequirement: verificationConfirmRequirementReducer,
   verificationProcess: verificationProcessReducer,
   verificationProcessManagement: verficationProcessManagementReducer,
@@ -63,6 +65,7 @@ export type AppActions =
   | CriteriaDetailActionTypes
   | CriteriaTypeActionTypes
   | ProvinceActionTypes
+  | ThirdPartyActionTypes
   | VerificationConfirmRequirementActionTypes
   | VerificationProcessActionTypes
   | VerificationProcessManagementActionTypes

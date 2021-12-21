@@ -239,6 +239,25 @@ const MainLayout = ({ children, isBleedLayout }: Props) => {
                         </li>
                       )
                     }
+                    {
+                      isAdmin && (
+                        <li
+                          key="thirdParty"
+                          className={`${activeSideItem === 'thirdParty' ? 'active' : ''}`}
+                          onClick={(e) => onSidebarClick(e, 'thirdParty')}
+                        >
+                          <a>
+                            <i className="fa fa-desktop" /> Quản lý bên thụ hưởng<span className="fa fa-chevron-down" />
+                          </a>
+                          <ul
+                            className="nav child_menu"
+                            style={{ display: activeSideItem === 'thirdParty' ? 'block' : 'none' }}
+                          >
+                            <li><Link to="/third-party">Duyệt bên thụ hưởng</Link></li>
+                          </ul>
+                        </li>
+                      )
+                    }
                   </ul>
                 </div>              
               </div>

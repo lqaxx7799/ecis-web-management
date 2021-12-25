@@ -125,11 +125,11 @@ const ConfirmVerificationRequirement = (props: Props) => {
   return (
     <div className="row">
       <Helmet>
-        <title>Phân công xác minh sự tuân thủ</title>
+        <title>Xử lý xác minh sự tuân thủ</title>
       </Helmet>
       <div className="x_panel">
         <div className="x_title">
-          <h2>Phân công xác minh sự tuân thủ</h2>
+          <h2>Xử lý xác minh sự tuân thủ</h2>
           <div className="clearfix"></div>
         </div>
         <div className="x_content">

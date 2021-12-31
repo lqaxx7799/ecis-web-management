@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "ECIS",
+  "name": "Hệ thống phân loại thông tin doanh nghiệp",
   "icons": [
     {
       "src": "favicon.ico",

@@ -33,14 +33,14 @@ const CriteriaForm = (props: Props) => {
             type="radio"
             checked={currentCriteria.companyRate === true}
           />
-          <label>Có</label>
+          <label>Đáp ứng</label>
         </div>
         <div>
           <input
             type="radio"
             checked={props.data?.isRequired ? !currentCriteria.companyRate : currentCriteria.companyRate === false}
           />
-          <label>Không</label>
+          <label>Không đáp ứng</label>
         </div>
         {
           !props.data?.isRequired && (

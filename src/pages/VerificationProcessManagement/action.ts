@@ -386,6 +386,25 @@ function rejectClassified(processId: number): AppThunk<Promise<VerificationProce
   };
 }
 
+function approveAllCriterias(verificationProcessId: number): AppThunk<Promise<VerificationCriteria[]>> {
+  return async (dispatch, getState) => {
+    const updated = await verificationCriteriaServices.approveAll(verificationProcessId);
+
+    const state = getState();
+    const { verificationCriterias } = state.verificationProcessManagement;
+    const updatedCriterias = verificationCriterias.map((criteria) => ({
+      ...criteria,
+      approvedStatus: 'VERIFIED',
+    }));
+    dispatch<VerificationProcessManagementActionTypes>({
+      type: 'VERIFICATION_PROCESS_MANAGEMENT_CRITERIA_UPDATED',
+      payload: updatedCriterias,
+    });
+
+    return updated;
+  };
+}
+
 const verificationProcessManagementActions = {
   loadSelfVerification,
   submitVerifyReview,
@@ -411,6 +430,7 @@ const verificationProcessManagementActions = {
   updateCriteriaCompliance,
   updateCriteriaField,
   updateVerificationCriteria,
+  approveAllCriterias,
 };
 
 export default verificationProcessManagementActions;

@@ -13,10 +13,15 @@ function update(verificationCriteria: Partial<VerificationCriteria>): Promise<Ve
   return request.put(`/VerificationCriteria/Update`, verificationCriteria);
 }
 
+function approveAll(processId: number): Promise<VerificationCriteria[]> {
+  return request.put(`/VerificationCriteria/ApproveAll/${processId}`);
+}
+
 const verificationCriteriaServices = {
   getAllByProcessId,
   getById,
   update,
+  approveAll,
 };
 
 export default verificationCriteriaServices;

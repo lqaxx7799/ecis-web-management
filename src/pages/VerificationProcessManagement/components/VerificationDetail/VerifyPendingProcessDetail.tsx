@@ -34,6 +34,7 @@ const VerifyPendingProcessDetail = (props: Props) => {
   const [openingSubmitModal, setOpeningSubmitModal] = useState(false);
   const [assignedAgentId, setAssignedAgentId] = useState<string | undefined>(undefined);
   const [submitting, setSubmitting] = useState(false);
+  const [approveAllSubmiting, setApproveAllSubmiting] = useState(false);
 
   let { id } = useParams<RouteParams>();
 
@@ -44,6 +45,19 @@ const VerifyPendingProcessDetail = (props: Props) => {
         setSelectedTabId(_.get(criteriaTypes, '0.id'));
       });
   }, [dispatch, id]);
+
+  const approveAllCriterias = () => {
+    setApproveAllSubmiting(true);
+    dispatch(verificationProcessManagementActions.approveAllCriterias(parseInt(id)))
+      .then(() => {
+        setApproveAllSubmiting(false);
+        toast.success('Lưu đánh giá thành công.');
+      })
+      .catch(() => {
+        setApproveAllSubmiting(false);
+        toast.error('Đã xảy ra lỗi trong quá trình lưu đánh giá. Vui lòng thử lại sau.');
+      });
+  };
 
   const submitVerify = () => {
     if (!assignedAgentId || assignedAgentId === '-') {
@@ -103,6 +117,13 @@ const VerifyPendingProcessDetail = (props: Props) => {
           >
             Yêu cầu xác minh
           </Link>
+          <button
+            className="btn btn-default"
+            onClick={approveAllCriterias}
+            disabled={approveAllSubmiting}
+          >
+            Đánh dấu tất cả đạt
+          </button>
           {
             canSubmit ? (
               <button
